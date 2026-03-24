@@ -1780,25 +1780,13 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
     function cotizar() {
         try {
-            // CORRECCION FINAL: ALERTA TRADUCIDA SEGÚN IDIOMA
             const t = translations[currentLang];
 
-            if(!document.getElementById('termsCheck').checked && document.getElementById('termsCheck').type !== 'hidden') { alert(t.alertTerms); return; }
-            const email = document.getElementById('emailCliente').value;
-            
             const rawHora = document.getElementById('horaIda').value;
             const fecha = document.getElementById('fechaIda').value;
 
-            if(email.length < 5) { alert(t.alertEmail); return; }
             if(!fecha) { alert(t.alertDate); return; }
             if(!rawHora) { alert(t.alertTime); return; }
-
-            const hora = convertirHora12h(rawHora); 
-
-            const nombre = document.getElementById('nombreCliente').value;
-            const tel = document.getElementById('telefonoCliente').value;
-            if(nombre.length < 2) { alert(t.alertName); return; }
-            if(tel.length < 5) { alert(t.alertPhone); return; }
             
             if (direccionMode === 'personalizado') {
                 const subtipo = document.getElementById('subtipoPersonalizado').value;
@@ -1827,7 +1815,6 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 const codigoUnico = generarCodigo();
                 let notasFinales = document.getElementById('notasCliente').value;
                 
-                // Traducción del Tipo de Viaje
                 let tipoViajeTxt = document.getElementById('tipoServicio').value;
                 if(currentLang === 'en') {
                     tipoViajeTxt = (tipoViajeTxt === 'REDONDO') ? 'Round Trip' : 'One Way';
@@ -1839,17 +1826,17 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 const datosCotizacion = { 
                     esVenta: false, 
                     codigo: codigoUnico, 
-                    nombre: nombre, 
-                    telefono: tel, 
-                    email: email, 
-                    pasajeros: document.getElementById('pasajeros').value, // FIX: Agregado pasajeros
-                    tipoViaje: tipoViajeTxt, // FIX: Traducido
+                    nombre: '', 
+                    telefono: '', 
+                    email: '', 
+                    pasajeros: document.getElementById('pasajeros').value,
+                    tipoViaje: tipoViajeTxt,
                     origen: document.getElementById('origen').value, 
                     destino: destinoFinal, 
                     fecha: fecha, 
-                    hora: hora, 
-                    fechaRegreso: fechaVueltaVal, // FIX: Separado
-                    horaRegreso: horaVueltaVal,   // FIX: Separado
+                    hora: convertirHora12h(rawHora), 
+                    fechaRegreso: fechaVueltaVal,
+                    horaRegreso: horaVueltaVal,
                     notas: notasFinales, 
                     itinerario: document.getElementById('itinerarioCliente').value, 
                     vehiculo: t.valSpecialQuote, 
