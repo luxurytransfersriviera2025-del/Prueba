@@ -867,10 +867,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDldy9JHnkFpXZoqADLlRyAUNL9XJNP9IhsxmzltcySAUIZkcJ4wGZPKKeGolaVQYy/exec"; 
 
     let direccionMode = 'desdeAero'; 
-    const imgUrlErtiga = "https://i.imgur.com/yoqbNJ7.png";
-    const imgUrlTransporter = "https://i.imgur.com/8EOh4DB.png";
-    const imgUrlSprinter = "https://i.imgur.com/BffyPRe.png";
-    const imgUrlSuburban = "https://i.imgur.com/95X8eqt.png"; 
+    const baseGH = "https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/";
+    const imgUrlsErtiga = [
+        baseGH + "1%20Ertiga.png",
+        baseGH + "2%20Ertiga.png",
+        baseGH + "3%20Ertiga.png",
+        baseGH + "4%20Ertiga.png"
+    ];
+    const imgUrlErtiga     = imgUrlsErtiga[0];
+    const imgUrlTransporter = baseGH + "5%20Transporter.png";
+    const imgUrlSprinter    = baseGH + "7%20Sprinter.png";
+    const imgUrlSuburban    = baseGH + "8.%20Suburban.png";
+    const imgUrlToyotaGL    = baseGH + "6%20Toyota%20GL.png";
 
     function adjustScrollMargin() {
         const header = document.querySelector('header');
@@ -1932,12 +1940,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             const cp = (usd) => convertirPrecio(usd, moneda);
 
             // Mostrar vehículos que tienen capacidad suficiente para los pasajeros
-            if (pax <= 3)  divRes.innerHTML += crearCard("STANDARD SEDAN",   "1-3 Pax",  cp(p.sedan),    moneda, zonaOrigen, imgUrlErtiga,      rutaLabel);
-            if (pax <= 5)  divRes.innerHTML += crearCard("LUXURY SUV",        "1-5 Pax",  cp(p.luxury),   moneda, zonaOrigen, imgUrlSuburban,    rutaLabel);
-            if (pax <= 7)  divRes.innerHTML += crearCard("VAN STANDARD",      "4-7 Pax",  cp(p.van),      moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
-            if (pax <= 10) divRes.innerHTML += crearCard("SMALL GROUP VAN",   "8-10 Pax", cp(p.small),    moneda, zonaOrigen, imgUrlSprinter,    rutaLabel);
-            if (pax <= 15) divRes.innerHTML += crearCard("SPRINTER",          currentLang === 'en' ? 'Up to 15 Pax' : 'Hasta 15 Pax', cp(p.sprinter), moneda, zonaOrigen, imgUrlSprinter, rutaLabel);
-            if (pax > 15)  divRes.innerHTML += crearCard("3 × VAN STANDARD",  currentLang === 'en' ? 'Up to 21 Pax (3 Vans)' : 'Hasta 21 Pax (3 Vans)', cp(p.van * 3), moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
+            if (pax <= 3)  divRes.innerHTML += crearCard("CLASSIC SEDAN",  "1-3 Pax",  cp(p.sedan),    moneda, zonaOrigen, imgUrlsErtiga,     rutaLabel);
+            if (pax <= 5)  divRes.innerHTML += crearCard("LUXURY VIP",      "1-5 Pax",  cp(p.luxury),   moneda, zonaOrigen, imgUrlSuburban,    rutaLabel);
+            if (pax <= 7)  divRes.innerHTML += crearCard("COMFORT VAN",     "4-7 Pax",  cp(p.van),      moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
+            if (pax <= 10) divRes.innerHTML += crearCard("FAMILY VAN",      "8-10 Pax", cp(p.small),    moneda, zonaOrigen, imgUrlToyotaGL,    rutaLabel);
+            if (pax <= 15) divRes.innerHTML += crearCard("GRAND SPRINTER",  currentLang === 'en' ? 'Up to 15 Pax' : 'Hasta 15 Pax', cp(p.sprinter), moneda, zonaOrigen, imgUrlSprinter, rutaLabel);
+            if (pax > 15)  divRes.innerHTML += crearCard("CONVOY",          currentLang === 'en' ? 'Up to 21 Pax (3 Vans)' : 'Hasta 21 Pax (3 Vans)', cp(p.van * 3), moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
             divRes.style.display = 'block';
             divRes.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } catch (error) {
@@ -1959,7 +1967,24 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
         return `
         <div class="tarjeta" id="${id}">
-            <div class="tarjeta-img"><img src="${img}" alt="${veh}"></div>
+            <div class="tarjeta-img">${
+                Array.isArray(img)
+                ? `<div id="slider-${id}" style="width:100%;height:140px;position:relative;overflow:hidden;border-radius:8px;">
+                    ${img.map((src,i) => `<img src="${src}" alt="${veh}" style="position:absolute;top:0;left:0;width:100%;height:140px;object-fit:contain;transition:opacity 0.6s ease;opacity:${i===0?1:0};" class="ertiga-slide-${id}">`).join('')}
+                  </div>
+                  <script>
+                    (function(){
+                        var slides = document.querySelectorAll('.ertiga-slide-${id}');
+                        var cur = 0;
+                        setInterval(function(){
+                            slides[cur].style.opacity = 0;
+                            cur = (cur + 1) % slides.length;
+                            slides[cur].style.opacity = 1;
+                        }, 2000);
+                    })();
+                  </script>`
+                : `<img src="${img}" alt="${veh}">`
+            }</div>
             <div class="tarjeta-info">
                 <h3>${veh}</h3>
                 <div class="tarjeta-route-display">${rutaLabel}</div>
@@ -1999,54 +2024,41 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>
                     <div class="input-wrapper" style="padding:8px 10px;">
                         <label style="font-weight:800; color:var(--navy-bg); margin-bottom:5px; display:block;">${isEN ? 'WHATSAPP *' : 'WHATSAPP *'}</label>
-                        <div style="display:flex; align-items:stretch; border:1px solid #ccc; border-radius:6px; overflow:visible; background:#fff; position:relative;">
-                            <div style="position:relative; background:#f8f9fa; border-right:1px solid #eee; flex-shrink:0; display:flex; align-items:center;">
-                                <div id="pais-btn-${id}" onclick="togglePaisDropdown('${id}')" style="display:flex; align-items:center; gap:4px; padding:8px 10px; cursor:pointer; min-width:80px; white-space:nowrap;">
-                                    <span id="pais-flag-${id}" style="font-size:18px;">🇺🇸</span>
-                                    <span id="pais-cod-${id}" style="font-weight:800; color:var(--action-green); font-size:13px;">+1</span>
-                                    <span style="color:#999; font-size:10px;">▾</span>
-                                </div>
-                                <input type="hidden" id="lada-${id}" value="+1">
-                                <div id="pais-drop-${id}" style="display:none; position:absolute; top:100%; left:0; z-index:9999; background:#fff; border:1px solid #ddd; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.15); max-height:260px; overflow-y:auto; min-width:200px;">
-                                    ${[
-                                        ['+1','🇺🇸','United States'],
-                                        ['+52','🇲🇽','México'],
-                                        ['+1','🇨🇦','Canada'],
-                                        ['+44','🇬🇧','United Kingdom'],
-                                        ['+49','🇩🇪','Deutschland'],
-                                        ['+33','🇫🇷','France'],
-                                        ['+34','🇪🇸','España'],
-                                        ['+39','🇮🇹','Italia'],
-                                        ['+31','🇳🇱','Netherlands'],
-                                        ['+55','🇧🇷','Brasil'],
-                                        ['+54','🇦🇷','Argentina'],
-                                        ['+57','🇨🇴','Colombia'],
-                                        ['+56','🇨🇱','Chile'],
-                                        ['+51','🇵🇪','Perú'],
-                                        ['+58','🇻🇪','Venezuela'],
-                                        ['+502','🇬🇹','Guatemala'],
-                                        ['+507','🇵🇦','Panamá'],
-                                        ['+53','🇨🇺','Cuba'],
-                                        ['+61','🇦🇺','Australia'],
-                                        ['+81','🇯🇵','Japan'],
-                                        ['+86','🇨🇳','China'],
-                                        ['+91','🇮🇳','India'],
-                                        ['+7','🇷🇺','Russia'],
-                                        ['+972','🇮🇱','Israel'],
-                                        ['+971','🇦🇪','UAE'],
-                                    ].map(([code,flag,name]) =>
-                                        `<div onclick="seleccionarPais('${id}','${code}','${flag}')" style="display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;font-size:13px;border-bottom:0.5px solid #f0f0f0;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">`+
-                                        `<span style="font-size:20px;">${flag}</span>`+
-                                        `<span style="flex:1;color:#333;">${name}</span>`+
-                                        `<span style="font-weight:700;color:var(--action-green)">${code}</span></div>`
-                                    ).join('')}
-                                    <div onclick="seleccionarPaisOtro('${id}')" style="display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;font-size:13px;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">
-                                        <span style="font-size:20px;">🌍</span>
-                                        <span style="flex:1;color:#333;" id="otro-lbl-${id}">${isEN ? 'Other' : 'Otro'}</span>
-                                        <span style="font-weight:700;color:#999">+?</span>
-                                    </div>
-                                </div>
+                        <div style="display:flex; align-items:stretch; border:1px solid #ccc; border-radius:6px; overflow:hidden; background:#fff;">
+                            <div style="display:flex; align-items:center; background:#f8f9fa; border-right:1px solid #eee; flex-shrink:0;">
+                                <select id="bandera-${id}" onchange="cambiarPrefijoCard('${id}')" style="border:none; outline:none; background:transparent; cursor:pointer; font-size:13px; font-weight:700; color:var(--navy-bg); padding:8px 6px; appearance:none; -webkit-appearance:none; width:60px; text-align:center;">
+                                    <option value="+1"   selected>🇺🇸 US</option>
+                                    <option value="+52"         >🇲🇽 MX</option>
+                                    <option value="+1"          >🇨🇦 CA</option>
+                                    <option value="+44"         >🇬🇧 GB</option>
+                                    <option value="+49"         >🇩🇪 DE</option>
+                                    <option value="+33"         >🇫🇷 FR</option>
+                                    <option value="+34"         >🇪🇸 ES</option>
+                                    <option value="+39"         >🇮🇹 IT</option>
+                                    <option value="+31"         >🇳🇱 NL</option>
+                                    <option value="+55"         >🇧🇷 BR</option>
+                                    <option value="+54"         >🇦🇷 AR</option>
+                                    <option value="+57"         >🇨🇴 CO</option>
+                                    <option value="+56"         >🇨🇱 CL</option>
+                                    <option value="+51"         >🇵🇪 PE</option>
+                                    <option value="+58"         >🇻🇪 VE</option>
+                                    <option value="+502"        >🇬🇹 GT</option>
+                                    <option value="+507"        >🇵🇦 PA</option>
+                                    <option value="+53"         >🇨🇺 CU</option>
+                                    <option value="+61"         >🇦🇺 AU</option>
+                                    <option value="+81"         >🇯🇵 JP</option>
+                                    <option value="+86"         >🇨🇳 CN</option>
+                                    <option value="+91"         >🇮🇳 IN</option>
+                                    <option value="+7"          >🇷🇺 RU</option>
+                                    <option value="+972"        >🇮🇱 IL</option>
+                                    <option value="+971"        >🇦🇪 AE</option>
+                                    <option disabled>─</option>
+                                    <option value="OTRO"        >${isEN ? '🌍 Other' : '🌍 Otro'}</option>
+                                </select>
+                                <div style="width:1px; height:100%; background:#eee;"></div>
+                                <input type="text" id="lada-${id}" value="+1" style="width:38px; border:none; outline:none; background:transparent; font-weight:800; color:var(--action-green); font-size:13px; text-align:center; padding:0;" readonly>
                             </div>
+                            <div style="width:1px; background:#eee; flex-shrink:0;"></div>
                             <input type="tel" id="tel-${id}" placeholder="987 654 3210" style="flex:1; border:none; outline:none; background:transparent; padding:10px; font-size:15px; width:100%; min-width:50px;">
                         </div>
                     </div>
@@ -2092,42 +2104,17 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
     }
 
-    function togglePaisDropdown(id) {
-        const drop = document.getElementById('pais-drop-' + id);
-        const isOpen = drop.style.display === 'block';
-        // Cerrar todos los dropdowns abiertos
-        document.querySelectorAll('[id^="pais-drop-"]').forEach(d => d.style.display = 'none');
-        drop.style.display = isOpen ? 'none' : 'block';
-    }
-
-    function seleccionarPais(id, codigo, bandera) {
-        document.getElementById('lada-' + id).value = codigo;
-        document.getElementById('pais-flag-' + id).textContent = bandera;
-        document.getElementById('pais-cod-' + id).textContent = codigo;
-        document.getElementById('pais-drop-' + id).style.display = 'none';
-        document.getElementById('tel-' + id).focus();
-    }
-
-    function seleccionarPaisOtro(id) {
-        document.getElementById('pais-drop-' + id).style.display = 'none';
-        const codigo = prompt(currentLang === 'en' ? 'Enter country code (e.g. +34):' : 'Ingresa el prefijo (ej. +34):');
-        if (codigo) {
-            const clean = codigo.startsWith('+') ? codigo : '+' + codigo;
-            document.getElementById('lada-' + id).value = clean;
-            document.getElementById('pais-flag-' + id).textContent = '🌍';
-            document.getElementById('pais-cod-' + id).textContent = clean;
+    function cambiarPrefijoCard(id) {
+        const sel = document.getElementById('bandera-' + id);
+        const cod = document.getElementById('lada-' + id);
+        const tel = document.getElementById('tel-' + id);
+        if (!sel || !cod) return;
+        if (sel.value === 'OTRO') {
+            cod.readOnly = false; cod.value = '+'; cod.style.background = '#fff'; cod.focus();
+        } else {
+            cod.readOnly = true; cod.style.background = 'transparent'; cod.value = sel.value; tel.focus();
         }
-        document.getElementById('tel-' + id).focus();
     }
-
-    // Cerrar dropdown al hacer clic fuera
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('[id^="pais-btn-"]') && !e.target.closest('[id^="pais-drop-"]')) {
-            document.querySelectorAll('[id^="pais-drop-"]').forEach(d => d.style.display = 'none');
-        }
-    });
-
-    function cambiarPrefijoCard(id) {} // legacy — ya no se usa
 
     function enviarDesdeCard(id, datosCard) {
         const t = translations[currentLang];
