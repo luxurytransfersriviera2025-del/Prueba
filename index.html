@@ -597,14 +597,14 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
                     <!-- FILA 1 ONE WAY: Origen | Destino -->
                     <div class="row-top" id="rowTopOneWay">
-                        <div class="input-wrapper"><label id="labelOrigen">PICK-UP</label><input type="text" id="origen" placeholder="¿Dónde te recogemos?"></div>
-                        <div class="input-wrapper" id="divDestinoInput"><label id="labelDestino">DESTINATION</label><input type="text" id="destino" placeholder="¿A dónde vas?"></div>
+                        <div class="input-wrapper"><label id="labelOrigen">PICK-UP</label><input type="text" id="origen" placeholder="Where are we picking you up?"></div>
+                        <div class="input-wrapper" id="divDestinoInput"><label id="labelDestino">DESTINATION</label><input type="text" id="destino" placeholder="Where are you going?"></div>
                     </div>
 
                     <!-- FILA 1 ROUND TRIP: Origen | Destino | Pasajeros -->
                     <div class="row-top-rt" id="rowTopRoundTrip" style="display:none;">
-                        <div class="input-wrapper"><label id="labelOrigenRT">PICK-UP</label><input type="text" id="origenRT" placeholder="¿Dónde te recogemos?" oninput="document.getElementById('origen').value=this.value" onfocus="syncRT()"></div>
-                        <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="¿A dónde vas?" oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
+                        <div class="input-wrapper"><label id="labelOrigenRT">PICK-UP</label><input type="text" id="origenRT" placeholder="Where are we picking you up?" oninput="document.getElementById('origen').value=this.value" onfocus="syncRT()"></div>
+                        <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="Where are you going?" oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
                         <div class="input-wrapper promo-rt-cell">
                             <label id="label-pax-rt">PASSENGERS</label>
                             <select id="pasajeros" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
@@ -639,7 +639,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         </div>
                         <div class="input-wrapper">
                             <label id="label-promo" style="color:var(--gold);">PROMO CODE</label>
-                            <input type="text" id="codigoPromoOneWay" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
+                            <input type="text" id="codigoPromoOneWay" placeholder="OPTIONAL" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
                         </div>
                     </div>
 
@@ -663,7 +663,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         </div>
                         <div class="input-wrapper">
                             <label id="label-promo-rt" style="color:var(--gold);">PROMO CODE</label>
-                            <input type="text" id="codigoPromo" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
+                            <input type="text" id="codigoPromo" placeholder="OPTIONAL" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
                         </div>
                     </div>
 
@@ -1267,6 +1267,15 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('label-sencillo').innerText = t.labelSencillo;
         document.getElementById('label-redondo').innerText = t.labelRedondo;
         document.getElementById('label-promo').innerText = lang === 'en' ? 'PROMO CODE' : 'CÓDIGO PROMOCIONAL';
+        // RT fields
+        document.getElementById('labelOrigenRT').innerText  = t.labelOrigen;
+        document.getElementById('labelDestinoRT').innerText = t.labelDestino;
+        document.getElementById('label-pax-rt').innerText   = t.labelPax;
+        document.getElementById('label-promo-rt').innerText = lang === 'en' ? 'PROMO CODE' : 'CÓDIGO PROMOCIONAL';
+        document.getElementById('origenRT').placeholder  = lang === 'en' ? 'Where are we picking you up?' : '¿Dónde te recogemos?';
+        document.getElementById('destinoRT').placeholder = lang === 'en' ? 'Where are you going?' : '¿A dónde vas?';
+        document.getElementById('origen').placeholder    = lang === 'en' ? 'Where are we picking you up?' : '¿Dónde te recogemos?';
+        document.getElementById('destino').placeholder   = lang === 'en' ? 'Where are you going?' : '¿A dónde vas?';
         
         // TRADUCCION INPUT AEROPUERTO
         const origenInput = document.getElementById('origen');
@@ -1394,6 +1403,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('fechaIda').addEventListener('change', function() {
             document.getElementById('fechaVuelta').setAttribute('min', this.value);
         });
+        
+        // Forzar placeholders en inglés desde el inicio
+        document.getElementById('origen').placeholder   = 'Where are we picking you up?';
+        document.getElementById('destino').placeholder  = 'Where are you going?';
+        document.getElementById('origenRT').placeholder  = 'Where are we picking you up?';
+        document.getElementById('destinoRT').placeholder = 'Where are you going?';
         
         setLang('en'); // INICIALIZAR EN INGLES
         // Limpiar el campo origen para que inicie vacío (sin aeropuerto pre-llenado)
@@ -1990,8 +2005,25 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 ? { sedan: preciosSencillo.sedan*2, van: preciosSencillo.van*2, small: preciosSencillo.small*2, sprinter: preciosSencillo.sprinter*2, luxury: preciosSencillo.luxury*2 }
                 : preciosSencillo;
 
-            let cap15 = currentLang === 'en' ? "Up to 15 Pax" : "Hasta 15 Pax";
-            const cp = (usd) => convertirPrecio(usd, moneda);
+            // Verificar código promocional
+            const promoOW = document.getElementById('codigoPromoOneWay') ? document.getElementById('codigoPromoOneWay').value.trim().toUpperCase() : '';
+            const promoRT = document.getElementById('codigoPromo') ? document.getElementById('codigoPromo').value.trim().toUpperCase() : '';
+            const promoCode = promoOW || promoRT;
+            const descuento = (promoCode === 'LTR-10' || promoCode === 'LTR10') ? 0.10 : 0;
+            const cp = (usd) => {
+                const base = convertirPrecio(usd, moneda);
+                return descuento > 0 ? Math.round(base * (1 - descuento) * 100) / 100 : base;
+            };
+
+            // Mostrar banner de descuento si aplica
+            if (descuento > 0) {
+                divRes.innerHTML += `<div style="background:#d4edda;border:1px solid #28a745;border-radius:8px;padding:12px 18px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-tag" style="color:#28a745;font-size:18px;"></i>
+                    <span style="font-weight:700;color:#155724;font-size:14px;">${currentLang==='en' ? '🎉 Promo LTR-10 applied — 10% discount on all vehicles!' : '🎉 Código LTR-10 aplicado — ¡10% de descuento en todos los vehículos!'}</span>
+                </div>`;
+            }
+
+            const cap15 = currentLang === 'en' ? "Up to 15 Pax" : "Hasta 15 Pax";
 
             // Mostrar vehículos que tienen capacidad suficiente para los pasajeros
             if (pax <= 3)  divRes.innerHTML += crearCard("CLASSIC SEDAN",  "1-3 Pax",  cp(p.sedan),    moneda, zonaOrigen, imgUrlsErtiga,     rutaLabel);
@@ -2122,7 +2154,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>
                     <div class="input-wrapper">
                         <label>${isEN ? 'Flight No. (Arrival)' : 'No. Vuelo (Llegada)'}</label>
-                        <input type="text" id="vuelo-${id}" placeholder="${isEN ? 'Ex: AA 123' : 'Ej: Y4 123'}">
+                        <input type="text" id="vuelo-${id}" placeholder="${isEN ? 'Optional' : 'Opcional'}">
                     </div>
                 </div>
                 <div class="form-card-notes">
