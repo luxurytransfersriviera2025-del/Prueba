@@ -2062,9 +2062,28 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const tipo = document.getElementById('tipoServicio').value;
         const pAlto = Math.round(precio * 1.30);
         const id = 'c' + (++_cid);
+
+        // Detectar si hay descuento activo
+        const promoOW = document.getElementById('codigoPromoOneWay') ? document.getElementById('codigoPromoOneWay').value.trim().toUpperCase() : '';
+        const promoRT = document.getElementById('codigoPromo') ? document.getElementById('codigoPromo').value.trim().toUpperCase() : '';
+        const promoCode = promoOW || promoRT;
+        const tieneDescuento = (promoCode === 'LTR-10' || promoCode === 'LTR10');
+
+        // Precio mostrado ya viene con descuento aplicado si hay código
+        // precioOriginal = precio sin descuento (para segunda tacha)
+        const precioOriginal = tieneDescuento ? Math.round(precio / 0.90 * 100) / 100 : precio;
+
         const dataStr = JSON.stringify({ esVenta: true, vehiculo: veh, precio: "$" + precio + " " + moneda, zona: zona }).replace(/"/g, "&quot;");
         let tipoTexto = (tipo === 'SENCILLO') ? t.oneWay : t.roundTrip;
         let iconoTipo = (tipo === 'SENCILLO') ? "fa-arrow-right" : "fa-exchange-alt";
+
+        // Bloque de precios según si hay descuento o no
+        const precioHTML = tieneDescuento
+            ? `<span class="price-old">$${pAlto}</span>
+               <span class="price-old" style="font-size:0.95em; color:#e74c3c;">$${precioOriginal}</span>
+               <span class="price-current" style="color:var(--action-green);">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`
+            : `<span class="price-old">$${pAlto}</span>
+               <span class="price-current">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`;
 
         return `
         <div class="tarjeta" id="${id}">
@@ -2092,8 +2111,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             </div>
             <div class="tarjeta-price">
                 <div class="price-container">
-                    <span class="price-old">$${pAlto}</span>
-                    <span class="price-current">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>
+                    ${precioHTML}
                 </div>
                 <button class="btn-reservar" onclick="abrirFormCard('${id}', ${dataStr})">${t.bookBtn} <i class="fas fa-chevron-down"></i></button>
             </div>
