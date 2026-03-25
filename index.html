@@ -1678,7 +1678,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     };
     function convertirPrecio(usd, moneda) {
         if (moneda === 'MXN') return Math.round(usd * 18.5);
-        if (moneda === 'CAD') return Math.round(usd * 18.5 / 11.5 * 100) / 100;
+        if (moneda === 'CAD') return Math.round(usd * 18.5 / 11.5);
         return usd;
     }
 
@@ -2017,7 +2017,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             const descuento = (promoCode === 'LTR-10' || promoCode === 'LTR10') ? 0.10 : 0;
             const cp = (usd) => {
                 const base = convertirPrecio(usd, moneda);
-                return descuento > 0 ? Math.round(base * (1 - descuento) * 100) / 100 : base;
+                return descuento > 0 ? Math.round(base * (1 - descuento)) : base;
             };
 
             // Mostrar banner de descuento si aplica
@@ -2077,7 +2077,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
         // Precio mostrado ya viene con descuento aplicado si hay código
         // precioOriginal = precio sin descuento (para segunda tacha)
-        const precioOriginal = tieneDescuento ? Math.round(precio / 0.90 * 100) / 100 : precio;
+        const precioOriginal = tieneDescuento ? Math.round(precio / 0.90) : precio;
 
         const dataStr = JSON.stringify({ esVenta: true, vehiculo: veh, precio: "$" + precio + " " + moneda, zona: zona }).replace(/"/g, "&quot;");
         let tipoTexto = (tipo === 'SENCILLO') ? t.oneWay : t.roundTrip;
