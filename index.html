@@ -580,8 +580,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         @media (max-width: 480px) { .form-card-grid { grid-template-columns: 1fr; } }
 
                         /* Fila de regreso */
-                        .row-return { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px; padding-top:15px; border-top:1px dashed #ddd; display:none; }
-                        @media (max-width: 900px) { .row-return { grid-template-columns:1fr; } }
+                        .row-return { display:grid; grid-template-columns:1fr 1fr 1fr 2fr; gap:15px; margin-top:15px; padding-top:15px; border-top:1px dashed #ddd; display:none; }
+                        @media (max-width: 900px) { .row-return { grid-template-columns:1fr 1fr; } }
+                        @media (max-width: 550px) { .row-return { grid-template-columns:1fr; } }
                     </style>
 
                     <div class="calc-main-row">
@@ -605,24 +606,34 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         </select>
                     </div>
 
-                    <!-- Fila de regreso -->
+                    <!-- Fila de regreso (incluye pasajeros y promo cuando es Round Trip) -->
                     <div class="row-return" id="divVueltaContenedor">
                         <div class="input-wrapper" id="divFechaVuelta" style="background:#f8fafc; border-color:#cbd5e1;"><label id="label-fecha-vuelta" style="color:var(--action-green);">FECHA DE REGRESO</label><input type="date" id="fechaVuelta" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%;"></div>
                         <div class="input-wrapper" id="divHoraVuelta" style="background:#f8fafc; border-color:#cbd5e1;"><label id="label-hora-vuelta" style="color:var(--action-green);">HORA DE REGRESO</label><input type="time" id="horaVuelta" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%; cursor:pointer;"></div>
                         <div class="input-wrapper" id="divVueloVuelta" style="display:none;"><label id="label-vuelo-vuelta">No. Vuelo Regreso</label><input type="text" id="numVueloVuelta" placeholder="Ej: AA 456"></div>
-                    </div>
-
-                    <!-- Fila final: Pasajeros + Promo Code -->
-                    <div style="display:grid; grid-template-columns:1fr 2fr; gap:12px; margin-top:15px;">
                         <div class="input-wrapper">
-                            <label id="label-pax">PASAJEROS</label>
+                            <label id="label-pax-rt">PASAJEROS</label>
                             <select id="pasajeros" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
                                 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
                             </select>
                         </div>
                         <div class="input-wrapper">
-                            <label id="label-promo" style="color:var(--gold);">CÓDIGO PROMOCIONAL</label>
+                            <label id="label-promo-rt" style="color:var(--gold);">CÓDIGO PROMOCIONAL</label>
                             <input type="text" id="codigoPromo" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
+                        </div>
+                    </div>
+
+                    <!-- Fila final One Way: Pasajeros + Promo Code -->
+                    <div id="divPaxPromoOneWay" style="display:grid; grid-template-columns:1fr 2fr; gap:12px; margin-top:15px;">
+                        <div class="input-wrapper">
+                            <label id="label-pax">PASAJEROS</label>
+                            <select id="pasajerosOneWay" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                            </select>
+                        </div>
+                        <div class="input-wrapper">
+                            <label id="label-promo" style="color:var(--gold);">CÓDIGO PROMOCIONAL</label>
+                            <input type="text" id="codigoPromoOneWay" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
                         </div>
                     </div>
 
@@ -1773,6 +1784,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('divVueltaContenedor').style.display = isRedondo ? 'grid' : 'none';
         document.getElementById('divFechaVuelta').style.display = isRedondo ? 'flex' : 'none';
         document.getElementById('divHoraVuelta').style.display = isRedondo ? 'flex' : 'none';
+        document.getElementById('divPaxPromoOneWay').style.display = isRedondo ? 'none' : 'grid';
+        // Sincronizar pasajeros entre ambos selects
+        const paxOW = document.getElementById('pasajerosOneWay');
+        const paxRT = document.getElementById('pasajeros');
+        if (isRedondo) { paxRT.value = paxOW.value; }
+        else { paxOW.value = paxRT.value; }
         document.getElementById('resultados').style.display = 'none';
     }
 
@@ -1858,7 +1875,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             }
 
             const moneda = document.getElementById('moneda').value;
-            const pax = parseInt(document.getElementById('pasajeros').value);
+            const activePaxId = (tipo === 'REDONDO') ? 'pasajeros' : 'pasajerosOneWay';
+            const pax = parseInt(document.getElementById(activePaxId).value);
 
             const origenVal = document.getElementById('origen').value;
             const destinoVal = document.getElementById('destino').value;
@@ -1969,7 +1987,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     <span class="price-old">$${pAlto}</span>
                     <span class="price-current">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>
                 </div>
-                <button class="btn-reservar" onclick="abrirFormCard('${id}', ${dataStr})">${t.bookBtn} <i class="fas fa-arrow-right"></i></button>
+                <button class="btn-reservar" onclick="abrirFormCard('${id}', ${dataStr})">${t.bookBtn} <i class="fas fa-chevron-down"></i></button>
             </div>
 
             <!-- FORMULARIO EXPANDIBLE -->
