@@ -1685,7 +1685,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
     const diccionarioZonas = {
         "AEROPUERTO CANCUN":       ["AEROPUERTO INTERNACIONAL DE CANCUN","CANCUN INTERNATIONAL AIRPORT","AEROPUERTO CANCUN","AEROPUERTO DE CANCUN","CUN AIRPORT","CUN","TERMINAL 2","TERMINAL 3","TERMINAL 4","TERMINAL CANCUN"],
-        "AEROPUERTO TULUM":        ["AEROPUERTO TULUM","AEROPUERTO INTERNACIONAL DE TULUM","TULUM INTERNATIONAL AIRPORT","TQO","AEROPUERTO RIVIERA MAYA","AEROPUERTO DE TULUM"],
+        "PUERTO JUAREZ":           ["PUERTO JUAREZ", "PUERTO JUÁREZ", "PUNTA SAM", "ISLA MUJERES FERRY", "FERRY TERMINAL", "EMBARCADERO JUAREZ", "EL EMBARCADERO"],
         "ZONA HOTELERA DE TULUM":  ["TULUM HOTEL ZONE","ZONA HOTELERA TULUM","PAPAYA PLAYA","NOMADE","AZULIK","ESTRELLITA","LIBELULA","CASA PHOENIX"],
         "CENTRO DE TULUM":         ["TULUM DOWNTOWN","CENTRO DE TULUM","TULUM PUEBLO","TULUM, Q.R.","ZAMA","VELETA"],
         "ZONA HOTELERA DE CANCUN": ["CANCUN HOTEL ZONE","ZONA HOTELERA","KUKULCAN","HOTEL ZONE","BOULEVARD KUKULCAN"],
@@ -1706,7 +1706,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         "FELIPE CARRILLO PUERTO":  ["FELIPE CARRILLO PUERTO","CARRILLO PUERTO"]
     };
     const zonasGPS = [
-        { nombre: "AEROPUERTO CANCUN",       latMin: 21.020, latMax: 21.050, lonMin: -86.900, lonMax: -86.850 },
+        { nombre: "AEROPUERTO CANCUN",       latMin: 21.025, latMax: 21.045, lonMin: -86.895, lonMax: -86.855 },
         { nombre: "AEROPUERTO TULUM",        latMin: 20.215, latMax: 20.245, lonMin: -87.640, lonMax: -87.580 },
         { nombre: "COSTA MUJERES",           latMin: 21.2300, latMax: 21.3500, lonMin: -86.8500, lonMax: -86.7800 },
         { nombre: "PLAYA MUJERES",           latMin: 21.2000, latMax: 21.2290, lonMin: -86.8200, lonMax: -86.7800 },
@@ -1714,14 +1714,13 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         { nombre: "ZONA HOTELERA DE CANCUN", latMin: 21.0000, latMax: 21.1200, lonMin: -86.8100, lonMax: -86.7500 },
         { nombre: "ZONA HOTELERA DE CANCUN", latMin: 21.1200, latMax: 21.1500, lonMin: -86.8100, lonMax: -86.7200 },
         { nombre: "CENTRO DE CANCUN",        latMin: 21.1200, latMax: 21.1700, lonMin: -86.9500, lonMax: -86.8250 },
-        { nombre: "PUERTO MORELOS",          latMin: 20.9500, latMax: 21.0500, lonMin: -86.9500, lonMax: -86.8300 },
-        { nombre: "PUERTO MORELOS",          latMin: 20.8200, latMax: 20.9500, lonMin: -87.0000, lonMax: -86.8000 },
+        { nombre: "PUERTO MORELOS",          latMin: 20.8200, latMax: 20.9800, lonMin: -87.0000, lonMax: -86.8000 },
         { nombre: "PLAYA PARAISO",           latMin: 20.7000, latMax: 20.8200, lonMin: -86.9900, lonMax: -86.9200 },
         { nombre: "PLAYA DEL CARMEN",        latMin: 20.5500, latMax: 20.7000, lonMin: -87.1500, lonMax: -87.0000 },
         { nombre: "PUERTO AVENTURAS",        latMin: 20.4500, latMax: 20.5500, lonMin: -87.3000, lonMax: -87.1500 },
         { nombre: "AKUMAL",                  latMin: 20.3000, latMax: 20.4500, lonMin: -87.3500, lonMax: -87.2500 },
-        { nombre: "ZONA HOTELERA DE TULUM",  latMin: 20.1215, latMax: 20.2200, lonMin: -87.4700, lonMax: -87.4000 },
-        { nombre: "CENTRO DE TULUM",         latMin: 20.1800, latMax: 20.2400, lonMin: -87.5500, lonMax: -87.4701 },
+        { nombre: "CENTRO DE TULUM",         latMin: 20.1800, latMax: 20.2400, lonMin: -87.5500, lonMax: -87.4600 },
+        { nombre: "ZONA HOTELERA DE TULUM",  latMin: 20.0900, latMax: 20.1799, lonMin: -87.4700, lonMax: -87.3900 },
         { nombre: "MERIDA",                  latMin: 20.8500, latMax: 21.1000, lonMin: -89.7500, lonMax: -89.5000 },
         { nombre: "VALLADOLID",              latMin: 20.6500, latMax: 20.7500, lonMin: -88.2500, lonMax: -88.1500 }
     ];
@@ -1867,6 +1866,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         } else {
             document.getElementById('pasajerosOneWay').value = document.getElementById('pasajeros').value;
         }
+        // Sincronizar promo code
+        if (isRedondo) {
+            document.getElementById('codigoPromo').value = document.getElementById('codigoPromoOneWay').value;
+        } else {
+            document.getElementById('codigoPromoOneWay').value = document.getElementById('codigoPromo').value;
+        }
         document.getElementById('resultados').style.display = 'none';
     }
 
@@ -2006,9 +2011,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 : preciosSencillo;
 
             // Verificar código promocional
-            const promoOW = document.getElementById('codigoPromoOneWay') ? document.getElementById('codigoPromoOneWay').value.trim().toUpperCase() : '';
-            const promoRT = document.getElementById('codigoPromo') ? document.getElementById('codigoPromo').value.trim().toUpperCase() : '';
-            const promoCode = promoOW || promoRT;
+            const isRedondoMode = tipo === 'REDONDO';
+            const promoCode = isRedondoMode
+                ? (document.getElementById('codigoPromo') ? document.getElementById('codigoPromo').value.trim().toUpperCase() : '')
+                : (document.getElementById('codigoPromoOneWay') ? document.getElementById('codigoPromoOneWay').value.trim().toUpperCase() : '');
             const descuento = (promoCode === 'LTR-10' || promoCode === 'LTR10') ? 0.10 : 0;
             const cp = (usd) => {
                 const base = convertirPrecio(usd, moneda);
@@ -2063,10 +2069,11 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const pAlto = Math.round(precio * 1.30);
         const id = 'c' + (++_cid);
 
-        // Detectar si hay descuento activo
-        const promoOW = document.getElementById('codigoPromoOneWay') ? document.getElementById('codigoPromoOneWay').value.trim().toUpperCase() : '';
-        const promoRT = document.getElementById('codigoPromo') ? document.getElementById('codigoPromo').value.trim().toUpperCase() : '';
-        const promoCode = promoOW || promoRT;
+        // Detectar si hay descuento activo (solo del campo visible)
+        const tipoActivo = document.getElementById('tipoServicio').value;
+        const promoCode = (tipoActivo === 'REDONDO')
+            ? (document.getElementById('codigoPromo') ? document.getElementById('codigoPromo').value.trim().toUpperCase() : '')
+            : (document.getElementById('codigoPromoOneWay') ? document.getElementById('codigoPromoOneWay').value.trim().toUpperCase() : '');
         const tieneDescuento = (promoCode === 'LTR-10' || promoCode === 'LTR10');
 
         // Precio mostrado ya viene con descuento aplicado si hay código
@@ -2080,8 +2087,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         // Bloque de precios según si hay descuento o no
         const precioHTML = tieneDescuento
             ? `<span class="price-old">$${pAlto}</span>
-               <span class="price-old" style="font-size:0.95em; color:var(--navy-bg);">$${precioOriginal}</span>
-               <span class="price-current" style="color:var(--action-green);">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`
+               <span class="price-old" style="font-size:0.95em; color:#e74c3c; text-decoration:line-through;">$${precioOriginal}</span>
+               <span class="price-current">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`
             : `<span class="price-old">$${pAlto}</span>
                <span class="price-current">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`;
 
@@ -2174,6 +2181,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         <label>${isEN ? 'Flight No. (Arrival)' : 'No. Vuelo (Llegada)'}</label>
                         <input type="text" id="vuelo-${id}" placeholder="${isEN ? 'Optional' : 'Opcional'}">
                     </div>
+                    ${tipo === 'REDONDO' ? `
+                    <div class="input-wrapper">
+                        <label style="color:var(--action-green);">${isEN ? 'Flight No. (Return)' : 'No. Vuelo (Regreso)'}</label>
+                        <input type="text" id="vuelo-regreso-${id}" placeholder="${isEN ? 'Optional' : 'Opcional'}">
+                    </div>` : ''}
+                    </div>
                 </div>
                 <div class="form-card-notes">
                     <div class="input-wrapper">
@@ -2264,7 +2277,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             fecha: document.getElementById('fechaIda').value, hora: horaIda,
             fechaRegreso: fechaVueltaVal, horaRegreso: horaVueltaVal,
             notas: notasFinales, vuelo,
-            vueloRegreso: document.getElementById('numVueloVuelta') ? document.getElementById('numVueloVuelta').value : "",
+            vueloRegreso: document.getElementById('vuelo-regreso-' + id) ? document.getElementById('vuelo-regreso-' + id).value : "",
             vehiculo: datosCard.vehiculo, precio: datosCard.precio,
             zona: datosCard.zona, idioma: currentLang
         };
