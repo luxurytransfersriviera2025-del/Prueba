@@ -563,9 +563,24 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
                     <!-- FILA PRINCIPAL SIMPLIFICADA -->
                     <style>
-                        .calc-main-row { display: grid; grid-template-columns: 2fr 2fr 1.5fr 1.5fr; gap: 12px; margin-bottom: 15px; }
-                        @media (max-width: 900px) { .calc-main-row { grid-template-columns: 1fr 1fr; } .calc-main-row .cmr-datetime { grid-column: span 1; } }
-                        @media (max-width: 550px) { .calc-main-row { grid-template-columns: 1fr; } .calc-main-row .cmr-datetime { grid-column: span 1; } }
+                        /* Fila 1 One Way: Origen | Destino */
+                        .row-top { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+                        /* Fila 1 Round Trip: Origen | Destino | Promo */
+                        .row-top-rt { display:grid; grid-template-columns:2fr 2fr 0.7fr; gap:12px; margin-bottom:12px; }
+                        /* Fila 2 One Way: Fecha | Hora | Pasajeros | Promo */
+                        .row-bottom-ow { display:grid; grid-template-columns:1.5fr 1.5fr 1fr 1.5fr; gap:12px; margin-bottom:12px; }
+                        /* Fila 2 Round Trip: Fecha | Hora | FechaR | HoraR | Pasajeros */
+                        .row-bottom-rt { display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:12px; margin-bottom:12px; display:none; }
+                        @media (max-width:900px) {
+                            .row-top,.row-top-rt { grid-template-columns:1fr 1fr; }
+                            .row-top-rt .promo-rt-cell { grid-column:span 2; }
+                            .row-bottom-ow { grid-template-columns:1fr 1fr; }
+                            .row-bottom-rt { grid-template-columns:1fr 1fr; }
+                        }
+                        @media (max-width:550px) {
+                            .row-top,.row-top-rt,.row-bottom-ow,.row-bottom-rt { grid-template-columns:1fr; }
+                            .row-top-rt .promo-rt-cell { grid-column:span 1; }
+                        }
 
                         /* Estilos formulario expandible en tarjetas */
                         .tarjeta-booking-form { display: none; border-top: 2px dashed #e0e0e0; padding: 25px; background: #fafafa; animation: slideDownBF 0.3s ease; }
@@ -578,64 +593,87 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         .btn-enviar-reserva:hover { background:var(--action-green-hover); transform:translateY(2px); box-shadow:0 3px 0 #007a3d; }
                         @media (max-width: 768px) { .form-card-grid { grid-template-columns: 1fr 1fr; } .form-card-notes { grid-template-columns: 1fr; } }
                         @media (max-width: 480px) { .form-card-grid { grid-template-columns: 1fr; } }
-
-                        /* Fila de regreso */
-                        .row-return { display:grid; grid-template-columns:1fr 1fr 1fr 2fr; gap:15px; margin-top:15px; padding-top:15px; border-top:1px dashed #ddd; display:none; }
-                        @media (max-width: 900px) { .row-return { grid-template-columns:1fr 1fr; } }
-                        @media (max-width: 550px) { .row-return { grid-template-columns:1fr; } }
                     </style>
 
-                    <div class="calc-main-row">
-                        <div class="input-wrapper"><label id="labelOrigen">LUGAR DE ORIGEN</label><input type="text" id="origen" placeholder="¿Dónde te recogemos?"></div>
-                        <div class="input-wrapper" id="divDestinoInput"><label id="labelDestino">LUGAR DE DESTINO</label><input type="text" id="destino" placeholder="¿A dónde vas?"></div>
-                        <div class="input-wrapper cmr-datetime">
-                            <label id="label-fecha">FECHA DE IDA</label>
-                            <input type="date" id="fechaIda" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%;">
-                        </div>
-                        <div class="input-wrapper cmr-datetime">
-                            <label id="label-hora">HORA DE IDA</label>
-                            <input type="time" id="horaIda" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%; cursor:pointer;">
+                    <!-- FILA 1 ONE WAY: Origen | Destino -->
+                    <div class="row-top" id="rowTopOneWay">
+                        <div class="input-wrapper"><label id="labelOrigen">PICK-UP</label><input type="text" id="origen" placeholder="¿Dónde te recogemos?"></div>
+                        <div class="input-wrapper" id="divDestinoInput"><label id="labelDestino">DESTINATION</label><input type="text" id="destino" placeholder="¿A dónde vas?"></div>
+                    </div>
+
+                    <!-- FILA 1 ROUND TRIP: Origen | Destino | Pasajeros -->
+                    <div class="row-top-rt" id="rowTopRoundTrip" style="display:none;">
+                        <div class="input-wrapper"><label id="labelOrigenRT">PICK-UP</label><input type="text" id="origenRT" placeholder="¿Dónde te recogemos?" oninput="document.getElementById('origen').value=this.value" onfocus="syncRT()"></div>
+                        <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="¿A dónde vas?" oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
+                        <div class="input-wrapper promo-rt-cell">
+                            <label id="label-pax-rt">PASSENGERS</label>
+                            <select id="pasajeros" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                            </select>
                         </div>
                     </div>
 
                     <!-- Campo horas (modo especial) -->
-                    <div class="input-wrapper" id="divHorasInput" style="display:none; margin-bottom:15px;">
+                    <div class="input-wrapper" id="divHorasInput" style="display:none; margin-bottom:12px;">
                         <label id="label-duracion">Duración Requerida</label>
                         <select id="horasSeleccionadas2" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%;">
                             <option value="2 Horas">2 Horas</option><option value="4 Horas">4 Horas</option><option value="6 Horas">6 Horas</option><option value="8 Horas">8 Horas</option><option value="Mas de 8 Horas">Más de 8 Horas</option>
                         </select>
                     </div>
 
-                    <!-- Fila de regreso (incluye pasajeros y promo cuando es Round Trip) -->
-                    <div class="row-return" id="divVueltaContenedor">
-                        <div class="input-wrapper" id="divFechaVuelta" style="background:#f8fafc; border-color:#cbd5e1;"><label id="label-fecha-vuelta" style="color:var(--action-green);">FECHA DE REGRESO</label><input type="date" id="fechaVuelta" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%;"></div>
-                        <div class="input-wrapper" id="divHoraVuelta" style="background:#f8fafc; border-color:#cbd5e1;"><label id="label-hora-vuelta" style="color:var(--action-green);">HORA DE REGRESO</label><input type="time" id="horaVuelta" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%; cursor:pointer;"></div>
-                        <div class="input-wrapper" id="divVueloVuelta" style="display:none;"><label id="label-vuelo-vuelta">No. Vuelo Regreso</label><input type="text" id="numVueloVuelta" placeholder="Ej: AA 456"></div>
+                    <!-- FILA 2 ONE WAY: Fecha | Hora | Pasajeros | Promo -->
+                    <div class="row-bottom-ow" id="rowBottomOneWay">
                         <div class="input-wrapper">
-                            <label id="label-pax-rt">PASAJEROS</label>
-                            <select id="pasajeros" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
-                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option>
-                            </select>
+                            <label id="label-fecha">SERVICE DATE</label>
+                            <input type="date" id="fechaIda" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%;">
                         </div>
                         <div class="input-wrapper">
-                            <label id="label-promo-rt" style="color:var(--gold);">CÓDIGO PROMOCIONAL</label>
-                            <input type="text" id="codigoPromo" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
+                            <label id="label-hora">SERVICE TIME</label>
+                            <input type="time" id="horaIda" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%; cursor:pointer;">
                         </div>
-                    </div>
-
-                    <!-- Fila final One Way: Pasajeros + Promo Code -->
-                    <div id="divPaxPromoOneWay" style="display:grid; grid-template-columns:1fr 2fr; gap:12px; margin-top:15px;">
                         <div class="input-wrapper">
-                            <label id="label-pax">PASAJEROS</label>
+                            <label id="label-pax">PASSENGERS</label>
                             <select id="pasajerosOneWay" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
                                 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option>
                             </select>
                         </div>
                         <div class="input-wrapper">
-                            <label id="label-promo" style="color:var(--gold);">CÓDIGO PROMOCIONAL</label>
+                            <label id="label-promo" style="color:var(--gold);">PROMO CODE</label>
                             <input type="text" id="codigoPromoOneWay" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
                         </div>
                     </div>
+
+                    <!-- FILA 2 ROUND TRIP: Fecha | Hora | Fecha Regreso | Hora Regreso | Pasajeros -->
+                    <div class="row-bottom-rt" id="rowBottomRoundTrip">
+                        <div class="input-wrapper">
+                            <label id="label-fecha-rt">SERVICE DATE</label>
+                            <input type="date" id="fechaIdaRT" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%;" oninput="document.getElementById('fechaIda').value=this.value">
+                        </div>
+                        <div class="input-wrapper">
+                            <label id="label-hora-rt">SERVICE TIME</label>
+                            <input type="time" id="horaIdaRT" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%; cursor:pointer;" oninput="document.getElementById('horaIda').value=this.value">
+                        </div>
+                        <div class="input-wrapper" style="background:#f8fafc; border-color:#cbd5e1;">
+                            <label id="label-fecha-vuelta" style="color:var(--action-green);">RETURN DATE</label>
+                            <input type="date" id="fechaVuelta" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%;">
+                        </div>
+                        <div class="input-wrapper" style="background:#f8fafc; border-color:#cbd5e1;">
+                            <label id="label-hora-vuelta" style="color:var(--action-green);">RETURN TIME</label>
+                            <input type="time" id="horaVuelta" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; font-family:var(--font-body); min-height:25px; width:100%; cursor:pointer;">
+                        </div>
+                        <div class="input-wrapper">
+                            <label id="label-promo-rt" style="color:var(--gold);">PROMO CODE</label>
+                            <input type="text" id="codigoPromo" placeholder="OPCIONAL (LTR10)" style="border:none; outline:none; background:transparent; font-size:14px; font-weight:600; color:#333; width:100%; font-family:var(--font-body); text-transform:uppercase;">
+                        </div>
+                    </div>
+
+                    <!-- Hidden fields para compatibilidad -->
+                    <div id="divVueltaContenedor" style="display:none;">
+                        <div id="divFechaVuelta"></div>
+                        <div id="divHoraVuelta"></div>
+                        <div id="divVueloVuelta"><input type="text" id="numVueloVuelta" placeholder="Ej: AA 456"></div>
+                    </div>
+                    <div id="divPaxPromoOneWay" style="display:none;"></div>
 
                     <button class="btn-cotizar" id="btnAccion" onclick="cotizar()">Buscar Precios</button>
                 <div id="resultados"></div>
@@ -1786,18 +1824,34 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
     }
 
+    function syncRT() {
+        document.getElementById('origenRT').value = document.getElementById('origen').value;
+        document.getElementById('destinoRT').value = document.getElementById('destino').value;
+    }
+
     function toggleVuelta() {
         const tipo = document.getElementById('tipoServicio').value;
         const isRedondo = (tipo === 'REDONDO');
-        document.getElementById('divVueltaContenedor').style.display = isRedondo ? 'grid' : 'none';
-        document.getElementById('divFechaVuelta').style.display = isRedondo ? 'flex' : 'none';
-        document.getElementById('divHoraVuelta').style.display = isRedondo ? 'flex' : 'none';
-        document.getElementById('divPaxPromoOneWay').style.display = isRedondo ? 'none' : 'grid';
-        // Sincronizar pasajeros entre ambos selects
-        const paxOW = document.getElementById('pasajerosOneWay');
-        const paxRT = document.getElementById('pasajeros');
-        if (isRedondo) { paxRT.value = paxOW.value; }
-        else { paxOW.value = paxRT.value; }
+
+        // Fila 1
+        document.getElementById('rowTopOneWay').style.display   = isRedondo ? 'none' : 'grid';
+        document.getElementById('rowTopRoundTrip').style.display = isRedondo ? 'grid' : 'none';
+
+        // Fila 2
+        document.getElementById('rowBottomOneWay').style.display   = isRedondo ? 'none' : 'grid';
+        document.getElementById('rowBottomRoundTrip').style.display = isRedondo ? 'grid' : 'none';
+
+        // Sincronizar origen/destino al cambiar a RT
+        if (isRedondo) {
+            document.getElementById('origenRT').value  = document.getElementById('origen').value;
+            document.getElementById('destinoRT').value = document.getElementById('destino').value;
+            document.getElementById('fechaIdaRT').value = document.getElementById('fechaIda').value;
+            document.getElementById('horaIdaRT').value  = document.getElementById('horaIda').value;
+            // Sync pax
+            document.getElementById('pasajeros').value = document.getElementById('pasajerosOneWay').value;
+        } else {
+            document.getElementById('pasajerosOneWay').value = document.getElementById('pasajeros').value;
+        }
         document.getElementById('resultados').style.display = 'none';
     }
 
@@ -2030,34 +2084,34 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         <label style="font-weight:800; color:var(--navy-bg); margin-bottom:5px; display:block;">${isEN ? 'WHATSAPP *' : 'WHATSAPP *'}</label>
                         <div style="display:flex; align-items:stretch; border:1px solid #ccc; border-radius:6px; overflow:hidden; background:#fff;">
                             <div style="display:flex; align-items:center; background:#f8f9fa; border-right:1px solid #eee; flex-shrink:0;">
-                                <select id="bandera-${id}" onchange="cambiarPrefijoCard('${id}')" style="border:none; outline:none; background:transparent; cursor:pointer; font-size:13px; font-weight:700; color:var(--navy-bg); padding:8px 6px; appearance:none; -webkit-appearance:none; width:60px; text-align:center;">
-                                    <option value="+1"   selected>🇺🇸 US</option>
-                                    <option value="+52"         >🇲🇽 MX</option>
-                                    <option value="+1"          >🇨🇦 CA</option>
-                                    <option value="+44"         >🇬🇧 GB</option>
-                                    <option value="+49"         >🇩🇪 DE</option>
-                                    <option value="+33"         >🇫🇷 FR</option>
-                                    <option value="+34"         >🇪🇸 ES</option>
-                                    <option value="+39"         >🇮🇹 IT</option>
-                                    <option value="+31"         >🇳🇱 NL</option>
-                                    <option value="+55"         >🇧🇷 BR</option>
-                                    <option value="+54"         >🇦🇷 AR</option>
-                                    <option value="+57"         >🇨🇴 CO</option>
-                                    <option value="+56"         >🇨🇱 CL</option>
-                                    <option value="+51"         >🇵🇪 PE</option>
-                                    <option value="+58"         >🇻🇪 VE</option>
-                                    <option value="+502"        >🇬🇹 GT</option>
-                                    <option value="+507"        >🇵🇦 PA</option>
-                                    <option value="+53"         >🇨🇺 CU</option>
-                                    <option value="+61"         >🇦🇺 AU</option>
-                                    <option value="+81"         >🇯🇵 JP</option>
-                                    <option value="+86"         >🇨🇳 CN</option>
-                                    <option value="+91"         >🇮🇳 IN</option>
-                                    <option value="+7"          >🇷🇺 RU</option>
-                                    <option value="+972"        >🇮🇱 IL</option>
-                                    <option value="+971"        >🇦🇪 AE</option>
-                                    <option disabled>─</option>
-                                    <option value="OTRO"        >${isEN ? '🌍 Other' : '🌍 Otro'}</option>
+                                <select id="bandera-${id}" onchange="cambiarPrefijoCard('${id}')" style="border:none; outline:none; background:transparent; cursor:pointer; font-size:13px; font-weight:700; color:var(--navy-bg); padding:8px 6px; appearance:none; -webkit-appearance:none; width:48px; text-align:center;">
+                                    <option value="+1"   selected>US</option>
+                                    <option value="+52"         >MX</option>
+                                    <option value="+1"          >CA</option>
+                                    <option value="+44"         >GB</option>
+                                    <option value="+49"         >DE</option>
+                                    <option value="+33"         >FR</option>
+                                    <option value="+34"         >ES</option>
+                                    <option value="+39"         >IT</option>
+                                    <option value="+31"         >NL</option>
+                                    <option value="+55"         >BR</option>
+                                    <option value="+54"         >AR</option>
+                                    <option value="+57"         >CO</option>
+                                    <option value="+56"         >CL</option>
+                                    <option value="+51"         >PE</option>
+                                    <option value="+58"         >VE</option>
+                                    <option value="+502"        >GT</option>
+                                    <option value="+507"        >PA</option>
+                                    <option value="+53"         >CU</option>
+                                    <option value="+61"         >AU</option>
+                                    <option value="+81"         >JP</option>
+                                    <option value="+86"         >CN</option>
+                                    <option value="+91"         >IN</option>
+                                    <option value="+7"          >RU</option>
+                                    <option value="+972"        >IL</option>
+                                    <option value="+971"        >AE</option>
+                                    <option disabled>──</option>
+                                    <option value="OTRO"        >${isEN ? 'Other' : 'Otro'}</option>
                                 </select>
                                 <div style="width:1px; height:100%; background:#eee;"></div>
                                 <input type="text" id="lada-${id}" value="+1" style="width:38px; border:none; outline:none; background:transparent; font-weight:800; color:var(--action-green); font-size:13px; text-align:center; padding:0;" readonly>
@@ -2260,8 +2314,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     function initAutocomplete() {
         const bounds = new google.maps.LatLngBounds(new google.maps.LatLng(17.9, -91.5), new google.maps.LatLng(21.8, -86.5));
         const opts = { bounds: bounds, strictBounds: true, componentRestrictions: { country: "mx" }, fields: ["name", "geometry", "address_components"], types: ["establishment", "geocode"] };
-        const autoOrigen = new google.maps.places.Autocomplete(document.getElementById('origen'), opts);
+        const autoOrigen  = new google.maps.places.Autocomplete(document.getElementById('origen'), opts);
         const autoDestino = new google.maps.places.Autocomplete(document.getElementById('destino'), opts);
+        const autoOrigenRT  = new google.maps.places.Autocomplete(document.getElementById('origenRT'), opts);
+        const autoDestinoRT = new google.maps.places.Autocomplete(document.getElementById('destinoRT'), opts);
         function extraerDatos(place, tipo) {
             if (place.geometry) {
                 document.getElementById('latitud' + tipo).value = place.geometry.location.lat();
@@ -2278,6 +2334,16 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
         autoOrigen.addListener('place_changed', function() { extraerDatos(autoOrigen.getPlace(), "Origen"); });
         autoDestino.addListener('place_changed', function() { extraerDatos(autoDestino.getPlace(), "Destino"); });
+        autoOrigenRT.addListener('place_changed', function() {
+            const p = autoOrigenRT.getPlace();
+            document.getElementById('origen').value = p.name || document.getElementById('origenRT').value;
+            extraerDatos(p, "Origen");
+        });
+        autoDestinoRT.addListener('place_changed', function() {
+            const p = autoDestinoRT.getPlace();
+            document.getElementById('destino').value = p.name || document.getElementById('destinoRT').value;
+            extraerDatos(p, "Destino");
+        });
     }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdK5yLQ20SQrLc_0rOuo7oxxHVQ233Bh0&libraries=places&callback=initAutocomplete" async defer></script>
