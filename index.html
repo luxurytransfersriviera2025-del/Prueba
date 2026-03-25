@@ -2017,21 +2017,21 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
             // Mostrar banner de descuento si aplica
             if (descuento > 0) {
-                divRes.innerHTML += `<div style="background:#d4edda;border:1px solid #28a745;border-radius:8px;padding:12px 18px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
-                    <i class="fas fa-tag" style="color:#28a745;font-size:18px;"></i>
-                    <span style="font-weight:700;color:#155724;font-size:14px;">${currentLang==='en' ? '🎉 Promo LTR-10 applied — 10% discount on all vehicles!' : '🎉 Código LTR-10 aplicado — ¡10% de descuento en todos los vehículos!'}</span>
+                divRes.innerHTML += `<div style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 100%);border-left:4px solid var(--gold);border-radius:8px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+                    <i class="fas fa-tag" style="color:var(--gold);font-size:16px;"></i>
+                    <span style="font-weight:700;color:var(--gold);font-size:13px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font-title);">${currentLang==='en' ? 'Promo LTR-10 — 10% exclusive discount applied' : 'Código LTR-10 — 10% de descuento exclusivo aplicado'}</span>
                 </div>`;
             }
 
             const cap15 = currentLang === 'en' ? "Up to 15 Pax" : "Hasta 15 Pax";
 
-            // Mostrar vehículos que tienen capacidad suficiente para los pasajeros
-            if (pax <= 3)  divRes.innerHTML += crearCard("CLASSIC SEDAN",  "1-3 Pax",  cp(p.sedan),    moneda, zonaOrigen, imgUrlsErtiga,     rutaLabel);
+            // Mostrar vehículos de mayor a menor precio (efecto ancla)
             if (pax <= 5)  divRes.innerHTML += crearCard("LUXURY VIP",      "1-5 Pax",  cp(p.luxury),   moneda, zonaOrigen, imgUrlSuburban,    rutaLabel);
-            if (pax <= 7)  divRes.innerHTML += crearCard("COMFORT VAN",     "4-7 Pax",  cp(p.van),      moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
-            if (pax <= 10) divRes.innerHTML += crearCard("FAMILY VAN",      "8-10 Pax", cp(p.small),    moneda, zonaOrigen, imgUrlToyotaGL,    rutaLabel);
             if (pax <= 15) divRes.innerHTML += crearCard("GRAND SPRINTER",  currentLang === 'en' ? 'Up to 15 Pax' : 'Hasta 15 Pax', cp(p.sprinter), moneda, zonaOrigen, imgUrlSprinter, rutaLabel);
             if (pax > 15)  divRes.innerHTML += crearCard("CONVOY",          currentLang === 'en' ? 'Up to 21 Pax (3 Vans)' : 'Hasta 21 Pax (3 Vans)', cp(p.van * 3), moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
+            if (pax <= 10) divRes.innerHTML += crearCard("FAMILY VAN",      "8-10 Pax", cp(p.small),    moneda, zonaOrigen, imgUrlToyotaGL,    rutaLabel);
+            if (pax <= 7)  divRes.innerHTML += crearCard("COMFORT VAN",     "4-7 Pax",  cp(p.van),      moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
+            if (pax <= 3)  divRes.innerHTML += crearCard("CLASSIC SEDAN",   "1-3 Pax",  cp(p.sedan),    moneda, zonaOrigen, imgUrlsErtiga,     rutaLabel);
             divRes.style.display = 'block';
             divRes.scrollIntoView({ behavior: 'smooth', block: 'start' });
             // Iniciar sliders de imágenes después de renderizar
@@ -2080,7 +2080,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         // Bloque de precios según si hay descuento o no
         const precioHTML = tieneDescuento
             ? `<span class="price-old">$${pAlto}</span>
-               <span class="price-old" style="font-size:0.95em; color:#e74c3c;">$${precioOriginal}</span>
+               <span class="price-old" style="font-size:0.95em; color:var(--navy-bg);">$${precioOriginal}</span>
                <span class="price-current" style="color:var(--action-green);">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`
             : `<span class="price-old">$${pAlto}</span>
                <span class="price-current">$${precio} <small style="font-size:0.5em; font-weight:600;">${moneda}</small></span>`;
@@ -2201,15 +2201,22 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     }
 
     function abrirFormCard(id, datosCard) {
+        const form = document.getElementById('form-' + id);
+        const tarjeta = document.getElementById(id);
+        const isOpen = form.classList.contains('open');
+
+        // Cerrar todos los formularios abiertos
         document.querySelectorAll('.tarjeta-booking-form.open').forEach(f => {
             f.classList.remove('open');
             f.closest('.tarjeta').classList.remove('expanded');
         });
-        const form = document.getElementById('form-' + id);
-        const tarjeta = document.getElementById(id);
-        form.classList.add('open');
-        tarjeta.classList.add('expanded');
-        setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+
+        // Si estaba cerrado, abrirlo; si estaba abierto, dejarlo cerrado
+        if (!isOpen) {
+            form.classList.add('open');
+            tarjeta.classList.add('expanded');
+            setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
     }
 
     function cambiarPrefijoCard(id) {
