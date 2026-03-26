@@ -160,7 +160,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             .logo { font-size: 1.2rem; letter-spacing: 0.5px; } .logo-icon { height: 30px; }
 
             .hero {
-                background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://imgur.com/qAxXmrB.jpg');
+                background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.0)), url('https://imgur.com/qAxXmrB.jpg');
                 background-position: center center;
                 height: 100vh;
                 align-items: flex-start;
@@ -170,42 +170,46 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 height: 100vh; 
                 width: 100%; 
                 margin-top: 0; 
-                padding: 80px 20px 40px 20px;
+                padding-top: 100px;
                 display: flex; 
                 flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-                text-align: center;
+                justify-content: flex-start; 
             }
 
             .hero-content h1 {
-                font-size: 2.3rem; 
-                margin: 0;
+                order: 1; 
+                font-size: 2.2rem; 
+                margin-bottom: 10px; 
                 white-space: normal; 
                 text-shadow: 0 2px 15px rgba(0,0,0,0.9); 
                 letter-spacing: 0;
-                text-align: center;
-                width: 100%;
+                min-height: 5.5em; 
+                display: block;
             }
 
             .hero-content p {
-                font-size: 1.05rem;
-                line-height: 1.5; 
+                order: 2;
+                margin-top: 15px; 
+                margin-bottom: 0; 
+                font-size: 1.1rem;
+                line-height: 1.4; 
                 text-shadow: none; 
-                background-color: rgba(0, 0, 0, 0.45); 
-                padding: 15px 20px; 
-                border-radius: 12px;
-                width: 92%;
-                text-align: center;
-                margin: 0;
+                background-color: rgba(0, 0, 0, 0.1); 
+                padding: 15px; 
+                border-radius: 15px;
+                width: 90%; 
+                box-sizing: border-box;
+                align-self: center;
             }
 
             .btn-cta {
+                order: 3; 
+                margin-top: auto; 
+                margin-bottom: 260px; 
                 align-self: center; 
-                width: 92%; 
+                width: 90%; 
                 font-size: 1.1rem; 
-                padding: 18px 0;
-                margin: 0;
+                padding: 18px 0; 
             }
         }
 
@@ -522,6 +526,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             .nav-links { gap: 12px; flex-wrap: wrap; justify-content: center; }
             .nav-links a { font-size: 0.72rem; }
             .logo { font-size: 1rem; }
+            #nav-custom { display: none; }
         }
 
         /* Custom section móvil */
