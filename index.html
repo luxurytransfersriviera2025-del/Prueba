@@ -512,6 +512,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 <a href="#seccion-calculadora" class="nav-link" id="nav-cotizar">Cotizar</a>
                 <a href="#servicios" class="nav-link" id="nav-servicios">Servicios</a>
                 <a href="#flota" class="nav-link" id="nav-flota">Flota</a>
+                <a href="#servicio-personalizado" class="nav-link" id="nav-custom">Custom</a>
                 <a href="javascript:void(0)" class="nav-link" onclick="toggleLanguage()" id="lang-btn"><i class="fas fa-globe"></i> English</a>
             </nav>
         </div>
@@ -784,7 +785,93 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         </div>
     </section>
 
-     <style>
+    <!-- ===== SECCIÓN SERVICIO PERSONALIZADO ===== -->
+    <section id="servicio-personalizado" style="background:#f4f4f4; padding:60px 20px;">
+        <div style="max-width:900px; margin:0 auto;">
+            <div style="text-align:center; margin-bottom:40px;">
+                <h2 id="custom-title" style="font-family:var(--font-title); font-size:2rem; font-weight:900; color:var(--navy-bg); text-transform:uppercase; margin-bottom:10px;">Can't Find Your Route?</h2>
+                <p id="custom-subtitle" style="font-family:var(--font-body); font-size:1.1rem; color:#555; max-width:600px; margin:0 auto;">Weddings, large groups, hourly service, special events or destinations not in our calculator — tell us what you need and we'll quote you as soon as possible.</p>
+            </div>
+
+            <!-- Cards de casos especiales -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px; margin-bottom:40px;">
+                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
+                    <i class="fas fa-heart" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
+                    <strong id="custom-card1" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Weddings & Events</strong>
+                </div>
+                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
+                    <i class="fas fa-users" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
+                    <strong id="custom-card2" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Large Groups</strong>
+                </div>
+                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
+                    <i class="fas fa-clock" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
+                    <strong id="custom-card3" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Hourly Service</strong>
+                </div>
+                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
+                    <i class="fas fa-map-marker-alt" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
+                    <strong id="custom-card4" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Special Destination</strong>
+                </div>
+                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
+                    <i class="fas fa-route" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
+                    <strong id="custom-card5" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Custom Tour</strong>
+                </div>
+            </div>
+
+            <!-- Formulario personalizado -->
+            <div style="background:#fff; border-radius:16px; padding:35px; border:2px solid var(--gold); box-shadow:0 10px 40px rgba(0,0,0,0.08);">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                    <div class="input-wrapper">
+                        <label id="custom-label-name" style="color:var(--navy-bg);">FULL NAME</label>
+                        <input type="text" id="custom-nombre" placeholder="Your name">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-email" style="color:var(--navy-bg);">EMAIL ADDRESS</label>
+                        <input type="email" id="custom-email" placeholder="email@example.com">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-phone" style="color:var(--navy-bg);">WHATSAPP</label>
+                        <input type="tel" id="custom-tel" placeholder="+1 987 654 3210">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-pax" style="color:var(--navy-bg);">PASSENGERS</label>
+                        <input type="number" id="custom-pax" placeholder="e.g. 25" min="1" style="border:none;outline:none;background:transparent;font-size:15px;font-weight:600;color:#333;width:100%;font-family:var(--font-body);">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-origen" style="color:var(--navy-bg);">PICK-UP</label>
+                        <input type="text" id="custom-origen" placeholder="Where are we picking you up?">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-destino" style="color:var(--navy-bg);">DESTINATION</label>
+                        <input type="text" id="custom-destino" placeholder="Where are you going?">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-fecha" style="color:var(--navy-bg);">SERVICE DATE</label>
+                        <input type="date" id="custom-fecha" style="border:none;outline:none;background:transparent;font-size:14px;font-weight:600;color:#333;font-family:var(--font-body);min-height:25px;width:100%;">
+                    </div>
+                    <div class="input-wrapper">
+                        <label id="custom-label-tipo" style="color:var(--navy-bg);">SERVICE TYPE</label>
+                        <select id="custom-tipo" style="border:none;outline:none;background:transparent;font-size:14px;font-weight:600;color:#333;width:100%;font-family:var(--font-body);">
+                            <option id="custom-opt1">Wedding / Event</option>
+                            <option id="custom-opt2">Large Group Transfer</option>
+                            <option id="custom-opt3">Hourly Service</option>
+                            <option id="custom-opt4">Special Destination</option>
+                            <option id="custom-opt5">Custom Tour</option>
+                            <option id="custom-opt6">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-wrapper" style="margin-bottom:20px;">
+                    <label id="custom-label-notas" style="color:var(--navy-bg);">DETAILS / NOTES</label>
+                    <textarea id="custom-notas" rows="3" placeholder="Tell us more about your request — number of stops, special requirements, itinerary..." style="border:none;outline:none;background:transparent;font-size:14px;font-weight:600;color:#333;width:100%;font-family:var(--font-body);resize:vertical;"></textarea>
+                </div>
+                <button onclick="enviarSolicitudPersonalizada()" style="background:var(--navy-bg);color:#fff;border:none;border-radius:8px;padding:16px 40px;font-size:16px;font-weight:800;cursor:pointer;font-family:var(--font-title);text-transform:uppercase;letter-spacing:1px;width:100%;transition:all 0.2s;box-shadow:0 5px 0 #001a3a;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
+                    <i class="fas fa-paper-plane"></i> <span id="custom-btn-txt">SEND REQUEST</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <style>
         /* Estilos exclusivos para esta sección de redes */
         .ltr-social-container {
             text-align: center;
@@ -1015,7 +1102,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     // --- DICCIONARIO DE TRADUCCIÓN ---
     const translations = {
         es: {
-            navCotizar: "Cotizar", navServicios: "Servicios", navFlota: "Flota",
+            navCotizar: "Cotizar", navServicios: "Servicios", navFlota: "Flota", navCustom: "Personalizado",
             heroTitle: "TU VIAJE EXCLUSIVO EN CANCÚN, LA RIVIERA MAYA Y TULUM",
             heroSubtitle: "Un viaje seguro y privado es el verdadero lujo que puedes dar a tu familia y amigos. Cotiza ahora y compruébalo.",
             heroBtn: "COTIZAR AHORA",
@@ -1128,7 +1215,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             }
         },
         en: {
-            navCotizar: "Quote", navServicios: "Services", navFlota: "Fleet",
+            navCotizar: "Quote", navServicios: "Services", navFlota: "Fleet", navCustom: "Custom",
             heroTitle: "YOUR EXCLUSIVE TRIP IN CANCUN, RIVIERA MAYA AND TULUM",
             heroSubtitle: "A safe and private trip is the true luxury you can give your family and friends. Quote now and see for yourself.",
             heroBtn: "QUOTE NOW",
@@ -1258,6 +1345,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('nav-cotizar').innerText = t.navCotizar;
         document.getElementById('nav-servicios').innerText = t.navServicios;
         document.getElementById('nav-flota').innerText = t.navFlota;
+        document.getElementById('nav-custom').innerText = t.navCustom;
         document.getElementById('hero-title').innerHTML = t.heroTitle;
         document.getElementById('hero-subtitle').innerText = t.heroSubtitle;
         document.getElementById('hero-btn').innerText = t.heroBtn;
@@ -1979,8 +2067,27 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 document.getElementById('cpDestino').value
             );
 
-            if (!zonaOrigen) { alert(t.alertNoZone + '\n\n(Origen)'); return; }
-            if (!zonaDestino) { alert(t.alertNoZone + '\n\n(Destino)'); return; }
+            if (!zonaOrigen || !zonaDestino) {
+                const divRes = document.getElementById('resultados');
+                divRes.innerHTML = `
+                    <div style="background:#fff;border:2px solid var(--gold);border-radius:12px;padding:35px;text-align:center;margin-top:15px;">
+                        <i class="fas fa-map-marked-alt" style="font-size:40px;color:var(--gold);margin-bottom:15px;display:block;"></i>
+                        <h3 style="font-family:var(--font-title);color:var(--navy-bg);font-size:1.3rem;margin-bottom:10px;text-transform:uppercase;">
+                            ${currentLang==='en' ? 'Route Not Found' : 'Ruta No Encontrada'}
+                        </h3>
+                        <p style="color:#555;font-size:15px;margin-bottom:25px;max-width:500px;margin-left:auto;margin-right:auto;">
+                            ${currentLang==='en'
+                                ? "We couldn't find a price for this route automatically. Our team will quote you as soon as possible through our Custom Service."
+                                : "No pudimos encontrar un precio para esta ruta automáticamente. Nuestro equipo te cotizará lo antes posible a través de nuestro Servicio Personalizado."}
+                        </p>
+                        <a href="#servicio-personalizado" onclick="document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;transition:0.3s;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
+                            <i class="fas fa-concierge-bell"></i> ${currentLang==='en' ? 'Request Custom Quote' : 'Solicitar Cotización Personalizada'}
+                        </a>
+                    </div>`;
+                divRes.style.display = 'block';
+                divRes.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
 
             // Buscar precio en la matriz
             const preciosSencillo = tarifasMatrizUSD[zonaOrigen] && tarifasMatrizUSD[zonaOrigen][zonaDestino];
@@ -1993,12 +2100,21 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             divRes.innerHTML = `<div class="ruta-header">${t.resultsFor}: ${rutaLabel}</div>`;
 
             if (!preciosSencillo) {
-                // Ruta sin precio en matriz → solicitar cotización
-                divRes.innerHTML += `<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:20px;margin-top:15px;text-align:center;">
-                    <i class="fas fa-info-circle" style="color:#e6a800;font-size:24px;margin-bottom:10px;display:block;"></i>
-                    <strong>${currentLang==='en'?'Special Route — Contact Us':'Ruta Especial — Contáctanos'}</strong><br>
-                    <span style="font-size:14px;color:#555;">${currentLang==='en'?'This route requires a custom quote. Please use the Custom option or contact us directly.':'Esta ruta requiere cotización especial. Usa la opción Personalizado o contáctanos directamente.'}</span>
-                </div>`;
+                divRes.innerHTML += `
+                    <div style="background:#fff;border:2px solid var(--gold);border-radius:12px;padding:35px;text-align:center;margin-top:15px;">
+                        <i class="fas fa-map-marked-alt" style="font-size:40px;color:var(--gold);margin-bottom:15px;display:block;"></i>
+                        <h3 style="font-family:var(--font-title);color:var(--navy-bg);font-size:1.3rem;margin-bottom:10px;text-transform:uppercase;">
+                            ${currentLang==='en' ? 'Route Not Found' : 'Ruta No Encontrada'}
+                        </h3>
+                        <p style="color:#555;font-size:15px;margin-bottom:25px;max-width:500px;margin-left:auto;margin-right:auto;">
+                            ${currentLang==='en'
+                                ? "We couldn't find a price for this route automatically. Our team will quote you as soon as possible through our Custom Service."
+                                : "No pudimos encontrar un precio para esta ruta automáticamente. Nuestro equipo te cotizará lo antes posible a través de nuestro Servicio Personalizado."}
+                        </p>
+                        <a href="#servicio-personalizado" onclick="document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
+                            <i class="fas fa-concierge-bell"></i> ${currentLang==='en' ? 'Request Custom Quote' : 'Solicitar Cotización Personalizada'}
+                        </a>
+                    </div>`;
                 divRes.style.display = 'block';
                 divRes.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
@@ -2375,6 +2491,44 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             alert("Error al enviar. Intenta por WhatsApp.");
             document.getElementById('loadingOverlay').style.display = 'none';
         });
+    }
+
+    function enviarSolicitudPersonalizada() {
+        const nombre = document.getElementById('custom-nombre').value.trim();
+        const email  = document.getElementById('custom-email').value.trim();
+        const tel    = document.getElementById('custom-tel').value.trim();
+        const pax    = document.getElementById('custom-pax').value.trim();
+        const origen = document.getElementById('custom-origen').value.trim();
+        const destino= document.getElementById('custom-destino').value.trim();
+        const fecha  = document.getElementById('custom-fecha').value;
+        const tipo   = document.getElementById('custom-tipo').options[document.getElementById('custom-tipo').selectedIndex].text;
+        const notas  = document.getElementById('custom-notas').value.trim();
+        const t      = translations[currentLang];
+
+        if (nombre.length < 2)  { alert(t.alertName); return; }
+        if (email.length < 5)   { alert(t.alertEmail); return; }
+        if (tel.length < 5)     { alert(t.alertPhone); return; }
+
+        const codigoUnico = generarCodigo();
+        const datos = {
+            esVenta: false,
+            codigo: codigoUnico,
+            nombre, email,
+            telefono: tel,
+            pasajeros: pax || '?',
+            tipoViaje: tipo,
+            origen: origen || '—',
+            destino: destino || '—',
+            fecha: fecha || '—',
+            hora: '—',
+            fechaRegreso: '', horaRegreso: '',
+            notas, itinerario: '',
+            vehiculo: currentLang==='en' ? 'Custom Service' : 'Servicio Personalizado',
+            precio: currentLang==='en' ? 'To Be Quoted' : 'Por Cotizar',
+            idioma: currentLang
+        };
+        document.getElementById('codigoDisplay').innerText = codigoUnico;
+        iniciarEnvio(datos);
     }
 
     function cerrarModal() { document.getElementById('modalConfirmacion').style.display = 'none'; }
