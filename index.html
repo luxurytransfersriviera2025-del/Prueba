@@ -71,6 +71,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             overflow-x: hidden;
         }
 
+        img { max-width: 100%; height: auto; }
+        * { box-sizing: border-box; }
+
         a { text-decoration: none; color: inherit; transition: 0.3s; }
 
         /* HEADER */
@@ -101,7 +104,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
         .nav-links a:hover { color: var(--gold); }
 
-        #seccion-calculadora, #servicios, #flota {
+        #seccion-calculadora, #servicios, #flota, #servicio-personalizado {
             scroll-margin-top: calc(var(--header-height) - 25px);
         }
 
@@ -370,7 +373,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
         .service-card { background-color: var(--black); border: 1px solid var(--gold); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.4s ease; position: relative; display: flex; flex-direction: column; }
         .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3); border-color: var(--gold-hover); }
-        .service-img { height: 220px; width: 100%; object-fit: cover; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
+        .service-img { height: 220px; width: 100%; object-fit: cover; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); max-width: 100%; }
         .service-info { padding: 10px 30px 40px 30px; text-align: center; margin-top: -20px; position: relative; z-index: 2; }
         .service-icon { font-size: 40px; color: var(--gold); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .service-title { font-family: var(--font-title); font-size: 26px; color: var(--white); margin-bottom: 15px; font-weight: 700; }
@@ -491,12 +494,48 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             .form-grid, .contact-section { grid-template-columns: 1fr; background: transparent; padding: 0; gap: 12px; border: none; } 
             .input-wrapper { border-radius: 10px !important; box-shadow: 0 2px 5px rgba(0,0,0,0.05); } 
             .direction-tabs { flex-direction: column; gap: 8px; } .tab-btn { justify-content: center; padding: 14px; } 
-            .tarjeta { flex-direction: column; text-align: left; padding: 20px; gap: 15px; } 
-            .tarjeta-img { width: 100%; height: 180px; flex: auto; border:none; padding:0; background: #f9f9f9; } 
-            .tarjeta-price { border-left: none; padding-left: 0; border-top: 1px solid #eee; padding-top: 20px; text-align: left; flex-direction: row; align-items: center; justify-content: space-between; flex: auto; } 
-            .btn-reservar { width: auto; padding: 12px 25px; margin-top: 0; }
-            .vehicle-img-clean { height: 250px; } .slider-btn { width: 40px; height: 40px; font-size: 16px; top: 40%; } .vehicle-name-clean { font-size: 1.6rem; }
+            .tarjeta { flex-direction: column; text-align: left; padding: 15px; gap: 12px; } 
+            .tarjeta-img { width: 100%; height: 160px; flex: auto; border:none; padding:0; background: #f9f9f9; } 
+            .tarjeta-info { min-width: unset; width: 100%; }
+            .tarjeta-info h3 { font-size: 18px; }
+            .tarjeta-price { border-left: none; padding-left: 0; border-top: 1px solid #eee; padding-top: 15px; text-align: left; flex-direction: row; align-items: center; justify-content: space-between; flex: auto; width: 100%; } 
+            .btn-reservar { width: auto; padding: 12px 20px; margin-top: 0; font-size: 13px; }
+            .feature-grid { flex-wrap: wrap; gap: 6px; }
+            .feature-tag { font-size: 11px; padding: 4px 8px; }
+            .vehicle-img-clean { height: 200px; } 
+            .slider-btn { width: 36px; height: 36px; font-size: 14px; top: 35%; } 
+            .vehicle-name-clean { font-size: 1.4rem; }
             .modal-box { width: 95%; max-height: 95vh; }
+            .ruta-header { font-size: 12px; padding: 10px 12px; }
+            .tarjeta-route-display { font-size: 11px; }
+            .price-current { font-size: 1.6rem !important; }
+            .section-header h2 { font-size: 1.6rem; }
+            .title-calc { font-size: 22px; }
+            /* calc-main-row — ya manejado por row-top/row-bottom pero por si acaso */
+            .calc-main-row { grid-template-columns: 1fr !important; }
+            /* social icons ya son flex-wrap pero forzamos en muy pequeño */
+            .ltr-social-icons { gap: 10px; }
+            .ltr-social-link { width: 38px; height: 38px; font-size: 17px; }
+            /* imágenes de servicios */
+            .service-img { height: 160px; }
+            .service-card { min-height: unset; }
+        }
+
+        /* Nav móvil — compactar links */
+        @media (max-width: 600px) {
+            .nav-links { gap: 12px; flex-wrap: wrap; justify-content: center; }
+            .nav-links a { font-size: 0.72rem; }
+            .logo { font-size: 1rem; }
+        }
+
+        /* Custom section móvil */
+        @media (max-width: 768px) {
+            #servicio-personalizado { padding: 40px 15px; }
+            .custom-form-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+            .custom-form-grid { grid-template-columns: 1fr !important; }
+            .ltr-social-link { width: 34px; height: 34px; font-size: 15px; }
         }
     </style>
 </head>
@@ -819,7 +858,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
             <!-- Formulario personalizado -->
             <div style="background:#fff; border-radius:16px; padding:35px; border:2px solid var(--gold); box-shadow:0 10px 40px rgba(0,0,0,0.08);">
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;" class="custom-form-grid">
                     <div class="input-wrapper">
                         <label id="custom-label-name" style="color:var(--navy-bg);">FULL NAME</label>
                         <input type="text" id="custom-nombre" placeholder="Your name">
@@ -1364,17 +1403,23 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('origen').placeholder    = lang === 'en' ? 'Where are we picking you up?' : '¿Dónde te recogemos?';
         document.getElementById('destino').placeholder   = lang === 'en' ? 'Where are you going?' : '¿A dónde vas?';
         
-        // TRADUCCION INPUT AEROPUERTO
+        // TRADUCCION INPUT AEROPUERTO — solo si ya tiene el nombre del aeropuerto
         const origenInput = document.getElementById('origen');
         const destinoInput = document.getElementById('destino');
         const activeLangAirportName = lang === 'es' ? airportNameES : airportNameEN;
+        const prevLangAirportName = lang === 'es' ? airportNameEN : airportNameES;
 
         if (direccionMode === 'desdeAero') {
-            origenInput.value = activeLangAirportName;
+            // Solo actualizar si ya tenía el nombre del aeropuerto en el otro idioma
+            if (origenInput.value === prevLangAirportName) {
+                origenInput.value = activeLangAirportName;
+            }
             if(lang === 'en') destinoInput.placeholder = "Where are you going?";
             else destinoInput.placeholder = "¿A qué hotel vas?";
         } else if (direccionMode === 'haciaAero') {
-            destinoInput.value = activeLangAirportName;
+            if (destinoInput.value === prevLangAirportName) {
+                destinoInput.value = activeLangAirportName;
+            }
             if(lang === 'en') origenInput.placeholder = "Pick-up Location";
             else origenInput.placeholder = "¿Dónde te recogemos?";
         } else {
@@ -1490,20 +1535,19 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('fechaIda').addEventListener('change', function() {
             document.getElementById('fechaVuelta').setAttribute('min', this.value);
         });
-        
-        // Forzar placeholders en inglés desde el inicio
-        document.getElementById('origen').placeholder   = 'Where are we picking you up?';
-        document.getElementById('destino').placeholder  = 'Where are you going?';
-        document.getElementById('origenRT').placeholder  = 'Where are we picking you up?';
-        document.getElementById('destinoRT').placeholder = 'Where are you going?';
-        
-        setLang('en'); // INICIALIZAR EN INGLES
-        // Limpiar el campo origen para que inicie vacío (sin aeropuerto pre-llenado)
+
+        // Limpiar campos ANTES de setLang para evitar pre-llenado del aeropuerto
+        direccionMode = 'libre';
         const origenInput = document.getElementById('origen');
         origenInput.value = '';
         origenInput.removeAttribute('readonly');
         origenInput.style.cssText = 'color:var(--text-dark); background:transparent;';
-        origenInput.placeholder = 'Pick-up Location';
+
+        setLang('en');
+
+        // Restaurar modo correcto sin re-llenar el campo
+        direccionMode = 'desdeAero';
+
         initSlider();
         adjustScrollMargin();
     };
