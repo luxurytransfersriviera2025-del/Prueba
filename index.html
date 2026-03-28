@@ -633,14 +633,14 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
                     <!-- FILA 1 ONE WAY: Origen | Destino -->
                     <div class="row-top" id="rowTopOneWay">
-                        <div class="input-wrapper"><label id="labelOrigen">PICK-UP</label><input type="text" id="origen" placeholder="Where are we picking you up?"></div>
-                        <div class="input-wrapper" id="divDestinoInput"><label id="labelDestino">DESTINATION</label><input type="text" id="destino" placeholder="Where are you going?"></div>
+                        <div class="input-wrapper"><label id="labelOrigen">PICK-UP</label><input type="text" id="origen" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..."></div>
+                        <div class="input-wrapper" id="divDestinoInput"><label id="labelDestino">DESTINATION</label><input type="text" id="destino" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..."></div>
                     </div>
 
                     <!-- FILA 1 ROUND TRIP: Origen | Destino | Pasajeros -->
                     <div class="row-top-rt" id="rowTopRoundTrip" style="display:none;">
-                        <div class="input-wrapper"><label id="labelOrigenRT">PICK-UP</label><input type="text" id="origenRT" placeholder="Where are we picking you up?" oninput="document.getElementById('origen').value=this.value" onfocus="syncRT()"></div>
-                        <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="Where are you going?" oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
+                        <div class="input-wrapper"><label id="labelOrigenRT">PICK-UP</label><input type="text" id="origenRT" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." oninput="document.getElementById('origen').value=this.value" onfocus="syncRT()"></div>
+                        <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
                         <div class="input-wrapper promo-rt-cell">
                             <label id="label-pax-rt">PASSENGERS</label>
                             <select id="pasajeros" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
@@ -850,11 +850,11 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>
                     <div class="input-wrapper">
                         <label id="custom-label-origen" style="color:var(--navy-bg);">PICK-UP</label>
-                        <input type="text" id="custom-origen" placeholder="Where are we picking you up?">
+                        <input type="text" id="custom-origen" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...">
                     </div>
                     <div class="input-wrapper">
                         <label id="custom-label-destino" style="color:var(--navy-bg);">DESTINATION</label>
-                        <input type="text" id="custom-destino" placeholder="Where are you going?">
+                        <input type="text" id="custom-destino" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...">
                     </div>
                     <div class="input-wrapper">
                         <label id="custom-label-fecha" style="color:var(--navy-bg);">SERVICE DATE</label>
@@ -1374,10 +1374,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.getElementById('labelDestinoRT').innerText = t.labelDestino;
         document.getElementById('label-pax-rt').innerText   = t.labelPax;
         document.getElementById('label-promo-rt').innerText = lang === 'en' ? 'PROMO CODE' : 'CÓDIGO PROMOCIONAL';
-        document.getElementById('origenRT').placeholder  = lang === 'en' ? 'Where are we picking you up?' : '¿Dónde te recogemos?';
-        document.getElementById('destinoRT').placeholder = lang === 'en' ? 'Where are you going?' : '¿A dónde vas?';
-        document.getElementById('origen').placeholder    = lang === 'en' ? 'Where are we picking you up?' : '¿Dónde te recogemos?';
-        document.getElementById('destino').placeholder   = lang === 'en' ? 'Where are you going?' : '¿A dónde vas?';
+        document.getElementById('origenRT').placeholder  = lang === 'en' ? 'Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...' : 'Ej: Aeropuerto CUN/TQO, Hotel, Airbnb, Resort...';
+        document.getElementById('destinoRT').placeholder = lang === 'en' ? 'Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...' : 'Ej: Aeropuerto CUN/TQO, Hotel, Airbnb, Resort...';
+        document.getElementById('origen').placeholder    = lang === 'en' ? 'Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...' : 'Ej: Aeropuerto CUN/TQO, Hotel, Airbnb, Resort...';
+        document.getElementById('destino').placeholder   = lang === 'en' ? 'Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...' : 'Ej: Aeropuerto CUN/TQO, Hotel, Airbnb, Resort...';
         
         // TRADUCCION INPUT AEROPUERTO — solo si ya tiene el nombre del aeropuerto
         const origenInput = document.getElementById('origen');
@@ -1390,17 +1390,17 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             if (origenInput.value === prevLangAirportName) {
                 origenInput.value = activeLangAirportName;
             }
-            if(lang === 'en') destinoInput.placeholder = "Where are you going?";
+            if(lang === 'en') destinoInput.placeholder = "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...";
             else destinoInput.placeholder = "¿A qué hotel vas?";
         } else if (direccionMode === 'haciaAero') {
             if (destinoInput.value === prevLangAirportName) {
                 destinoInput.value = activeLangAirportName;
             }
-            if(lang === 'en') origenInput.placeholder = "Pick-up Location";
+            if(lang === 'en') origenInput.placeholder = "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...";
             else origenInput.placeholder = "¿Dónde te recogemos?";
         } else {
              if(lang === 'en') {
-                origenInput.placeholder = "Pick-up Location";
+                origenInput.placeholder = "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...";
                 destinoInput.placeholder = "Destination";
             } else {
                 origenInput.placeholder = "Lugar de Recogida";
@@ -1889,18 +1889,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (modo === 'desdeAero') {
             origen.value = activeLangAirportName; origen.setAttribute('readonly', true); origen.style.cssText = ro;
             destino.value = ""; destino.removeAttribute('readonly'); destino.style.cssText = ed; 
-            destino.placeholder = currentLang === 'en' ? "Where are you going?" : "¿A qué hotel vas?";
+            destino.placeholder = currentLang === 'en' ? "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." : "¿A qué hotel vas?";
             btnAccion.innerText = translations[currentLang].btnAccion;
         } else if (modo === 'haciaAero') {
             destino.value = activeLangAirportName; destino.setAttribute('readonly', true); destino.style.cssText = ro;
             origen.value = ""; origen.removeAttribute('readonly'); origen.style.cssText = ed; 
-            origen.placeholder = currentLang === 'en' ? "Pick-up Location" : "¿Dónde te recogemos?";
+            origen.placeholder = currentLang === 'en' ? "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." : "¿Dónde te recogemos?";
             btnAccion.innerText = translations[currentLang].btnAccion;
         } else if (modo === 'personalizado') {
             document.getElementById('divSubtipoServicio').style.display = 'flex';
             document.getElementById('divVueloInfo').style.display = 'none';
             origen.value = ""; origen.removeAttribute('readonly'); origen.style.cssText = ed; 
-            origen.placeholder = currentLang === 'en' ? "Pick-up Location" : "Lugar de Recogida";
+            origen.placeholder = currentLang === 'en' ? "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." : "Lugar de Recogida";
             destino.value = ""; destino.removeAttribute('readonly'); destino.style.cssText = ed; 
             destino.placeholder = currentLang === 'en' ? "Destination" : "Lugar de Destino";
             btnAccion.innerText = translations[currentLang].btnQuoteCustom;
