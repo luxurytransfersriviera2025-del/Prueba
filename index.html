@@ -829,30 +829,6 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 <p id="custom-subtitle" style="font-family:var(--font-body); font-size:1.1rem; color:#555; max-width:600px; margin:0 auto;">Weddings, large groups, hourly service, special events or destinations not in our calculator — tell us what you need and we'll quote you as soon as possible.</p>
             </div>
 
-            <!-- Cards de casos especiales -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px; margin-bottom:40px;">
-                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
-                    <i class="fas fa-heart" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
-                    <strong id="custom-card1" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Weddings & Events</strong>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
-                    <i class="fas fa-users" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
-                    <strong id="custom-card2" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Large Groups</strong>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
-                    <i class="fas fa-clock" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
-                    <strong id="custom-card3" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Hourly Service</strong>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
-                    <i class="fas fa-map-marker-alt" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
-                    <strong id="custom-card4" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Special Destination</strong>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:20px; text-align:center; border:1px solid #e0e0e0;">
-                    <i class="fas fa-route" style="font-size:28px; color:var(--gold); margin-bottom:10px; display:block;"></i>
-                    <strong id="custom-card5" style="font-family:var(--font-title); font-size:13px; color:var(--navy-bg); text-transform:uppercase;">Custom Tour</strong>
-                </div>
-            </div>
-
             <!-- Formulario personalizado -->
             <div style="background:#fff; border-radius:16px; padding:35px; border:2px solid var(--gold); box-shadow:0 10px 40px rgba(0,0,0,0.08);">
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;" class="custom-form-grid">
@@ -997,27 +973,28 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     <div class="modal-overlay" id="modalConfirmacion">
         <div class="modal-box">
             <div class="modal-header-fixed">
-                <h2 class="modal-title-fixed" id="modalTitle">¡Solicitud Recibida!</h2>
-                <button class="btn-close-fixed" id="btn-close-confirm" onclick="cerrarModal()">Cerrar <i class="fas fa-times"></i></button>
+                <h2 class="modal-title-fixed" id="modalTitle">Booking Confirmed!</h2>
+                <button class="btn-close-fixed" id="btn-close-confirm" onclick="cerrarModal()">Close <i class="fas fa-times"></i></button>
             </div>
             <div class="modal-scrollable-content" style="text-align: center;">
                 <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
-                <h2 class="modal-main-title" id="modalMainTitle">¡Solicitud Recibida!</h2>
-                
-                <p style="margin:0; font-size:11px; color:#888; text-transform: uppercase; font-weight:700; letter-spacing: 1px;" id="modalCodeLabel">Tu código de referencia es:</p>
+                <h2 class="modal-main-title" id="modalMainTitle">Booking Confirmed!</h2>
+
+                <p style="margin:0 0 6px 0; font-size:11px; color:#888; text-transform:uppercase; font-weight:700; letter-spacing:1.5px;" id="modalCodeLabel">YOUR BOOKING NUMBER</p>
                 <div id="codigoDisplay" class="codigo-reserva">LTR-????</div>
 
-                <p class="modal-text" id="modalText">Hemos recibido tu solicitud. Un asesor te contactará lo más breve posible para finalizar tu reserva.</p>
+                <p class="modal-text" id="modalText">Thank you! We've received your booking request. One of our agents will contact you shortly to confirm your trip details and process your payment.</p>
 
-                <div style="background-color: #fff4e5; border-left: 4px solid #ff9800; padding: 10px; margin-bottom: 20px; text-align: left; font-size: 13px; color: #663c00;">
-                    <i class="fas fa-exclamation-triangle"></i> <strong id="modalWarningTitle">IMPORTANTE:</strong><br>
-                    <span id="modalWarningText">Te hemos enviado un correo con los detalles de tu solicitud. <br>Por favor revisa tu carpeta de SPAM o "Correo no deseado".</span>
+                <p class="modal-text" id="modalPayText" style="font-weight:700; color:var(--navy-bg); font-size:14px; margin-top:-10px;"></p>
+
+                <div style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e); border-left:4px solid var(--gold); border-radius:8px; padding:12px 15px; margin-bottom:20px; text-align:left; font-size:13px; color:#fff;">
+                    <i class="fas fa-bookmark" style="color:var(--gold);"></i> <strong id="modalWarningTitle">IMPORTANT:</strong><br>
+                    <span id="modalWarningText">Please save your booking number. You will also receive a confirmation email — check your SPAM folder if you don't see it.</span>
                 </div>
-                
+
                 <div class="modal-actions">
-                    <a href="tel:+529842411158" class="modal-btn btn-call" id="btn-modal-call"><i class="fas fa-phone"></i> Llama ahora</a>
-                    <a href="#" target="_blank" class="modal-btn btn-wa" id="btnWhatsapp"><i class="fab fa-whatsapp"></i> Confirmar por WhatsApp</a>
-                    <a href="#" class="modal-btn btn-mail" id="btnMail"><i class="fas fa-envelope"></i> Enviar Correo</a>
+                    <a href="#" target="_blank" class="modal-btn btn-wa" id="btnWhatsapp"><i class="fab fa-whatsapp"></i> <span id="modal-wa-txt">Confirm via WhatsApp</span></a>
+                    <a href="tel:+529842411158" class="modal-btn btn-call" id="btn-modal-call"><i class="fas fa-phone"></i> <span id="modal-call-txt">Call Us Now</span></a>
                 </div>
             </div>
         </div>
@@ -1216,17 +1193,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
             loadingText: "GENERANDO RESERVA...",
 
-            modalTitleReceived: "¡Solicitud Recibida!",
-            modalTitleSent: "¡Solicitud Enviada!",
-            modalTextReceived: "Hemos recibido tu solicitud. Un asesor te contactará lo más breve posible para finalizar tu reserva.",
-            modalTextSent: "Hemos recibido tu solicitud. Un asesor te contactará lo más breve posible para darte un precio.",
-            
-            modalCodeLabel: "TU CÓDIGO DE REFERENCIA ES:",
+            modalTitleReceived: "¡Reserva Confirmada!",
+            modalTitleSent: "¡Reserva Confirmada!",
+            modalTextReceived: "¡Gracias! Hemos recibido tu solicitud de reserva. Uno de nuestros asesores se pondrá en contacto contigo en breve para confirmar los detalles de tu traslado y coordinar tu método de pago.",
+            modalTextSent: "¡Gracias! Hemos recibido tu solicitud. Uno de nuestros asesores se pondrá en contacto contigo en breve para darte un precio personalizado.",
+            modalPayCard: "💳 Procesaremos tu pago con Tarjeta de Crédito/Débito de forma segura.",
+            modalPayPaypal: "💳 Te enviaremos una solicitud de pago por PayPal.",
+            modalPayCash: "💳 Coordinaremos tu depósito del 30% y el 70% restante en efectivo.",
+            modalCodeLabel: "NÚMERO DE RESERVA",
             modalWarningTitle: "IMPORTANTE:",
-            modalWarningText: "Te hemos enviado un correo con los detalles de tu solicitud. <br>Por favor revisa tu carpeta de SPAM o \"Correo no deseado\".",
-            btnModalCall: '<i class="fas fa-phone"></i> Llama ahora',
+            modalWarningText: "Guarda tu número de reserva. También recibirás un correo de confirmación — revisa tu carpeta de SPAM si no lo ves.",
+            btnModalCall: '<i class="fas fa-phone"></i> Llámanos Ahora',
             btnModalWa: '<i class="fab fa-whatsapp"></i> Confirmar por WhatsApp',
-            btnModalMail: '<i class="fas fa-envelope"></i> Enviar Correo',
             
             valSpecialQuote: "Cotización Especial",
             valToBeQuoted: "Por Cotizar",
@@ -1328,17 +1306,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
             loadingText: "GENERATING BOOKING...",
 
-            modalTitleReceived: "Request Received!",
-            modalTitleSent: "Request Sent!",
-            modalTextReceived: "We have received your request. An advisor will contact you shortly to finalize your reservation.",
-            modalTextSent: "We have received your request. An advisor will contact you shortly with the price.",
-
-            modalCodeLabel: "YOUR REFERENCE CODE IS:",
+            modalTitleReceived: "Booking Confirmed!",
+            modalTitleSent: "Booking Confirmed!",
+            modalTextReceived: "Thank you! We've received your booking request. One of our agents will contact you shortly to confirm your trip details and process your payment.",
+            modalTextSent: "Thank you! We've received your request. One of our agents will contact you shortly with a personalized quote.",
+            modalPayCard: "💳 We will process your Credit/Debit Card payment securely.",
+            modalPayPaypal: "💳 We will send you a PayPal payment request.",
+            modalPayCash: "💳 We will coordinate your 30% deposit and the remaining 70% in cash.",
+            modalCodeLabel: "YOUR BOOKING NUMBER",
             modalWarningTitle: "IMPORTANT:",
-            modalWarningText: "We sent you an email with the details. <br>Please check your SPAM folder.",
-            btnModalCall: '<i class="fas fa-phone"></i> Call Now',
+            modalWarningText: "Please save your booking number. You will also receive a confirmation email — check your SPAM folder if you don't see it.",
+            btnModalCall: '<i class="fas fa-phone"></i> Call Us Now',
             btnModalWa: '<i class="fab fa-whatsapp"></i> Confirm via WhatsApp',
-            btnModalMail: '<i class="fas fa-envelope"></i> Send Email',
 
             valSpecialQuote: "Special Quote",
             valToBeQuoted: "To Be Quoted",
@@ -1510,14 +1489,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         // CORRECCION 1: ACTUALIZAR TEXTO LOADING DINÁMICO
         document.getElementById('loadingTextDisplay').innerText = t.loadingText;
 
-        // CORRECCION 2: TEXTOS DEL MODAL DE CONFIRMACIÓN (Usamos valores por defecto, luego se sobrescriben en iniciarEnvio)
+        // CORRECCION 2: TEXTOS DEL MODAL DE CONFIRMACIÓN
         document.getElementById('modalCodeLabel').innerText = t.modalCodeLabel;
         document.getElementById('modalWarningTitle').innerText = t.modalWarningTitle;
         document.getElementById('modalWarningText').innerHTML = t.modalWarningText;
-        
         document.getElementById('btn-modal-call').innerHTML = t.btnModalCall;
         document.getElementById('btnWhatsapp').innerHTML = t.btnModalWa;
-        document.getElementById('btnMail').innerHTML = t.btnModalMail;
         
         // --- AUTO-UPDATE RESULTADOS ---
         if(document.getElementById('resultados').style.display === 'block') {
@@ -2434,7 +2411,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             notas: notasFinales, vuelo,
             vueloRegreso: document.getElementById('vuelo-regreso-' + id) ? document.getElementById('vuelo-regreso-' + id).value : "",
             vehiculo: datosCard.vehiculo, precio: datosCard.precio,
-            zona: datosCard.zona, idioma: currentLang
+            zona: datosCard.zona, idioma: currentLang, pago
         };
         document.getElementById('codigoDisplay').innerText = codigoUnico;
         iniciarEnvio(datosVenta);
@@ -2503,7 +2480,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const mailBody = encodeURIComponent(msg); 
 
         document.getElementById('btnWhatsapp').href = `https://wa.me/529842411158?text=${encodedMsg}`; 
-        document.getElementById('btnMail').href = `mailto:reservas@luxurytransfersriviera.com.mx?subject=${subject}&body=${mailBody}`; 
+        // btnMail removed from modal
 
         // 5. ENVIAR AL GOOGLE SHEET
         fetch(SCRIPT_URL, {
@@ -2520,10 +2497,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 document.getElementById('modalTitle').innerText = t.modalTitleReceived;
                 document.getElementById('modalMainTitle').innerText = t.modalTitleReceived;
                 document.getElementById('modalText').innerText = t.modalTextReceived;
+                // Mensaje personalizado según método de pago
+                const pago = data.pago || '';
+                let payMsg = '';
+                if (pago.includes('PayPal')) payMsg = t.modalPayPaypal;
+                else if (pago.includes('30%') || pago.includes('Cash') || pago.includes('Efectivo')) payMsg = t.modalPayCash;
+                else if (pago.includes('Card') || pago.includes('Tarjeta')) payMsg = t.modalPayCard;
+                document.getElementById('modalPayText').innerText = payMsg;
             } else {
                 document.getElementById('modalTitle').innerText = t.modalTitleSent;
                 document.getElementById('modalMainTitle').innerText = t.modalTitleSent;
                 document.getElementById('modalText').innerHTML = t.modalTextSent;
+                document.getElementById('modalPayText').innerText = '';
             }
             document.getElementById('modalConfirmacion').style.display = 'flex';
         })
