@@ -643,7 +643,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
                         <div class="input-wrapper promo-rt-cell">
                             <label id="label-pax-rt">PASSENGERS</label>
-                            <select id="pasajeros" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
+                            <select id="pasajeros" onchange="if(this.value==='16+') document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
                                 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16+">16+ (Personalizado)</option>
                             </select>
                         </div>
@@ -669,7 +669,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         </div>
                         <div class="input-wrapper">
                             <label id="label-pax">PASSENGERS</label>
-                            <select id="pasajerosOneWay" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
+                            <select id="pasajerosOneWay" onchange="if(this.value==='16+') document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
                                 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16+">16+ (Personalizado)</option>
                             </select>
                         </div>
