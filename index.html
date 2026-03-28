@@ -1401,7 +1401,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         } else {
              if(lang === 'en') {
                 origenInput.placeholder = "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...";
-                destinoInput.placeholder = "Destination";
+                destinoInput.placeholder = "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort...";
             } else {
                 origenInput.placeholder = "Lugar de Recogida";
                 destinoInput.placeholder = "Lugar de Destino";
@@ -1902,7 +1902,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             origen.value = ""; origen.removeAttribute('readonly'); origen.style.cssText = ed; 
             origen.placeholder = currentLang === 'en' ? "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." : "Lugar de Recogida";
             destino.value = ""; destino.removeAttribute('readonly'); destino.style.cssText = ed; 
-            destino.placeholder = currentLang === 'en' ? "Destination" : "Lugar de Destino";
+            destino.placeholder = currentLang === 'en' ? "Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." : "Ej: Aeropuerto CUN/TQO, Hotel, Airbnb, Resort...";
             btnAccion.innerText = translations[currentLang].btnQuoteCustom;
             updateTipoServicio(document.getElementById('tipoServicio').value);
             ajustarCamposPersonalizados();
@@ -2399,6 +2399,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (bandera&& _savedFormData.bandera) { bandera.value = _savedFormData.bandera; cambiarPrefijoCard(id); }
         if (notas  && _savedFormData.notas)   notas.value   = _savedFormData.notas;
         if (pago   && _savedFormData.pago)    pago.value    = _savedFormData.pago;
+        // Quitar foco de todos los campos para que el teclado no abra automáticamente
+        [nombre, email, lada, tel, notas].forEach(el => { if (el) el.blur(); });
+        document.activeElement.blur();
     }
 
     function abrirFormCard(id, datosCard) {
@@ -2419,7 +2422,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             tarjeta.classList.add('expanded');
             // Pre-llenar con datos guardados
             rellenarDatosForm(id);
-            setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+            // Scroll al inicio de la tarjeta, no al campo activo
+            setTimeout(() => tarjeta.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
         }
     }
 
