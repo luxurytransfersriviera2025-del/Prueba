@@ -104,7 +104,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
         .nav-links a:hover { color: var(--gold); }
 
-        #seccion-calculadora, #servicios, #flota, #servicio-personalizado {
+        #seccion-quote, #servicios, #flota, #servicio-personalizado {
             scroll-margin-top: calc(var(--header-height) - 25px);
         }
 
@@ -214,7 +214,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
 
         /* CALCULADORA */
-        #seccion-calculadora { 
+        #seccion-quote { 
             position: relative; background-color: #f4f4f4; min-height: 100vh;
             display: flex; align-items: center; justify-content: center; flex-direction: column;
             padding: 30px 0 50px 0; z-index: 1;
@@ -371,7 +371,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         .section-header h2 { font-family: var(--font-title); font-size: 42px; color: var(--gold); font-weight: 700; margin-bottom: 10px; letter-spacing: -1px; }
         .section-header p { color: #666; font-size: 16px; max-width: 700px; margin: 0 auto; font-family: var(--font-body); }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .service-card { background-color: var(--black); border: 1px solid var(--gold); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.4s ease; position: relative; display: flex; flex-direction: column; }
+        .service-card { background-color: var(--black); border: 1px solid var(--gold); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.4s ease; position: relative; display: flex; flex-direction: column; cursor: pointer; }
         .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3); border-color: var(--gold-hover); }
         .service-img { height: 220px; width: 100%; object-fit: cover; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); max-width: 100%; }
         .service-info { padding: 10px 30px 40px 30px; text-align: center; margin-top: -20px; position: relative; z-index: 2; }
@@ -545,7 +545,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 Luxury Transfers
             </a>
             <nav class="nav-links">
-                <a href="#seccion-calculadora" class="nav-link" id="nav-cotizar">Cotizar</a>
+                <a href="#seccion-quote" class="nav-link" id="nav-cotizar">Cotizar</a>
                 <a href="#servicios" class="nav-link" id="nav-servicios">Servicios</a>
                 <a href="#flota" class="nav-link" id="nav-flota">Flota</a>
                 <a href="#servicio-personalizado" class="nav-link" id="nav-custom">Custom</a>
@@ -558,11 +558,11 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         <div class="hero-content">
             <h1 id="hero-title">TU VIAJE EXCLUSIVO EN CANCÚN, LA RIVIERA MAYA Y TULUM</h1>
             <p id="hero-subtitle">Un viaje seguro y privado es el verdadero lujo que puedes dar a tu familia y amigos. Cotiza ahora y compruébalo.</p>
-            <a href="#seccion-calculadora" class="btn-cta" id="hero-btn">COTIZAR AHORA</a>
+            <a href="#seccion-quote" class="btn-cta" id="hero-btn">COTIZAR AHORA</a>
         </div>
     </section>
 
-    <section id="seccion-calculadora">
+    <section id="seccion-quote">
         <div class="overlay" style="display:none;"></div> 
         <div class="main-container-calc">
             <h1 class="title-calc">
@@ -723,38 +723,38 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             <p id="servicios-subtitle">Soluciones de transporte exclusivas diseñadas para superar tus expectativas.</p>
         </div>
         <div class="services-grid">
-            <div class="service-card">
+            <a href="#seccion-quote" class="service-card" style="text-decoration:none;">
                 <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop" class="service-img" alt="Airport">
                 <div class="service-info">
                     <div class="service-icon"><i class="fas fa-plane-departure"></i></div>
                     <div class="service-title" id="serv-title-1">Aeropuerto</div>
                     <div class="service-desc" id="serv-desc-1">Transfer premium desde y hacia los aeropuertos de Cancún, Tulum y Mérida con monitoreo de vuelo.</div>
                 </div>
-            </div>
-            <div class="service-card">
+            </a>
+            <a href="#seccion-quote" class="service-card" style="text-decoration:none;">
                 <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop" class="service-img" alt="Hotel">
                 <div class="service-info">
                     <div class="service-icon"><i class="fas fa-building"></i></div>
                     <div class="service-title" id="serv-title-2">Hoteles</div>
                     <div class="service-desc" id="serv-desc-2">Traslados directos y exclusivos a cualquier hotel, resort o Airbnb en la Riviera Maya.</div>
                 </div>
-            </div>
-            <div class="service-card">
+            </a>
+            <a href="#seccion-quote" class="service-card" style="text-decoration:none;">
                 <img src="https://images.unsplash.com/photo-1518638150340-f706e86654de?w=600&h=400&fit=crop" class="service-img" alt="Tours">
                 <div class="service-info">
                     <div class="service-icon"><i class="fas fa-globe-americas"></i></div>
                     <div class="service-title" id="serv-title-3">Tours</div>
                     <div class="service-desc" id="serv-desc-3">¿Quieres visitar Chichén Itzá o Xcaret? Te llevamos con un servicio privado y flexible.</div>
                 </div>
-            </div>
-            <div class="service-card">
+            </a>
+            <a href="#servicio-personalizado" class="service-card" style="text-decoration:none;">
                 <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&h=400&fit=crop" class="service-img" alt="Hourly">
                 <div class="service-info">
                     <div class="service-icon"><i class="fas fa-clock"></i></div>
                     <div class="service-title" id="serv-title-4">Por Horas</div>
                     <div class="service-desc" id="serv-desc-4">Disponibilidad total del vehículo y chofer por horas para eventos especiales, cenas o reuniones.</div>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -772,7 +772,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                             <h3 class="vehicle-name-clean" id="veh-title-1">Sedán Ejecutivo</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-1">Viaja ligero y con total comodidad. Ideal para parejas o viajeros de negocios que buscan un traslado privado y eficiente.</p>
                             <div><span class="vehicle-capacity-clean"><i class="fas fa-user"></i> 1-3 Pax</span></div>
-                            <a href="#seccion-calculadora" class="btn-reservar-clean" id="btn-quote-1">Cotizar Ahora</a>
+                            <a href="#seccion-quote" class="btn-reservar-clean" id="btn-quote-1">Cotizar Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -783,7 +783,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                             <h3 class="vehicle-name-clean" id="veh-title-2">Luxury SUV</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-2">Exclusividad y potencia desde tu llegada. El recibimiento perfecto en el aeropuerto para ejecutivos y familias VIP.</p>
                             <div><span class="vehicle-capacity-clean"><i class="fas fa-star"></i> 1-5 Pax</span></div>
-                            <a href="#seccion-calculadora" class="btn-reservar-clean" id="btn-quote-2">Cotizar Ahora</a>
+                            <a href="#seccion-quote" class="btn-reservar-clean" id="btn-quote-2">Cotizar Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -794,7 +794,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                             <h3 class="vehicle-name-clean" id="veh-title-3">Van Ejecutiva</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-3">Espacio inteligente y confort total. La opción ideal para familias o grupos de amigos que buscan viajar juntos con seguridad.</p>
                             <div><span class="vehicle-capacity-clean"><i class="fas fa-users"></i> 1-8 Pax</span></div>
-                            <a href="#seccion-calculadora" class="btn-reservar-clean" id="btn-quote-3">Cotizar Ahora</a>
+                            <a href="#seccion-quote" class="btn-reservar-clean" id="btn-quote-3">Cotizar Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -805,7 +805,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                             <h3 class="vehicle-name-clean" id="veh-title-4">Sprinter</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-4">Ideal para bodas, eventos o familias numerosas. Viajen todos juntos, seguros y con aire acondicionado de primera.</p>
                             <div><span class="vehicle-capacity-clean"><i class="fas fa-bus"></i> 1-15 Pax</span></div>
-                            <a href="#seccion-calculadora" class="btn-reservar-clean" id="btn-quote-4">Cotizar Ahora</a>
+                            <a href="#seccion-quote" class="btn-reservar-clean" id="btn-quote-4">Cotizar Ahora</a>
                         </div>
                     </div>
                 </div>
