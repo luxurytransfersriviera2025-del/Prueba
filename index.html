@@ -643,7 +643,17 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         <div class="input-wrapper"><label id="labelDestinoRT">DESTINATION</label><input type="text" id="destinoRT" placeholder="Ex: CUN/TQO Airport, Hotel, Airbnb, Resort..." oninput="document.getElementById('destino').value=this.value" onfocus="syncRT()"></div>
                         <div class="input-wrapper promo-rt-cell">
                             <label id="label-pax-rt">PASSENGERS</label>
-                            <select id="pasajeros" onchange="if(this.value==='16+') document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
+                            <select id="pasajeros" onchange="if(this.value==='16+') {
+                                preCargarCustom({
+                                    origen: document.getElementById('origen').value,
+                                    destino: document.getElementById('destino').value,
+                                    fecha: document.getElementById('fechaIda').value,
+                                    pax: '16',
+                                    tipoViaje: 'REDONDO',
+                                    fechaRegreso: document.getElementById('fechaVuelta').value
+                                });
+                                document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});
+                            }" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
                                 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16+">16+ (Personalizado)</option>
                             </select>
                         </div>
@@ -669,7 +679,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         </div>
                         <div class="input-wrapper">
                             <label id="label-pax">PASSENGERS</label>
-                            <select id="pasajerosOneWay" onchange="if(this.value==='16+') document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
+                            <select id="pasajerosOneWay" onchange="if(this.value==='16+') { 
+                                const tipo = document.getElementById('tipoServicio').value;
+                                preCargarCustom({
+                                    origen: document.getElementById('origen').value,
+                                    destino: document.getElementById('destino').value,
+                                    fecha: document.getElementById('fechaIda').value,
+                                    pax: '16',
+                                    tipoViaje: tipo,
+                                    fechaRegreso: document.getElementById('fechaVuelta').value
+                                });
+                                document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});
+                            }" style="border:none; outline:none; background:transparent; font-size:15px; font-weight:600; color:#333; width:100%; font-family:var(--font-body);">
                                 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16+">16+ (Personalizado)</option>
                             </select>
                         </div>
@@ -831,6 +852,17 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
             <!-- Formulario personalizado -->
             <div style="background:#fff; border-radius:16px; padding:35px; border:2px solid var(--gold); box-shadow:0 10px 40px rgba(0,0,0,0.08);">
+
+                <!-- Selector One Way / Round Trip -->
+                <div style="display:flex; gap:25px; margin-bottom:20px; align-items:center;">
+                    <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-family:var(--font-title); font-weight:700; color:var(--navy-bg); font-size:14px;">
+                        <input type="radio" name="custom-trip" id="custom-ow" value="OW" checked onchange="toggleCustomReturn()"> <span id="custom-lbl-ow">One Way</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-family:var(--font-title); font-weight:700; color:var(--navy-bg); font-size:14px;">
+                        <input type="radio" name="custom-trip" id="custom-rt" value="RT" onchange="toggleCustomReturn()"> <span id="custom-lbl-rt">Round Trip</span>
+                    </label>
+                </div>
+
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;" class="custom-form-grid">
                     <div class="input-wrapper">
                         <label id="custom-label-name" style="color:var(--navy-bg);">FULL NAME</label>
@@ -859,6 +891,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     <div class="input-wrapper">
                         <label id="custom-label-fecha" style="color:var(--navy-bg);">SERVICE DATE</label>
                         <input type="date" id="custom-fecha" style="border:none;outline:none;background:transparent;font-size:14px;font-weight:600;color:#333;font-family:var(--font-body);min-height:25px;width:100%;">
+                    </div>
+                    <div class="input-wrapper" id="custom-fecha-regreso-wrapper" style="display:none;">
+                        <label id="custom-label-fecha-regreso" style="color:var(--action-green);">RETURN DATE</label>
+                        <input type="date" id="custom-fecha-regreso" style="border:none;outline:none;background:transparent;font-size:14px;font-weight:600;color:#333;font-family:var(--font-body);min-height:25px;width:100%;">
                     </div>
                     <div class="input-wrapper">
                         <label id="custom-label-tipo" style="color:var(--navy-bg);">SERVICE TYPE</label>
@@ -2099,7 +2135,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                                 ? "We couldn't find a price for this route automatically. Our team will quote you as soon as possible through our Custom Service."
                                 : "No pudimos encontrar un precio para esta ruta automáticamente. Nuestro equipo te cotizará lo antes posible a través de nuestro Servicio Personalizado."}
                         </p>
-                        <a href="#servicio-personalizado" onclick="document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;transition:0.3s;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
+                        <a href="#servicio-personalizado" onclick="preCargarCustom({origen:document.getElementById('origen').value,destino:document.getElementById('destino').value,fecha:document.getElementById('fechaIda').value,pax:document.getElementById(document.getElementById('tipoServicio').value==='REDONDO'?'pasajeros':'pasajerosOneWay').value,tipoViaje:document.getElementById('tipoServicio').value,fechaRegreso:document.getElementById('fechaVuelta').value});document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});return false;" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;transition:0.3s;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
                             <i class="fas fa-concierge-bell"></i> ${currentLang==='en' ? 'Request Custom Quote' : 'Solicitar Cotización Personalizada'}
                         </a>
                     </div>`;
@@ -2130,7 +2166,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                                 ? "We couldn't find a price for this route automatically. Our team will quote you as soon as possible through our Custom Service."
                                 : "No pudimos encontrar un precio para esta ruta automáticamente. Nuestro equipo te cotizará lo antes posible a través de nuestro Servicio Personalizado."}
                         </p>
-                        <a href="#servicio-personalizado" onclick="document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
+                        <a href="#servicio-personalizado" onclick="preCargarCustom({origen:document.getElementById('origen').value,destino:document.getElementById('destino').value,fecha:document.getElementById('fechaIda').value,pax:document.getElementById(document.getElementById('tipoServicio').value==='REDONDO'?'pasajeros':'pasajerosOneWay').value,tipoViaje:document.getElementById('tipoServicio').value,fechaRegreso:document.getElementById('fechaVuelta').value});document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});return false;" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
                             <i class="fas fa-concierge-bell"></i> ${currentLang==='en' ? 'Request Custom Quote' : 'Solicitar Cotización Personalizada'}
                         </a>
                     </div>`;
@@ -2178,7 +2214,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                                 ? 'For groups of 16 or more passengers, we offer a personalized service. Contact us and we\'ll quote you as soon as possible.'
                                 : 'Para grupos de 16 o más pasajeros ofrecemos un servicio personalizado. Contáctanos y te cotizamos lo antes posible.'}
                         </p>
-                        <a href="#servicio-personalizado" onclick="document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'})" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
+                        <a href="#servicio-personalizado" onclick="preCargarCustom({origen:document.getElementById('origen').value,destino:document.getElementById('destino').value,fecha:document.getElementById('fechaIda').value,pax:document.getElementById(document.getElementById('tipoServicio').value==='REDONDO'?'pasajeros':'pasajerosOneWay').value,tipoViaje:document.getElementById('tipoServicio').value,fechaRegreso:document.getElementById('fechaVuelta').value});document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});return false;" style="display:inline-block;background:var(--navy-bg);color:#fff;padding:14px 35px;border-radius:8px;font-family:var(--font-title);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='var(--navy-bg)';this.style.color='#fff'">
                             <i class="fas fa-concierge-bell"></i> ${currentLang==='en' ? 'Request Custom Quote' : 'Solicitar Cotización Personalizada'}
                         </a>
                     </div>`;
@@ -2374,6 +2410,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const bandera= document.getElementById('bandera-' + id);
         const notas  = document.getElementById('notas-' + id);
         const pago   = document.getElementById('pago-' + id);
+        const vuelo  = document.getElementById('vuelo-' + id);
+        const vueloR = document.getElementById('vuelo-regreso-' + id);
         if (nombre && nombre.value) _savedFormData.nombre  = nombre.value;
         if (email  && email.value)  _savedFormData.email   = email.value;
         if (lada   && lada.value)   _savedFormData.lada    = lada.value;
@@ -2381,6 +2419,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (bandera&& bandera.value)_savedFormData.bandera = bandera.value;
         if (notas  && notas.value)  _savedFormData.notas   = notas.value;
         if (pago   && pago.value)   _savedFormData.pago    = pago.value;
+        if (vuelo  && vuelo.value)  _savedFormData.vuelo   = vuelo.value;
+        if (vueloR && vueloR.value) _savedFormData.vueloR  = vueloR.value;
     }
 
     function rellenarDatosForm(id) {
@@ -2392,6 +2432,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const bandera= document.getElementById('bandera-' + id);
         const notas  = document.getElementById('notas-' + id);
         const pago   = document.getElementById('pago-' + id);
+        const vuelo  = document.getElementById('vuelo-' + id);
+        const vueloR = document.getElementById('vuelo-regreso-' + id);
         if (nombre && _savedFormData.nombre)  nombre.value  = _savedFormData.nombre;
         if (email  && _savedFormData.email)   email.value   = _savedFormData.email;
         if (lada   && _savedFormData.lada)    lada.value    = _savedFormData.lada;
@@ -2399,8 +2441,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (bandera&& _savedFormData.bandera) { bandera.value = _savedFormData.bandera; cambiarPrefijoCard(id); }
         if (notas  && _savedFormData.notas)   notas.value   = _savedFormData.notas;
         if (pago   && _savedFormData.pago)    pago.value    = _savedFormData.pago;
+        if (vuelo  && _savedFormData.vuelo)   vuelo.value   = _savedFormData.vuelo;
+        if (vueloR && _savedFormData.vueloR)  vueloR.value  = _savedFormData.vueloR;
         // Quitar foco de todos los campos para que el teclado no abra automáticamente
-        [nombre, email, lada, tel, notas].forEach(el => { if (el) el.blur(); });
+        [nombre, email, lada, tel, notas, vuelo, vueloR].forEach(el => { if (el) el.blur(); });
         document.activeElement.blur();
     }
 
@@ -2581,6 +2625,29 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             alert("Error al enviar. Intenta por WhatsApp.");
             document.getElementById('loadingOverlay').style.display = 'none';
         });
+    }
+
+    function toggleCustomReturn() {
+        const isRT = document.getElementById('custom-rt').checked;
+        document.getElementById('custom-fecha-regreso-wrapper').style.display = isRT ? 'block' : 'none';
+    }
+
+    function preCargarCustom(datos) {
+        // Pre-llenar campos del formulario Custom con datos del cotizador
+        if (datos.origen)       document.getElementById('custom-origen').value = datos.origen;
+        if (datos.destino)      document.getElementById('custom-destino').value = datos.destino;
+        if (datos.fecha)        document.getElementById('custom-fecha').value = datos.fecha;
+        if (datos.pax)          document.getElementById('custom-pax').value = datos.pax;
+        if (datos.tipoViaje === 'REDONDO') {
+            document.getElementById('custom-rt').checked = true;
+            document.getElementById('custom-ow').checked = false;
+            toggleCustomReturn();
+            if (datos.fechaRegreso) document.getElementById('custom-fecha-regreso').value = datos.fechaRegreso;
+        }
+        // Seleccionar automáticamente Large Group si son 16+
+        if (datos.pax && parseInt(datos.pax) >= 16) {
+            document.getElementById('custom-tipo').value = 'Large Group Transfer';
+        }
     }
 
     function enviarSolicitudPersonalizada() {
