@@ -2466,42 +2466,37 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     <div style="font-size:11px; font-weight:900; color:var(--navy-bg); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; font-family:var(--font-title);">
                         <i class="fas fa-plus-circle" style="color:var(--gold);"></i> ${isEN ? 'Optional Extras' : 'Extras Opcionales'} <span style="font-size:10px; color:#888; font-weight:400; text-transform:none;">(${isEN ? 'paid on board' : 'se pagan al abordar'})</span>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
-                            <span style="font-size:13px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#888; font-weight:400;">$2</span></span>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-water-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
-                                <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 15px; border:1px solid #e0e0e0;">
+                            <span style="font-size:14px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#888; font-weight:400; font-size:13px;">${formatExtraPrice(2)}</span></span>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-water-${id}" style="font-weight:700; color:var(--navy-bg); min-width:20px; text-align:center; font-size:15px;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
-                            <span style="font-size:13px; font-weight:600; color:#333;">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:#888; font-weight:400;">$4</span></span>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-beer-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
-                                <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
-                            </div>
-                        </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
-                            <span style="font-size:13px; font-weight:600; color:#333;">📍 ${isEN ? 'Extra Stop' : 'Parada Extra'} <span style="color:#888; font-weight:400;">$20</span></span>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <button type="button" onclick="cambiarExtra('${id}','stop',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-stop-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
-                                <button type="button" onclick="cambiarExtra('${id}','stop',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
-                            </div>
-                        </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
-                            <span style="font-size:13px; font-weight:600; color:#333;">🪑 ${isEN ? 'Baby Seat' : 'Silla Bebé'} <span style="color:#888; font-weight:400;">$15</span></span>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <button type="button" onclick="cambiarExtra('${id}','baby',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-baby-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
-                                <button type="button" onclick="cambiarExtra('${id}','baby',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 15px; border:1px solid #e0e0e0;">
+                            <span style="font-size:14px; font-weight:600; color:#333;">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:#888; font-weight:400; font-size:13px;">${formatExtraPrice(4)}</span></span>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-beer-${id}" style="font-weight:700; color:var(--navy-bg); min-width:20px; text-align:center; font-size:15px;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Checkbox para Round Trip -->
+                    ${tipo === 'REDONDO' ? `
+                    <div id="extras-rt-wrapper-${id}" style="margin-top:12px; background:#e8f4ff; border-radius:8px; padding:10px 15px; border:1px solid #cce0ff; display:flex; align-items:center; gap:10px;">
+                        <input type="checkbox" id="extras-rt-${id}" onchange="cambiarExtra('${id}','_rt',0)" style="width:18px; height:18px; cursor:pointer; accent-color:var(--navy-bg);">
+                        <label for="extras-rt-${id}" style="font-size:13px; font-weight:600; color:var(--navy-bg); cursor:pointer;">
+                            ${isEN ? 'Apply the same extras for the <strong>return trip</strong>' : 'Aplicar los mismos extras para el <strong>viaje de regreso</strong>'} 
+                            <span id="extras-rt-price-${id}" style="color:var(--action-green); font-weight:700;"></span>
+                        </label>
+                    </div>` : ''}
+
                     <div id="extras-total-${id}" style="margin-top:10px; text-align:right; font-size:13px; font-weight:700; color:var(--navy-bg); display:none;">
-                        ${isEN ? 'Extras total' : 'Total extras'}: <span style="color:var(--action-green);" id="extras-amount-${id}">$0 USD</span>
+                        ${isEN ? 'Extras total' : 'Total extras'}: <span style="color:var(--action-green); font-size:15px;" id="extras-amount-${id}">$0 USD</span>
                     </div>
                 </div>
 
@@ -2552,6 +2547,15 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (pago   && pago.value)   _savedFormData.pago    = pago.value;
         if (vuelo  && vuelo.value)  _savedFormData.vuelo   = vuelo.value;
         if (vueloR && vueloR.value) _savedFormData.vueloR  = vueloR.value;
+        // Guardar extras
+        const tipos = ['water','beer','stop','baby'];
+        _savedFormData.extras = {};
+        tipos.forEach(t => {
+            const el = document.getElementById(`extra-${t}-${id}`);
+            if (el) _savedFormData.extras[t] = parseInt(el.innerText) || 0;
+        });
+        const rtCheck = document.getElementById(`extras-rt-${id}`);
+        _savedFormData.extrasRT = rtCheck ? rtCheck.checked : false;
     }
 
     function rellenarDatosForm(id) {
@@ -2574,39 +2578,65 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (pago   && _savedFormData.pago)    pago.value    = _savedFormData.pago;
         if (vuelo  && _savedFormData.vuelo)   vuelo.value   = _savedFormData.vuelo;
         if (vueloR && _savedFormData.vueloR)  vueloR.value  = _savedFormData.vueloR;
-        // Quitar foco de todos los campos para que el teclado no abra automáticamente
+        // Restaurar extras
+        if (_savedFormData.extras) {
+            const tipos = ['water','beer','stop','baby'];
+            tipos.forEach(t => {
+                const el = document.getElementById(`extra-${t}-${id}`);
+                if (el && _savedFormData.extras[t]) el.innerText = _savedFormData.extras[t];
+            });
+            const rtCheck = document.getElementById(`extras-rt-${id}`);
+            if (rtCheck && _savedFormData.extrasRT) rtCheck.checked = _savedFormData.extrasRT;
+            cambiarExtra(id, '_rt', 0); // Recalcular totales
+        }
+        // Quitar foco
         [nombre, email, lada, tel, notas, vuelo, vueloR].forEach(el => { if (el) el.blur(); });
         document.activeElement.blur();
     }
 
     // Extras opcionales
-    const _extrasPrecios = { water: 2, beer: 4, stop: 20, baby: 15 };
+    const _extrasPrecios = { water: 2, beer: 4 };
     const _extrasNombres = {
         water: { en: 'Water Bottle', es: 'Agua' },
-        beer:  { en: 'Beer', es: 'Cerveza' },
-        stop:  { en: 'Extra Stop', es: 'Parada Extra' },
-        baby:  { en: 'Baby Seat', es: 'Silla Bebé' }
+        beer:  { en: 'Beer', es: 'Cerveza' }
     };
 
+    function getExtrasMoneda() {
+        return document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
+    }
+
+    function formatExtraPrice(usdPrice) {
+        const moneda = getExtrasMoneda();
+        const converted = convertirPrecio(usdPrice, moneda);
+        const symbol = moneda === 'MXN' ? '$' : moneda === 'CAD' ? 'C$' : '$';
+        return `${symbol}${converted} ${moneda}`;
+    }
+
     function cambiarExtra(id, tipo, delta) {
-        const el = document.getElementById(`extra-${tipo}-${id}`);
-        if (!el) return;
-        let val = parseInt(el.innerText) + delta;
-        if (val < 0) val = 0;
-        if (val > 10) val = 10;
-        el.innerText = val;
-        // Calcular total extras
+        if (tipo !== '_rt') {
+            const el = document.getElementById(`extra-${tipo}-${id}`);
+            if (!el) return;
+            let val = parseInt(el.innerText) + delta;
+            if (val < 0) val = 0;
+            if (val > 10) val = 10;
+            el.innerText = val;
+        }
         const tipos = ['water','beer','stop','baby'];
-        let total = 0;
+        let subtotal = 0;
         tipos.forEach(t => {
             const e = document.getElementById(`extra-${t}-${id}`);
-            if (e) total += parseInt(e.innerText) * _extrasPrecios[t];
+            if (e) subtotal += parseInt(e.innerText) * _extrasPrecios[t];
         });
+        const rtCheck = document.getElementById(`extras-rt-${id}`);
+        const isRT = rtCheck && rtCheck.checked;
+        const total = isRT ? subtotal * 2 : subtotal;
+        const rtPrice = document.getElementById(`extras-rt-price-${id}`);
+        if (rtPrice) rtPrice.innerText = subtotal > 0 ? `(+${formatExtraPrice(subtotal)})` : '';
         const totalEl = document.getElementById(`extras-total-${id}`);
         const amountEl = document.getElementById(`extras-amount-${id}`);
         if (totalEl && amountEl) {
             totalEl.style.display = total > 0 ? 'block' : 'none';
-            amountEl.innerText = `$${total} USD`;
+            amountEl.innerText = formatExtraPrice(total);
         }
     }
 
@@ -2620,7 +2650,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 parts.push(`${_extrasNombres[t][lang]} x${el.innerText} ($${parseInt(el.innerText) * _extrasPrecios[t]} USD)`);
             }
         });
-        return parts.length > 0 ? parts.join(', ') : '';
+        const rtCheck = document.getElementById(`extras-rt-${id}`);
+        const isRT = rtCheck && rtCheck.checked;
+        if (parts.length === 0) return '';
+        let text = parts.join(', ');
+        if (isRT) text += (lang === 'en' ? ' — Also for return trip (x2)' : ' — También en regreso (x2)');
+        return text;
     }
 
     function getExtrasTotal(id) {
