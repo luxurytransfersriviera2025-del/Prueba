@@ -2766,14 +2766,21 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             guardarDatosForm(openId);
             f.classList.remove('open');
             f.closest('.tarjeta').classList.remove('expanded');
+            // Ocultar totales de extras solo si se está cambiando a otra tarjeta
+            if (openId !== id) {
+                const extrasTotal = document.getElementById('extras-total-' + openId);
+                const totalConExtras = document.getElementById('total-con-extras-' + openId);
+                if (extrasTotal) extrasTotal.style.display = 'none';
+                if (totalConExtras) totalConExtras.style.display = 'none';
+            }
         });
 
         if (!isOpen) {
             form.classList.add('open');
             tarjeta.classList.add('expanded');
-            // Pre-llenar con datos guardados
             rellenarDatosForm(id);
-            // Scroll al inicio de la tarjeta, no al campo activo
+            // Restaurar totales de extras si los había
+            cambiarExtra(id, '_rt', 0);
             setTimeout(() => tarjeta.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
         }
     }
