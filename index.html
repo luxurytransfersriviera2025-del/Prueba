@@ -818,7 +818,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         <div class="card-content-clean">
                             <h3 class="vehicle-name-clean" id="veh-title-3">Comfort Van</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-3">Espacio inteligente y confort total. La opción ideal para familias o grupos de amigos que buscan viajar juntos con seguridad.</p>
-                            <div><span class="vehicle-capacity-clean"><i class="fas fa-users"></i> 1-8 Pax</span></div>
+                            <div><span class="vehicle-capacity-clean"><i class="fas fa-users"></i> 1-7 Pax</span></div>
                             <a href="#seccion-quote" class="btn-reservar-clean" id="btn-quote-3">Cotizar Ahora</a>
                         </div>
                     </div>
@@ -2307,9 +2307,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>`;
             } else {
                 if (pax <= 3)  divRes.innerHTML += crearCard("CLASSIC SEDAN",   "1-3 Pax",  cp(p.sedan),    moneda, zonaOrigen, imgUrlsErtiga,     rutaLabel);
-                if (pax <= 7)  divRes.innerHTML += crearCard("COMFORT VAN",     "4-7 Pax",  cp(p.van),      moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
+                if (pax <= 7)  divRes.innerHTML += crearCard("COMFORT VAN",     "1-7 Pax",  cp(p.van),      moneda, zonaOrigen, imgUrlTransporter, rutaLabel);
                 if (pax <= 10) divRes.innerHTML += crearCard("FAMILY VAN",      "8-10 Pax", cp(p.small),    moneda, zonaOrigen, imgUrlToyotaGL,    rutaLabel);
-                if (pax <= 15) divRes.innerHTML += crearCard("GRAND SPRINTER",  currentLang === 'en' ? 'Up to 15 Pax' : 'Hasta 15 Pax', cp(p.sprinter), moneda, zonaOrigen, imgUrlSprinter, rutaLabel);
+                if (pax <= 15) divRes.innerHTML += crearCard("GRAND SPRINTER",  "1-15 Pax", cp(p.sprinter), moneda, zonaOrigen, imgUrlSprinter, rutaLabel);
                 if (pax <= 5)  divRes.innerHTML += crearCard("LUXURY VIP",      "1-5 Pax",  cp(p.luxury),   moneda, zonaOrigen, imgUrlSuburban,    rutaLabel);
             }
             divRes.style.display = 'block';
@@ -2461,6 +2461,50 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         <input type="text" id="vuelo-regreso-${id}" placeholder="${isEN ? 'Optional' : 'Opcional'}">
                     </div>` : ''}
                 </div>
+                <!-- OPTIONAL EXTRAS -->
+                <div style="background:#f8f9fa; border-radius:10px; padding:15px; margin-bottom:16px; border:1px solid #e9ecef;">
+                    <div style="font-size:11px; font-weight:900; color:var(--navy-bg); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; font-family:var(--font-title);">
+                        <i class="fas fa-plus-circle" style="color:var(--gold);"></i> ${isEN ? 'Optional Extras' : 'Extras Opcionales'} <span style="font-size:10px; color:#888; font-weight:400; text-transform:none;">(${isEN ? 'paid on board' : 'se pagan al abordar'})</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#888; font-weight:400;">$2</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-water-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:#888; font-weight:400;">$4</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-beer-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">📍 ${isEN ? 'Extra Stop' : 'Parada Extra'} <span style="color:#888; font-weight:400;">$20</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','stop',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-stop-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','stop',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🪑 ${isEN ? 'Baby Seat' : 'Silla Bebé'} <span style="color:#888; font-weight:400;">$15</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','baby',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-baby-${id}" style="font-weight:700; color:var(--navy-bg); min-width:16px; text-align:center;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','baby',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="extras-total-${id}" style="margin-top:10px; text-align:right; font-size:13px; font-weight:700; color:var(--navy-bg); display:none;">
+                        ${isEN ? 'Extras total' : 'Total extras'}: <span style="color:var(--action-green);" id="extras-amount-${id}">$0 USD</span>
+                    </div>
+                </div>
+
                 <div class="form-card-notes">
                     <div class="input-wrapper">
                         <label>${isEN ? 'Notes / Luggage / Baby Seats' : 'Notas / Equipaje / Sillas de Bebé'}</label>
@@ -2535,6 +2579,60 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         document.activeElement.blur();
     }
 
+    // Extras opcionales
+    const _extrasPrecios = { water: 2, beer: 4, stop: 20, baby: 15 };
+    const _extrasNombres = {
+        water: { en: 'Water Bottle', es: 'Agua' },
+        beer:  { en: 'Beer', es: 'Cerveza' },
+        stop:  { en: 'Extra Stop', es: 'Parada Extra' },
+        baby:  { en: 'Baby Seat', es: 'Silla Bebé' }
+    };
+
+    function cambiarExtra(id, tipo, delta) {
+        const el = document.getElementById(`extra-${tipo}-${id}`);
+        if (!el) return;
+        let val = parseInt(el.innerText) + delta;
+        if (val < 0) val = 0;
+        if (val > 10) val = 10;
+        el.innerText = val;
+        // Calcular total extras
+        const tipos = ['water','beer','stop','baby'];
+        let total = 0;
+        tipos.forEach(t => {
+            const e = document.getElementById(`extra-${t}-${id}`);
+            if (e) total += parseInt(e.innerText) * _extrasPrecios[t];
+        });
+        const totalEl = document.getElementById(`extras-total-${id}`);
+        const amountEl = document.getElementById(`extras-amount-${id}`);
+        if (totalEl && amountEl) {
+            totalEl.style.display = total > 0 ? 'block' : 'none';
+            amountEl.innerText = `$${total} USD`;
+        }
+    }
+
+    function getExtrasText(id) {
+        const tipos = ['water','beer','stop','baby'];
+        const lang = currentLang;
+        const parts = [];
+        tipos.forEach(t => {
+            const el = document.getElementById(`extra-${t}-${id}`);
+            if (el && parseInt(el.innerText) > 0) {
+                parts.push(`${_extrasNombres[t][lang]} x${el.innerText} ($${parseInt(el.innerText) * _extrasPrecios[t]} USD)`);
+            }
+        });
+        return parts.length > 0 ? parts.join(', ') : '';
+    }
+
+    function getExtrasTotal(id) {
+        const tipos = ['water','beer','stop','baby'];
+        let total = 0;
+        tipos.forEach(t => {
+            const el = document.getElementById(`extra-${t}-${id}`);
+            if (el) total += parseInt(el.innerText) * _extrasPrecios[t];
+        });
+        return total;
+    }
+
     function abrirFormCard(id, datosCard) {
         const form = document.getElementById('form-' + id);
         const tarjeta = document.getElementById(id);
@@ -2593,7 +2691,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             horaVueltaVal  = convertirHora12h(document.getElementById('horaVuelta').value);
             fechaVueltaVal = document.getElementById('fechaVuelta').value;
         }
-        const notasFinales = notas + (pago ? ('\n' + (currentLang === 'en' ? 'Preferred Payment: ' : 'Método de Pago: ') + pago) : '');
+        const notasFinales = notas 
+            + (pago ? ('\n' + (currentLang === 'en' ? 'Preferred Payment: ' : 'Método de Pago: ') + pago) : '')
+            + (getExtrasText(id) ? ('\n' + (currentLang === 'en' ? 'Optional Extras: ' : 'Extras opcionales: ') + getExtrasText(id)) : '');
         const datosVenta = {
             esVenta: true, codigo: codigoUnico,
             nombre, telefono: lada + " " + tel, email,
