@@ -629,6 +629,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         .btn-enviar-reserva:hover { background:var(--action-green-hover); transform:translateY(2px); box-shadow:0 3px 0 #007a3d; }
                         @media (max-width: 768px) { .form-card-grid { grid-template-columns: 1fr 1fr; } .form-card-notes { grid-template-columns: 1fr; } }
                         @media (max-width: 480px) { .form-card-grid { grid-template-columns: 1fr; } }
+                        .extras-grid-2 { display:grid !important; grid-template-columns:1fr 1fr !important; gap:8px; }
+                        .extras-grid-4 { display:grid !important; grid-template-columns:1fr 1fr 1fr 1fr !important; gap:8px; }
+                        @media (max-width: 480px) { .extras-grid-4 { grid-template-columns:1fr 1fr !important; } }
                     </style>
 
                     <!-- FILA 1 ONE WAY: Origen | Destino -->
@@ -1930,6 +1933,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         "CHETUMAL":                ["CHETUMAL"],
         "HOLBOX":                  ["HOLBOX","CHIQUILA"],
         "VALLADOLID":              ["VALLADOLID"],
+        "CHICHEN ITZA":            ["CHICHEN ITZA","CHICHÉN ITZÁ","CHICHEN","ZONA ARQUEOLOGICA CHICHEN","ARCHAEOLOGICAL ZONE CHICHEN","CHICHEN ITZA YUC","PISTE","PISTÉ"],
         "MERIDA":                  ["MERIDA"],
         "FELIPE CARRILLO PUERTO":  ["FELIPE CARRILLO PUERTO","CARRILLO PUERTO"]
     };
@@ -1987,6 +1991,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 if (zona) break;
             }
         }
+        // Zonas bloqueadas — sin precio, van a Servicio Personalizado
+        const zonasBlockeadas = ['CHICHEN ITZA'];
+        if (zona && zonasBlockeadas.includes(zona)) return null;
         return zona;
     }
 
@@ -2474,7 +2481,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
                     ${tipo === 'REDONDO' ? `
                     <!-- ROUND TRIP: 4 extras en 1 fila, 4 columnas -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px;">
+                    <div class="extras-grid-4" style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px;">
                         <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 10px; border:1px solid #e0e0e0;">
                             <span style="font-size:12px; font-weight:600; color:#333;">🥤 <span style="color:#888;">${formatExtraPrice(2)}</span><br><span style="color:var(--action-green); font-size:10px;">${isEN ? 'Trip' : 'Ida'}</span></span>
                             <div style="display:flex; align-items:center; gap:5px;">
@@ -2509,8 +2516,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                         </div>
                     </div>
                     ` : `
-                    <!-- ONE WAY: 2 extras compactos -->
-                    <div style="display:flex; flex-direction:column; gap:6px;">
+                    <!-- ONE WAY: 2 extras en 1 fila, 2 columnas -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; min-width:0;">
                         <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 12px; border:1px solid #e0e0e0;">
                             <span style="font-size:13px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span></span>
                             <div style="display:flex; align-items:center; gap:8px;">
