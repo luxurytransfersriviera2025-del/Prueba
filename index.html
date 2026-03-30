@@ -2473,64 +2473,58 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>
 
                     ${tipo === 'REDONDO' ? `
-                    <!-- ROUND TRIP: 4 extras en 1 fila -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px;">
-                        <div style="background:#fff; border-radius:8px; padding:10px 8px; border:1px solid #e0e0e0; text-align:center;">
-                            <div style="font-size:12px; font-weight:700; color:#333; margin-bottom:6px;">🥤 ${isEN ? 'Water' : 'Agua'}<br><span style="color:var(--action-green); font-size:10px;">${isEN ? 'Trip' : 'Ida'}</span></div>
-                            <div style="font-size:10px; color:#888; margin-bottom:8px;">${formatExtraPrice(2)}</div>
-                            <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+                    <!-- ROUND TRIP: 4 extras compactos -->
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water' : 'Agua'} <span style="color:var(--action-green); font-size:11px; font-weight:500;">${isEN ? 'Trip' : 'Ida'}</span> <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
                                 <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-water-${id}" style="font-weight:700; color:var(--navy-bg); min-width:18px; text-align:center; font-size:14px;">0</span>
+                                <span id="extra-water-${id}" style="font-weight:700;color:var(--navy-bg);min-width:16px;text-align:center;">0</span>
                                 <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
-                        <div style="background:#f0f8ff; border-radius:8px; padding:10px 8px; border:1px solid #cce0ff; text-align:center;">
-                            <div style="font-size:12px; font-weight:700; color:#333; margin-bottom:6px;">🥤 ${isEN ? 'Water' : 'Agua'}<br><span style="color:var(--action-green); font-size:10px;">${isEN ? 'Return' : 'Regreso'}</span></div>
-                            <div style="font-size:10px; color:#888; margin-bottom:8px;">${formatExtraPrice(2)}</div>
-                            <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#f0f8ff; border-radius:8px; padding:8px 12px; border:1px solid #cce0ff;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water' : 'Agua'} <span style="color:var(--action-green); font-size:11px; font-weight:500;">${isEN ? 'Return' : 'Regreso'}</span> <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
                                 <button type="button" onclick="cambiarExtra('${id}','waterR',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-waterR-${id}" style="font-weight:700; color:var(--navy-bg); min-width:18px; text-align:center; font-size:14px;">0</span>
+                                <span id="extra-waterR-${id}" style="font-weight:700;color:var(--navy-bg);min-width:16px;text-align:center;">0</span>
                                 <button type="button" onclick="cambiarExtra('${id}','waterR',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
-                        <div style="background:#fff; border-radius:8px; padding:10px 8px; border:1px solid #e0e0e0; text-align:center;">
-                            <div style="font-size:12px; font-weight:700; color:#333; margin-bottom:6px;">🍺 ${isEN ? 'Beer' : 'Cerveza'}<br><span style="color:var(--action-green); font-size:10px;">${isEN ? 'Trip' : 'Ida'}</span></div>
-                            <div style="font-size:10px; color:#888; margin-bottom:8px;">${formatExtraPrice(4)}</div>
-                            <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:var(--action-green); font-size:11px; font-weight:500;">${isEN ? 'Trip' : 'Ida'}</span> <span style="color:#aaa; font-size:11px;">${formatExtraPrice(4)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
                                 <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-beer-${id}" style="font-weight:700; color:var(--navy-bg); min-width:18px; text-align:center; font-size:14px;">0</span>
+                                <span id="extra-beer-${id}" style="font-weight:700;color:var(--navy-bg);min-width:16px;text-align:center;">0</span>
                                 <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
-                        <div style="background:#f0f8ff; border-radius:8px; padding:10px 8px; border:1px solid #cce0ff; text-align:center;">
-                            <div style="font-size:12px; font-weight:700; color:#333; margin-bottom:6px;">🍺 ${isEN ? 'Beer' : 'Cerveza'}<br><span style="color:var(--action-green); font-size:10px;">${isEN ? 'Return' : 'Regreso'}</span></div>
-                            <div style="font-size:10px; color:#888; margin-bottom:8px;">${formatExtraPrice(4)}</div>
-                            <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#f0f8ff; border-radius:8px; padding:8px 12px; border:1px solid #cce0ff;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:var(--action-green); font-size:11px; font-weight:500;">${isEN ? 'Return' : 'Regreso'}</span> <span style="color:#aaa; font-size:11px;">${formatExtraPrice(4)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
                                 <button type="button" onclick="cambiarExtra('${id}','beerR',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-beerR-${id}" style="font-weight:700; color:var(--navy-bg); min-width:18px; text-align:center; font-size:14px;">0</span>
+                                <span id="extra-beerR-${id}" style="font-weight:700;color:var(--navy-bg);min-width:16px;text-align:center;">0</span>
                                 <button type="button" onclick="cambiarExtra('${id}','beerR',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
                     </div>
                     ` : `
-                    <!-- ONE WAY: 2 extras en 1 fila -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                        <div style="background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0; text-align:center;">
-                            <div style="font-size:13px; font-weight:700; color:#333; margin-bottom:4px;">🥤 ${isEN ? 'Water Bottle' : 'Agua'}</div>
-                            <div style="font-size:11px; color:#888; margin-bottom:8px;">${formatExtraPrice(2)}</div>
-                            <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                                <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-water-${id}" style="font-weight:700; color:var(--navy-bg); min-width:20px; text-align:center; font-size:15px;">0</span>
-                                <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">+</button>
+                    <!-- ONE WAY: 2 extras compactos -->
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-water-${id}" style="font-weight:700;color:var(--navy-bg);min-width:16px;text-align:center;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
-                        <div style="background:#fff; border-radius:8px; padding:10px 12px; border:1px solid #e0e0e0; text-align:center;">
-                            <div style="font-size:13px; font-weight:700; color:#333; margin-bottom:4px;">🍺 ${isEN ? 'Beer' : 'Cerveza'}</div>
-                            <div style="font-size:11px; color:#888; margin-bottom:8px;">${formatExtraPrice(4)}</div>
-                            <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                                <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">−</button>
-                                <span id="extra-beer-${id}" style="font-weight:700; color:var(--navy-bg); min-width:20px; text-align:center; font-size:15px;">0</span>
-                                <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">+</button>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:8px 12px; border:1px solid #e0e0e0;">
+                            <span style="font-size:13px; font-weight:600; color:#333;">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(4)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
+                                <span id="extra-beer-${id}" style="font-weight:700;color:var(--navy-bg);min-width:16px;text-align:center;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#f5f5f5;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
                             </div>
                         </div>
                     </div>
