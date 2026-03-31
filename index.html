@@ -1891,6 +1891,14 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             "CENTRO DE TULUM":z(400,465,495,618,650),"ZONA HOTELERA DE TULUM":z(410,475,505,618,650),
             "AEROPUERTO CANCUN":z(571,581,618,1116,1200),"AEROPUERTO TULUM":z(350,415,445,618,650)
         },
+        "CHETUMAL": {
+            "ZONA HOTELERA DE CANCUN":z(644,649,681,1116,1150),"CENTRO DE CANCUN":z(644,649,681,1116,1150),
+            "COSTA MUJERES":z(660,690,720,1280,1300),"PLAYA MUJERES":z(644,660,690,1220,1270),"PUERTO JUAREZ":z(620,630,650,1190,1250),
+            "PLAYA PARAISO":z(525,575,595,990,1025),"PUERTO MORELOS":z(565,580,600,1100,1200),"PLAYA DEL CARMEN":z(510,570,590,970,1000),
+            "PUERTO AVENTURAS":z(495,560,570,950,980),"AKUMAL":z(485,555,585,975,1000),
+            "CENTRO DE TULUM":z(450,515,545,918,950),"ZONA HOTELERA DE TULUM":z(476,541,571,969,992),
+            "AEROPUERTO CANCUN":z(577,587,624,1116,1250),"AEROPUERTO TULUM":z(450,515,545,918,950)
+        },
         "VALLADOLID": {
             "ZONA HOTELERA DE CANCUN":z(381,386,418,750,1056),"CENTRO DE CANCUN":z(381,386,418,750,1056),
             "COSTA MUJERES":z(410,440,465,1100,1200),"PLAYA MUJERES":z(395,410,440,1020,1090),"PUERTO JUAREZ":z(381,386,420,950,1080),
@@ -1916,6 +1924,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
     const diccionarioZonas = {
         "AEROPUERTO CANCUN":       ["AEROPUERTO INTERNACIONAL DE CANCUN","CANCUN INTERNATIONAL AIRPORT","AEROPUERTO CANCUN","AEROPUERTO DE CANCUN","CUN AIRPORT","CUN","TERMINAL 2","TERMINAL 3","TERMINAL 4","TERMINAL CANCUN"],
+        "AEROPUERTO TULUM":        ["AEROPUERTO TULUM","TQO","AEROPUERTO INTERNACIONAL DE TULUM","AEROPUERTO FELIPE CARRILLO PUERTO","TULUM AIRPORT"],
         "PUERTO JUAREZ":           ["PUERTO JUAREZ", "PUERTO JUÁREZ", "PUNTA SAM", "ISLA MUJERES FERRY", "FERRY TERMINAL", "EMBARCADERO JUAREZ", "EL EMBARCADERO"],
         "ZONA HOTELERA DE TULUM":  ["TULUM HOTEL ZONE","ZONA HOTELERA TULUM","PAPAYA PLAYA","NOMADE","AZULIK","ESTRELLITA","LIBELULA","CASA PHOENIX"],
         "CENTRO DE TULUM":         ["TULUM DOWNTOWN","CENTRO DE TULUM","TULUM PUEBLO","TULUM, Q.R.","ZAMA","VELETA"],
@@ -1935,7 +1944,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         "VALLADOLID":              ["VALLADOLID"],
         "CHICHEN ITZA":            ["CHICHEN ITZA","CHICHÉN ITZÁ","CHICHEN","ZONA ARQUEOLOGICA CHICHEN","ARCHAEOLOGICAL ZONE CHICHEN","CHICHEN ITZA YUC","PISTE","PISTÉ"],
         "MERIDA":                  ["MERIDA"],
-        "FELIPE CARRILLO PUERTO":  ["FELIPE CARRILLO PUERTO","CARRILLO PUERTO"]
+        "FELIPE CARRILLO PUERTO":  ["CARRILLO PUERTO CENTRO","PUEBLO CARRILLO PUERTO"]
     };
     const zonasGPS = [
         { nombre: "AEROPUERTO CANCUN",       latMin: 21.025, latMax: 21.045, lonMin: -86.895, lonMax: -86.855 },
@@ -1972,7 +1981,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     function detectarZonaPorCP(cp) {
         if (!cp) return null;
         for (let codigo in zonasCP) {
-            if (cp.startsWith(codigo) || cp.includes(codigo)) return zonasCP[codigo];
+            if (cp === codigo || cp.startsWith(codigo)) return zonasCP[codigo];
         }
         return null;
     }
@@ -1993,7 +2002,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             }
         }
         // Zonas bloqueadas — sin precio, van a Servicio Personalizado
-        const zonasBlockeadas = ['CHICHEN ITZA'];
+        const zonasBlockeadas = ['CHICHEN ITZA', 'VALLADOLID', 'MERIDA', 'HOLBOX', 'BACALAR', 'MAHAHUAL', 'CHETUMAL', 'FELIPE CARRILLO PUERTO'];
         if (zona && zonasBlockeadas.includes(zona)) return null;
         return zona;
     }
@@ -2004,7 +2013,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const destino = document.getElementById('destino');
         const btnAccion = document.getElementById('btnAccion');
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        if(modo === 'personalizado') document.getElementById('btnPersonalizado').classList.add('active');
+        const btnPerso = document.getElementById('btnPersonalizado'); if(modo === 'personalizado' && btnPerso) btnPerso.classList.add('active');
         document.getElementById('divSubtipoServicio').style.display = 'none';
         document.getElementById('radioTipoViaje').style.display = 'flex';
         document.getElementById('divVueloInfo').style.display = 'contents';
