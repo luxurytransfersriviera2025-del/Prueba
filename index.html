@@ -32,7 +32,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="https://i.imgur.com/lS3Crlx.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
@@ -767,7 +767,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     <div class="service-desc" id="serv-desc-2">Traslados directos y exclusivos a cualquier hotel, resort o Airbnb en la Riviera Maya.</div>
                 </div>
             </a>
-            <a href="#seccion-quote" class="service-card" style="text-decoration:none;">
+            <a href="#servicio-personalizado" class="service-card" style="text-decoration:none;" onclick="document.getElementById('custom-tipo').value=document.getElementById('custom-tipo').options[4]?document.getElementById('custom-tipo').options[4].value:'';document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});return false;">
                 <img src="https://images.unsplash.com/photo-1518638150340-f706e86654de?w=600&h=400&fit=crop" class="service-img" alt="Tours">
                 <div class="service-info">
                     <div class="service-icon"><i class="fas fa-globe-americas"></i></div>
@@ -775,7 +775,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     <div class="service-desc" id="serv-desc-3">¿Quieres visitar Chichén Itzá o Xcaret? Te llevamos con un servicio privado y flexible.</div>
                 </div>
             </a>
-            <a href="#servicio-personalizado" class="service-card" style="text-decoration:none;">
+            <a href="#servicio-personalizado" class="service-card" style="text-decoration:none;" onclick="document.getElementById('custom-tipo').value=document.getElementById('custom-tipo').options[2]?document.getElementById('custom-tipo').options[2].value:'';document.getElementById('servicio-personalizado').scrollIntoView({behavior:'smooth'});return false;">
                 <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&h=400&fit=crop" class="service-img" alt="Hourly">
                 <div class="service-info">
                     <div class="service-icon"><i class="fas fa-clock"></i></div>
@@ -1923,7 +1923,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     }
 
     const diccionarioZonas = {
-        "AEROPUERTO CANCUN":       ["AEROPUERTO INTERNACIONAL DE CANCUN","CANCUN INTERNATIONAL AIRPORT","AEROPUERTO CANCUN","AEROPUERTO DE CANCUN","CUN AIRPORT","CUN","TERMINAL 2","TERMINAL 3","TERMINAL 4","TERMINAL CANCUN"],
+        "AEROPUERTO CANCUN":       ["AEROPUERTO INTERNACIONAL DE CANCUN","CANCUN INTERNATIONAL AIRPORT","AEROPUERTO CANCUN","AEROPUERTO DE CANCUN","CUN AIRPORT","TERMINAL 2","TERMINAL 3","TERMINAL 4","TERMINAL CANCUN"],
         "AEROPUERTO TULUM":        ["AEROPUERTO TULUM","TQO","AEROPUERTO INTERNACIONAL DE TULUM","AEROPUERTO FELIPE CARRILLO PUERTO","TULUM AIRPORT"],
         "PUERTO JUAREZ":           ["PUERTO JUAREZ", "PUERTO JUÁREZ", "PUNTA SAM", "ISLA MUJERES FERRY", "FERRY TERMINAL", "EMBARCADERO JUAREZ", "EL EMBARCADERO"],
         "ZONA HOTELERA DE TULUM":  ["TULUM HOTEL ZONE","ZONA HOTELERA TULUM","PAPAYA PLAYA","NOMADE","AZULIK","ESTRELLITA","LIBELULA","CASA PHOENIX"],
@@ -1962,11 +1962,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         { nombre: "AKUMAL",                  latMin: 20.3000, latMax: 20.4500, lonMin: -87.3500, lonMax: -87.2500 },
         { nombre: "CENTRO DE TULUM",         latMin: 20.1800, latMax: 20.2400, lonMin: -87.5500, lonMax: -87.4600 },
         { nombre: "ZONA HOTELERA DE TULUM",  latMin: 20.0900, latMax: 20.1799, lonMin: -87.4700, lonMax: -87.3900 },
-        { nombre: "MERIDA",                  latMin: 20.8500, latMax: 21.1000, lonMin: -89.7500, lonMax: -89.5000 },
-        { nombre: "VALLADOLID",              latMin: 20.6800, latMax: 20.7500, lonMin: -88.2500, lonMax: -88.1500 },
         { nombre: "CHICHEN ITZA",            latMin: 20.6500, latMax: 20.7100, lonMin: -88.6500, lonMax: -88.4500 }
     ];
     const zonasCP = { "7750": "CENTRO DE CANCUN", "7751": "CENTRO DE CANCUN", "77520": "PUERTO JUAREZ", "77580": "PUERTO MORELOS", "77710": "PLAYA DEL CARMEN", "77712": "PLAYA DEL CARMEN", "77714": "PLAYA DEL CARMEN", "77733": "PUERTO AVENTURAS", "77776": "AKUMAL", "77760": "CENTRO DE TULUM", "77780": "CENTRO DE TULUM", "77310": "HOLBOX", "77930": "BACALAR", "770": "CHETUMAL", "970": "MERIDA", "971": "MERIDA", "972": "MERIDA", "973": "MERIDA", "9778": "VALLADOLID" };
+
+    // Zonas de larga distancia — requieren coincidencia estricta de palabra completa
+    const zonasLargaDistancia = ['VALLADOLID', 'MERIDA', 'BACALAR', 'MAHAHUAL', 'CHETUMAL', 'HOLBOX', 'FELIPE CARRILLO PUERTO'];
 
     function detectarZonaPorGPS(lat, lng) {
         if (!lat || !lng) return null;
@@ -1995,14 +1996,22 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (!zona && lugar) {
             const up = lugar.toUpperCase();
             for (let key in diccionarioZonas) {
+                const esLargaDistancia = zonasLargaDistancia.includes(key);
                 for (let kw of diccionarioZonas[key]) {
-                    if (up.includes(kw)) { zona = key; break; }
+                    if (esLargaDistancia) {
+                        // Coincidencia estricta: palabra completa con \b
+                        const regex = new RegExp('\\b' + kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+                        if (regex.test(up)) { zona = key; break; }
+                    } else {
+                        // Coincidencia normal para Riviera Maya y Cancún
+                        if (up.includes(kw)) { zona = key; break; }
+                    }
                 }
                 if (zona) break;
             }
         }
         // Zonas bloqueadas — sin precio, van a Servicio Personalizado
-        const zonasBlockeadas = ['CHICHEN ITZA', 'VALLADOLID', 'MERIDA', 'HOLBOX', 'BACALAR', 'MAHAHUAL', 'CHETUMAL', 'FELIPE CARRILLO PUERTO'];
+        const zonasBlockeadas = ['CHICHEN ITZA'];
         if (zona && zonasBlockeadas.includes(zona)) return null;
         return zona;
     }
