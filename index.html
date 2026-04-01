@@ -2954,7 +2954,6 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             document.getElementById('loadingOverlay').style.display = 'none';
             if(data.esVenta) {
                 document.getElementById('modalTitle').innerText = t.modalTitleReceived;
-                document.getElementById('modalMainTitle').innerText = t.modalTitleReceived;
                 document.getElementById('modalText').innerText = t.modalTextReceived;
                 // Mensaje personalizado según método de pago
                 const pago = data.pago || '';
@@ -2965,7 +2964,6 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 document.getElementById('modalPayText').innerText = payMsg;
             } else {
                 document.getElementById('modalTitle').innerText = t.modalTitleSent;
-                document.getElementById('modalMainTitle').innerText = t.modalTitleSent;
                 document.getElementById('modalText').innerHTML = t.modalTextSent;
                 document.getElementById('modalPayText').innerText = '';
             }
