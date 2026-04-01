@@ -1062,8 +1062,6 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
                 <p class="modal-text" id="modalText">Thank you! We've received your booking request. One of our agents will contact you shortly to confirm your trip details and process your payment.</p>
 
-                <div class="modal-pay-text" id="modalPayText"></div>
-
                 <div class="modal-warning-box">
                     <i class="fas fa-bookmark" style="color:var(--gold); margin-right:6px;"></i><strong id="modalWarningTitle">IMPORTANT:</strong><br>
                     <span id="modalWarningText">Please save your booking number. You will also receive a confirmation email — check your SPAM folder if you don't see it.</span>
@@ -2955,17 +2953,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             if(data.esVenta) {
                 document.getElementById('modalTitle').innerText = t.modalTitleReceived;
                 document.getElementById('modalText').innerText = t.modalTextReceived;
-                // Mensaje personalizado según método de pago
-                const pago = data.pago || '';
-                let payMsg = '';
-                if (pago.includes('PayPal')) payMsg = t.modalPayPaypal;
-                else if (pago.includes('30%') || pago.includes('Cash') || pago.includes('Efectivo')) payMsg = t.modalPayCash;
-                else if (pago.includes('Card') || pago.includes('Tarjeta')) payMsg = t.modalPayCard;
-                document.getElementById('modalPayText').innerText = payMsg;
             } else {
                 document.getElementById('modalTitle').innerText = t.modalTitleSent;
                 document.getElementById('modalText').innerHTML = t.modalTextSent;
-                document.getElementById('modalPayText').innerText = '';
             }
             document.getElementById('modalConfirmacion').style.display = 'flex';
         })
