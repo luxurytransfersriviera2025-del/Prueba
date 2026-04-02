@@ -2628,7 +2628,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (vuelo  && vuelo.value)  _savedFormData.vuelo   = vuelo.value;
         if (vueloR && vueloR.value) _savedFormData.vueloR  = vueloR.value;
         // Guardar extras
-        const tipos = ['water','beer','stop','baby'];
+        const tipos = ['water','beer','waterR','beerR'];
         _savedFormData.extras = {};
         tipos.forEach(t => {
             const el = document.getElementById(`extra-${t}-${id}`);
@@ -2660,7 +2660,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (vueloR && _savedFormData.vueloR)  vueloR.value  = _savedFormData.vueloR;
         // Restaurar extras
         if (_savedFormData.extras) {
-            const tipos = ['water','beer','stop','baby'];
+            const tipos = ['water','beer','waterR','beerR'];
             tipos.forEach(t => {
                 const el = document.getElementById(`extra-${t}-${id}`);
                 if (el && _savedFormData.extras[t]) el.innerText = _savedFormData.extras[t];
@@ -2803,13 +2803,11 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             guardarDatosForm(openId);
             f.classList.remove('open');
             f.closest('.tarjeta').classList.remove('expanded');
-            // Ocultar totales de extras solo si se está cambiando a otra tarjeta
-            if (openId !== id) {
-                const extrasTotal = document.getElementById('extras-total-' + openId);
-                const totalConExtras = document.getElementById('total-con-extras-' + openId);
-                if (extrasTotal) extrasTotal.style.display = 'none';
-                if (totalConExtras) totalConExtras.style.display = 'none';
-            }
+            // Ocultar totales de extras al cerrar cualquier tarjeta
+            const extrasTotal = document.getElementById('extras-total-' + openId);
+            const totalConExtras = document.getElementById('total-con-extras-' + openId);
+            if (extrasTotal) extrasTotal.style.display = 'none';
+            if (totalConExtras) totalConExtras.style.display = 'none';
         });
 
         if (!isOpen) {
