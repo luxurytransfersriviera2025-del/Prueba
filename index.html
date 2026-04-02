@@ -2857,6 +2857,15 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
         const extrasTexto = getExtrasText(id);
         const extrasTotal = getExtrasTotal(id);
+
+        // Capturar cantidades individuales de extras
+        const extraAgua     = parseInt(document.getElementById('extra-water-' + id)  ? document.getElementById('extra-water-' + id).innerText  : 0) || 0;
+        const extraCerveza  = parseInt(document.getElementById('extra-beer-' + id)   ? document.getElementById('extra-beer-' + id).innerText   : 0) || 0;
+        const extraAguaR    = parseInt(document.getElementById('extra-waterR-' + id) ? document.getElementById('extra-waterR-' + id).innerText : 0) || 0;
+        const extraCervezaR = parseInt(document.getElementById('extra-beerR-' + id)  ? document.getElementById('extra-beerR-' + id).innerText  : 0) || 0;
+        const moneda = document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
+        const totalExtrasStr = extrasTotal > 0 ? ('$' + extrasTotal + ' ' + moneda) : '$0';
+
         const notasFinales = notas 
             + (pago ? ('\n' + (currentLang === 'en' ? 'Preferred Payment: ' : 'Método de Pago: ') + pago) : '')
             + (extrasTexto ? ('\n' + (currentLang === 'en' ? 'Optional Extras: ' : 'Extras opcionales: ') + extrasTexto) : '')
@@ -2873,7 +2882,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             notas: notasFinales, vuelo,
             vueloRegreso: document.getElementById('vuelo-regreso-' + id) ? document.getElementById('vuelo-regreso-' + id).value : "",
             vehiculo: datosCard.vehiculo, precio: datosCard.precio,
-            zona: datosCard.zona, idioma: currentLang, pago
+            zona: datosCard.zona, idioma: currentLang, pago,
+            extraAgua, extraCerveza, extraAguaR, extraCervezaR,
+            totalExtras: totalExtrasStr
         };
         document.getElementById('codigoDisplay').innerText = codigoUnico;
         iniciarEnvio(datosVenta);
