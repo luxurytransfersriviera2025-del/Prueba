@@ -2866,10 +2866,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const moneda = document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
         const totalExtrasStr = extrasTotal > 0 ? ('$' + extrasTotal + ' ' + moneda) : '$0';
 
-        const notasFinales = notas 
-            + (pago ? ('\n' + (currentLang === 'en' ? 'Preferred Payment: ' : 'Método de Pago: ') + pago) : '')
-            + (extrasTexto ? ('\n' + (currentLang === 'en' ? 'Optional Extras: ' : 'Extras opcionales: ') + extrasTexto) : '')
-            + (extrasTotal > 0 ? ('\n' + (currentLang === 'en' ? '🧾 TOTAL (Transfer + Extras): $' : '🧾 TOTAL (Traslado + Extras): $') + (parseFloat(datosCard.precio.replace(/[^0-9.]/g,'')) + extrasTotal) + ' ' + moneda) : '');
+        // Notas limpias — solo lo que el cliente escribió
+        const notasFinales = notas;
+
         const datosVenta = {
             esVenta: true, codigo: codigoUnico,
             nombre, telefono: lada + " " + tel, email,
@@ -2930,6 +2929,21 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         // Agregar Precio si aplica
         if(data.precio && data.precio !== t.valToBeQuoted) { 
             msg += `*${l.price}:* ${data.precio}\n`; 
+        }
+
+        // Agregar Método de Pago
+        if(data.pago && data.pago.trim() !== "") {
+            msg += `*${currentLang === 'en' ? 'Payment' : 'Pago'}:* ${data.pago}\n`;
+        }
+
+        // Agregar Extras si hay
+        if(data.extraAgua > 0 || data.extraCerveza > 0 || data.extraAguaR > 0 || data.extraCervezaR > 0) {
+            msg += `\n*${currentLang === 'en' ? 'Extras' : 'Extras'}:*\n`;
+            if(data.extraAgua > 0)     msg += `  🥤 ${currentLang === 'en' ? 'Water (Trip)' : 'Agua (Ida)'}: ${data.extraAgua}\n`;
+            if(data.extraCerveza > 0)  msg += `  🍺 ${currentLang === 'en' ? 'Beer (Trip)' : 'Cerveza (Ida)'}: ${data.extraCerveza}\n`;
+            if(data.extraAguaR > 0)    msg += `  🥤 ${currentLang === 'en' ? 'Water (Return)' : 'Agua (Regreso)'}: ${data.extraAguaR}\n`;
+            if(data.extraCervezaR > 0) msg += `  🍺 ${currentLang === 'en' ? 'Beer (Return)' : 'Cerveza (Regreso)'}: ${data.extraCervezaR}\n`;
+            msg += `  💰 Total Extras: ${data.totalExtras}\n`;
         }
 
         // Agregar Itinerario (Importante para tours)
