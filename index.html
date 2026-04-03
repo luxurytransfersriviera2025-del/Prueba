@@ -2883,7 +2883,14 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             vehiculo: datosCard.vehiculo, precio: datosCard.precio,
             zona: datosCard.zona, idioma: currentLang, pago,
             extraAgua, extraCerveza, extraAguaR, extraCervezaR,
-            totalExtras: totalExtrasStr
+            totalExtras: totalExtrasStr,
+            cupon: (() => {
+                const tipoActivo = document.getElementById('tipoServicio') ? document.getElementById('tipoServicio').value : 'SENCILLO';
+                const el = tipoActivo === 'REDONDO'
+                    ? document.getElementById('codigoPromo')
+                    : document.getElementById('codigoPromoOneWay');
+                return el ? el.value.trim().toUpperCase() : '';
+            })()
         };
         document.getElementById('codigoDisplay').innerText = codigoUnico;
         iniciarEnvio(datosVenta);
