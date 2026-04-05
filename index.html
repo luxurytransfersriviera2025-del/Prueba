@@ -2864,7 +2864,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const extraAguaR    = parseInt(document.getElementById('extra-waterR-' + id) ? document.getElementById('extra-waterR-' + id).innerText : 0) || 0;
         const extraCervezaR = parseInt(document.getElementById('extra-beerR-' + id)  ? document.getElementById('extra-beerR-' + id).innerText  : 0) || 0;
         const moneda = document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
-        const totalExtrasStr = extrasTotal > 0 ? ('$' + extrasTotal + ' ' + moneda) : '$0';
+        const totalExtrasStr = extrasTotal > 0 ? ('$' + Math.round(convertirPrecio(extrasTotal, moneda)) + ' ' + moneda) : '$0';
 
         // Notas limpias — solo lo que el cliente escribió
         const notasFinales = notas;
