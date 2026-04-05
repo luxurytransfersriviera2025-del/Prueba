@@ -526,6 +526,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             .extras-grid-4 > div, div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] > div { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; padding: 8px 10px !important; }
             .extras-grid-4 > div > div, div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] > div > div { width: 100% !important; justify-content: center !important; }
             .extras-grid-4 > div > div > button, div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] > div > div > button { width: 28px !important; height: 28px !important; font-size: 14px !important; flex-shrink: 0; }
+            .extra-card-ow { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; padding: 8px 10px !important; }
+            .extra-card-ow > div { width: 100% !important; justify-content: center !important; }
             .feature-grid { flex-wrap: wrap; gap: 6px; }
             .feature-tag { font-size: 11px; padding: 4px 8px; }
             .vehicle-img-clean { height: 200px; } 
@@ -2570,8 +2572,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>
                     ` : `
                     <!-- ONE WAY: 2 extras en 1 fila, 2 columnas -->
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; min-width:0;">
-                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc;">
+                    <div class="extras-ow-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; min-width:0;">
+                        <div class="extra-card-ow" style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc;">
                             <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span></span>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <button type="button" onclick="cambiarExtra('${id}','water',-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#555;font-weight:700;">−</button>
@@ -2579,7 +2581,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                                 <button type="button" onclick="cambiarExtra('${id}','water',+1)" style="width:26px;height:26px;border-radius:50%;border:none;background:var(--navy-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">+</button>
                             </div>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc;">
+                        <div class="extra-card-ow" style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc;">
                             <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🍺 ${isEN ? 'Beer' : 'Cerveza'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(4)}</span></span>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#555;font-weight:700;">−</button>
