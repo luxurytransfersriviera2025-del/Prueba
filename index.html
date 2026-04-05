@@ -2712,22 +2712,29 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
         const tipos = ['water','beer','waterR','beerR'];
         const monedaActual = getExtrasMoneda();
-        let extrasTotal = 0;
+        // Total en USD (para conversión del grand total)
+        let extrasTotalUSD = 0;
+        // Total en moneda local (para mostrar al cliente)
+        let extrasTotalLocal = 0;
         tipos.forEach(t => {
             const e = document.getElementById(`extra-${t}-${id}`);
             if (e) {
                 const usdUnit = _extrasPrecios[t] || 0;
-                const unit = monedaActual === 'CAD' ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5)) : usdUnit;
-                extrasTotal += parseInt(e.innerText) * unit;
+                const localUnit = monedaActual === 'CAD'
+                    ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5))
+                    : usdUnit;
+                extrasTotalUSD   += parseInt(e.innerText) * usdUnit;
+                extrasTotalLocal += parseInt(e.innerText) * localUnit;
             }
         });
 
-        // Actualizar total dentro del formulario
+        // Actualizar total dentro del formulario (mostrar en moneda local)
         const totalEl = document.getElementById(`extras-total-${id}`);
         const amountEl = document.getElementById(`extras-amount-${id}`);
         if (totalEl && amountEl) {
-            totalEl.style.display = extrasTotal > 0 ? 'block' : 'none';
-            amountEl.innerText = formatExtraPrice(extrasTotal);
+            totalEl.style.display = extrasTotalLocal > 0 ? 'block' : 'none';
+            const symbol = monedaActual === 'CAD' ? 'C$' : '$';
+            amountEl.innerText = `${symbol}${extrasTotalLocal} ${monedaActual}`;
         }
 
         // Actualizar grand total en la tarjeta de precio
@@ -2735,16 +2742,16 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const extrasLineaEl = document.getElementById(`extras-linea-${id}`);
         const totalConExtrasEl = document.getElementById(`total-con-extras-${id}`);
         if (grandTotalEl && totalConExtrasEl) {
-            if (extrasTotal > 0) {
-                // Obtener precio base de la tarjeta
+            if (extrasTotalLocal > 0) {
                 const priceEl = document.querySelector(`#${id} .price-current`);
                 const precioBase = priceEl ? priceEl.innerText.replace(/[^0-9.]/g,'') : '0';
                 const moneda = getExtrasMoneda();
                 const precioBaseNum = parseFloat(precioBase) || 0;
-                const extraConvertido = convertirPrecio(extrasTotal, moneda);
-                const grandTotal = Math.round(precioBaseNum + extraConvertido);
+                // Para CAD usamos total local directamente, para otros convertimos desde USD
+                const extraParaTotal = moneda === 'CAD' ? extrasTotalLocal : convertirPrecio(extrasTotalUSD, moneda);
+                const grandTotal = Math.round(precioBaseNum + extraParaTotal);
                 const symbol = moneda === 'MXN' ? '$' : moneda === 'CAD' ? 'C$' : '$';
-                if (extrasLineaEl) extrasLineaEl.innerText = `+${formatExtraPrice(extrasTotal)}`;
+                if (extrasLineaEl) extrasLineaEl.innerText = `+${symbol}${extrasTotalLocal} ${moneda}`;
                 grandTotalEl.innerText = `${symbol}${grandTotal} ${moneda}`;
                 totalConExtrasEl.style.display = 'block';
             } else {
@@ -2756,11 +2763,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     function getExtrasText(id) {
         const tipos = ['water','beer','waterR','beerR'];
         const lang = currentLang;
+        const monedaActual = getExtrasMoneda();
+        const symbol = monedaActual === 'CAD' ? 'C$' : '$';
         const parts = [];
         tipos.forEach(t => {
             const el = document.getElementById(`extra-${t}-${id}`);
             if (el && parseInt(el.innerText) > 0) {
-                parts.push(`${_extrasNombres[t][lang]} x${el.innerText} (${formatExtraPrice(parseInt(el.innerText) * _extrasPrecios[t])})`);
+                const usdUnit = _extrasPrecios[t] || 0;
+                const localUnit = monedaActual === 'CAD'
+                    ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5))
+                    : convertirPrecio(usdUnit, monedaActual);
+                const lineTotal = parseInt(el.innerText) * localUnit;
+                parts.push(`${_extrasNombres[t][lang]} x${el.innerText} (${symbol}${lineTotal} ${monedaActual})`);
             }
         });
         return parts.length > 0 ? parts.join(', ') : '';
