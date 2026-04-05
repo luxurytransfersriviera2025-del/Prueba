@@ -1938,7 +1938,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         }
     };
     function convertirPrecio(usd, moneda) {
-        if (moneda === 'MXN') return Math.round(usd * 18.5);
+        if (moneda === 'MXN') return usd === 2 ? 35 : usd === 4 ? 70 : Math.round(usd * 18.5);
         if (moneda === 'CAD') return Math.round(usd * 18.5 / 11.5);
         return usd;
     }
@@ -2720,9 +2720,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             const e = document.getElementById(`extra-${t}-${id}`);
             if (e) {
                 const usdUnit = _extrasPrecios[t] || 0;
-                const localUnit = monedaActual === 'CAD'
-                    ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5))
-                    : usdUnit;
+                var localUnit;
+                if (monedaActual === 'CAD') {
+                    localUnit = _extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5);
+                } else {
+                    localUnit = convertirPrecio(usdUnit, monedaActual);
+                }
                 extrasTotalUSD   += parseInt(e.innerText) * usdUnit;
                 extrasTotalLocal += parseInt(e.innerText) * localUnit;
             }
@@ -2747,8 +2750,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 const precioBase = priceEl ? priceEl.innerText.replace(/[^0-9.]/g,'') : '0';
                 const moneda = getExtrasMoneda();
                 const precioBaseNum = parseFloat(precioBase) || 0;
-                // Para CAD usamos total local directamente, para otros convertimos desde USD
-                const extraParaTotal = moneda === 'CAD' ? extrasTotalLocal : convertirPrecio(extrasTotalUSD, moneda);
+                // Usar total local directamente (ya calculado correctamente en la moneda del cliente)
+                const extraParaTotal = extrasTotalLocal;
                 const grandTotal = Math.round(precioBaseNum + extraParaTotal);
                 const symbol = moneda === 'MXN' ? '$' : moneda === 'CAD' ? 'C$' : '$';
                 if (extrasLineaEl) extrasLineaEl.innerText = `+${symbol}${extrasTotalLocal} ${moneda}`;
@@ -2770,9 +2773,12 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             const el = document.getElementById(`extra-${t}-${id}`);
             if (el && parseInt(el.innerText) > 0) {
                 const usdUnit = _extrasPrecios[t] || 0;
-                const localUnit = monedaActual === 'CAD'
-                    ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5))
-                    : convertirPrecio(usdUnit, monedaActual);
+                var localUnit;
+                if (monedaActual === 'CAD') {
+                    localUnit = _extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5);
+                } else {
+                    localUnit = convertirPrecio(usdUnit, monedaActual);
+                }
                 const lineTotal = parseInt(el.innerText) * localUnit;
                 parts.push(`${_extrasNombres[t][lang]} x${el.innerText} (${symbol}${lineTotal} ${monedaActual})`);
             }
@@ -2788,40 +2794,20 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             const el = document.getElementById(`extra-${t}-${id}`);
             if (el) {
                 const usdUnit = _extrasPrecios[t] || 0;
-                const unit = monedaActual === 'CAD' ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5)) : usdUnit;
+                var unit;
+                if (monedaActual === 'CAD') {
+                    unit = _extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5);
+                } else {
+                    unit = convertirPrecio(usdUnit, monedaActual);
+                }
                 total += parseInt(el.innerText) * unit;
             }
         });
         return total;
     }
 
-    function getExtrasText(id) {
-        const tipos = ['water','beer','stop','baby'];
-        const lang = currentLang;
-        const parts = [];
-        tipos.forEach(t => {
-            const el = document.getElementById(`extra-${t}-${id}`);
-            if (el && parseInt(el.innerText) > 0) {
-                parts.push(`${_extrasNombres[t][lang]} x${el.innerText} ($${parseInt(el.innerText) * _extrasPrecios[t]} USD)`);
-            }
-        });
-        const rtCheck = document.getElementById(`extras-rt-${id}`);
-        const isRT = rtCheck && rtCheck.checked;
-        if (parts.length === 0) return '';
-        let text = parts.join(', ');
-        if (isRT) text += (lang === 'en' ? ' — Also for return trip (x2)' : ' — También en regreso (x2)');
-        return text;
-    }
 
-    function getExtrasTotal(id) {
-        const tipos = ['water','beer','stop','baby'];
-        let total = 0;
-        tipos.forEach(t => {
-            const el = document.getElementById(`extra-${t}-${id}`);
-            if (el) total += parseInt(el.innerText) * _extrasPrecios[t];
-        });
-        return total;
-    }
+
 
     function abrirFormCard(id, datosCard) {
         const form = document.getElementById('form-' + id);
