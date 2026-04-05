@@ -2849,6 +2849,16 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             rellenarDatosForm(id);
             // Restaurar totales de extras si los había
             cambiarExtra(id, '_rt', 0);
+            // Auto-guardar cuando el cliente escribe, sin esperar a cerrar
+            const camposAutoguardar = ['nombre','email','tel','notas','pago','vuelo','vuelo-regreso'];
+            camposAutoguardar.forEach(campo => {
+                const el = document.getElementById(campo + '-' + id);
+                if (el) el.addEventListener('input', () => guardarDatosForm(id));
+            });
+            const bandera = document.getElementById('bandera-' + id);
+            if (bandera) bandera.addEventListener('change', () => guardarDatosForm(id));
+            const pago = document.getElementById('pago-' + id);
+            if (pago) pago.addEventListener('change', () => guardarDatosForm(id));
             setTimeout(() => tarjeta.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
         }
     }
