@@ -2687,10 +2687,17 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         return document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
     }
 
+    // Precios fijos de extras en CAD para evitar decimales
+    const _extrasPreciosCAD = { 2: 3, 4: 6 };
+
     function formatExtraPrice(usdPrice) {
         const moneda = getExtrasMoneda();
-        const converted = convertirPrecio(usdPrice, moneda);
         const symbol = moneda === 'MXN' ? '$' : moneda === 'CAD' ? 'C$' : '$';
+        if (moneda === 'CAD') {
+            const fixedCAD = _extrasPreciosCAD[usdPrice] || Math.round(usdPrice * 18.5 / 11.5);
+            return `${symbol}${fixedCAD} ${moneda}`;
+        }
+        const converted = convertirPrecio(usdPrice, moneda);
         return `${symbol}${converted} ${moneda}`;
     }
 
@@ -2704,10 +2711,15 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             el.innerText = val;
         }
         const tipos = ['water','beer','waterR','beerR'];
+        const monedaActual = getExtrasMoneda();
         let extrasTotal = 0;
         tipos.forEach(t => {
             const e = document.getElementById(`extra-${t}-${id}`);
-            if (e) extrasTotal += parseInt(e.innerText) * (_extrasPrecios[t] || 0);
+            if (e) {
+                const usdUnit = _extrasPrecios[t] || 0;
+                const unit = monedaActual === 'CAD' ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5)) : usdUnit;
+                extrasTotal += parseInt(e.innerText) * unit;
+            }
         });
 
         // Actualizar total dentro del formulario
@@ -2756,11 +2768,18 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
     function getExtrasTotal(id) {
         const tipos = ['water','beer','waterR','beerR'];
+        const monedaActual = getExtrasMoneda();
         let total = 0;
         tipos.forEach(t => {
             const el = document.getElementById(`extra-${t}-${id}`);
-            if (el) total += parseInt(el.innerText) * (_extrasPrecios[t] || 0);
+            if (el) {
+                const usdUnit = _extrasPrecios[t] || 0;
+                const unit = monedaActual === 'CAD' ? (_extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5)) : usdUnit;
+                total += parseInt(el.innerText) * unit;
+            }
         });
+        return total;
+    }
         return total;
     }
 
@@ -2864,7 +2883,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const extraAguaR    = parseInt(document.getElementById('extra-waterR-' + id) ? document.getElementById('extra-waterR-' + id).innerText : 0) || 0;
         const extraCervezaR = parseInt(document.getElementById('extra-beerR-' + id)  ? document.getElementById('extra-beerR-' + id).innerText  : 0) || 0;
         const moneda = document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
-        const totalExtrasStr = extrasTotal > 0 ? ('$' + Math.round(convertirPrecio(extrasTotal, moneda)) + ' ' + moneda) : '$0';
+        const totalExtrasStr = extrasTotal > 0 ? ('$' + extrasTotal + ' ' + moneda) : '$0';
 
         // Notas limpias — solo lo que el cliente escribió
         const notasFinales = notas;
