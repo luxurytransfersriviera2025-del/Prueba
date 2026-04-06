@@ -2417,7 +2417,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         // precioOriginal = precio sin descuento (para segunda tacha)
         const precioOriginal = tieneDescuento ? Math.round(precio / 0.90) : precio;
 
-        const dataStr = JSON.stringify({ esVenta: true, vehiculo: veh, precio: "$" + precio + " " + moneda, zona: zona }).replace(/"/g, "&quot;");
+        const dataStr = JSON.stringify({ esVenta: true, vehiculo: veh, precio: "$" + precio + " " + moneda, zona: zona, origen: document.getElementById('origen').value, destino: document.getElementById('destino').value }).replace(/"/g, "&quot;");
         let tipoTexto = (tipo === 'SENCILLO') ? t.oneWay : t.roundTrip;
         let iconoTipo = (tipo === 'SENCILLO') ? "fa-arrow-right" : "fa-exchange-alt";
 
@@ -2535,7 +2535,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                     </div>
 
                     ${tipo === 'REDONDO' ? `
-                    <!-- ROUND TRIP: 4 extras en 1 fila, 4 columnas -->
+                    <!-- ROUND TRIP: extras en 2 filas, 4 columnas -->
                     <div class="extras-grid-4" style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px;">
                         <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc;">
                             <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🥤 ${isEN ? 'Water' : 'Agua'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span><br><span style="color:var(--navy-bg); font-size:10px; font-weight:700;">${isEN ? 'Trip' : 'Ida'}</span></span>
@@ -2569,9 +2569,25 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                                 <button type="button" onclick="cambiarExtra('${id}','beerR',+1)" style="width:26px;height:26px;border-radius:50%;border:none;background:var(--navy-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">+</button>
                             </div>
                         </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc; border-color:#D4AF37;">
+                            <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🛑 ${isEN ? 'Stop 20min' : 'Parada 20min'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(25)}</span><br><span style="color:var(--navy-bg); font-size:10px; font-weight:700;">${isEN ? 'Trip' : 'Ida'}</span></span>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <button type="button" onclick="cambiarExtra('${id}','stop',-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#555;font-weight:700;">−</button>
+                                <span id="extra-stop-${id}" style="font-weight:700;color:var(--navy-bg);min-width:18px;text-align:center;font-size:14px;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','stop',+1)" style="width:26px;height:26px;border-radius:50%;border:none;background:var(--navy-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">+</button>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc; border-color:#D4AF37;">
+                            <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🛑 ${isEN ? 'Stop 20min' : 'Parada 20min'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(25)}</span><br><span style="color:var(--navy-bg); font-size:10px; font-weight:700;">${isEN ? 'Return' : 'Regreso'}</span></span>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <button type="button" onclick="cambiarExtra('${id}','stopR',-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#555;font-weight:700;">−</button>
+                                <span id="extra-stopR-${id}" style="font-weight:700;color:var(--navy-bg);min-width:18px;text-align:center;font-size:14px;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','stopR',+1)" style="width:26px;height:26px;border-radius:50%;border:none;background:var(--navy-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">+</button>
+                            </div>
+                        </div>
                     </div>
                     ` : `
-                    <!-- ONE WAY: 2 extras en 1 fila, 2 columnas -->
+                    <!-- ONE WAY: extras en grid 2 columnas -->
                     <div class="extras-ow-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; min-width:0;">
                         <div class="extra-card-ow" style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc;">
                             <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🥤 ${isEN ? 'Water Bottle' : 'Agua'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(2)}</span></span>
@@ -2587,6 +2603,14 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                                 <button type="button" onclick="cambiarExtra('${id}','beer',-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#555;font-weight:700;">−</button>
                                 <span id="extra-beer-${id}" style="font-weight:700;color:var(--navy-bg);min-width:18px;text-align:center;font-size:14px;">0</span>
                                 <button type="button" onclick="cambiarExtra('${id}','beer',+1)" style="width:26px;height:26px;border-radius:50%;border:none;background:var(--navy-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">+</button>
+                            </div>
+                        </div>
+                        <div class="extra-card-ow" style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:10px 14px; border:1px solid #ccc; border-color:#D4AF37;">
+                            <span style="font-size:13px; font-weight:600; color:#333; font-family:var(--font-body);">🛑 ${isEN ? 'Stop 20min' : 'Parada 20min'} <span style="color:#aaa; font-size:11px;">${formatExtraPrice(25)}</span></span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <button type="button" onclick="cambiarExtra('${id}','stop',-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#555;font-weight:700;">−</button>
+                                <span id="extra-stop-${id}" style="font-weight:700;color:var(--navy-bg);min-width:18px;text-align:center;font-size:14px;">0</span>
+                                <button type="button" onclick="cambiarExtra('${id}','stop',+1)" style="width:26px;height:26px;border-radius:50%;border:none;background:var(--navy-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">+</button>
                             </div>
                         </div>
                     </div>
@@ -2644,7 +2668,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (vuelo  && vuelo.value)  _savedFormData.vuelo   = vuelo.value;
         if (vueloR && vueloR.value) _savedFormData.vueloR  = vueloR.value;
         // Guardar extras
-        const tipos = ['water','beer','waterR','beerR'];
+        const tipos = ['water','beer','waterR','beerR','stop','stopR'];
         _savedFormData.extras = {};
         tipos.forEach(t => {
             const el = document.getElementById(`extra-${t}-${id}`);
@@ -2676,7 +2700,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         if (vueloR && _savedFormData.vueloR)  vueloR.value  = _savedFormData.vueloR;
         // Restaurar extras
         if (_savedFormData.extras) {
-            const tipos = ['water','beer','waterR','beerR'];
+            const tipos = ['water','beer','waterR','beerR','stop','stopR'];
             tipos.forEach(t => {
                 const el = document.getElementById(`extra-${t}-${id}`);
                 if (el && _savedFormData.extras[t]) el.innerText = _savedFormData.extras[t];
@@ -2691,20 +2715,23 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     }
 
     // Extras opcionales
-    const _extrasPrecios = { water: 2, beer: 4, waterR: 2, beerR: 4 };
+    const _extrasPrecios = { water: 2, beer: 4, waterR: 2, beerR: 4, stop: 25, stopR: 25 };
     const _extrasNombres = {
         water:  { en: 'Water Bottle (Trip)',  es: 'Agua (Ida)' },
         beer:   { en: 'Beer (Trip)',          es: 'Cerveza (Ida)' },
         waterR: { en: 'Water Bottle (Return)',es: 'Agua (Regreso)' },
-        beerR:  { en: 'Beer (Return)',        es: 'Cerveza (Regreso)' }
+        beerR:  { en: 'Beer (Return)',        es: 'Cerveza (Regreso)' },
+        stop:   { en: '20-Min Stop (Trip)',   es: 'Parada 20 Min (Ida)' },
+        stopR:  { en: '20-Min Stop (Return)', es: 'Parada 20 Min (Regreso)' }
     };
 
     function getExtrasMoneda() {
         return document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
     }
 
-    // Precios fijos de extras en CAD para evitar decimales
-    const _extrasPreciosCAD = { 2: 3, 4: 6 };
+    // Precios fijos por moneda para evitar decimales
+    const _extrasPreciosCAD = { 2: 3, 4: 6, 25: 40 };
+    const _extrasPreciosMXN = { 2: 35, 4: 70, 25: 500 };
 
     function formatExtraPrice(usdPrice) {
         const moneda = getExtrasMoneda();
@@ -2713,8 +2740,11 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             const fixedCAD = _extrasPreciosCAD[usdPrice] || Math.round(usdPrice * 18.5 / 11.5);
             return `${symbol}${fixedCAD} ${moneda}`;
         }
-        const converted = convertirPrecio(usdPrice, moneda);
-        return `${symbol}${converted} ${moneda}`;
+        if (moneda === 'MXN') {
+            const fixedMXN = _extrasPreciosMXN[usdPrice] || Math.round(usdPrice * 18.5);
+            return `${symbol}${fixedMXN} ${moneda}`;
+        }
+        return `${symbol}${usdPrice} ${moneda}`;
     }
 
     function cambiarExtra(id, tipo, delta) {
@@ -2726,11 +2756,9 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             if (val > 100) val = 100;
             el.innerText = val;
         }
-        const tipos = ['water','beer','waterR','beerR'];
+        const tipos = ['water','beer','waterR','beerR','stop','stopR'];
         const monedaActual = getExtrasMoneda();
-        // Total en USD (para conversión del grand total)
-        let extrasTotalUSD = 0;
-        // Total en moneda local (para mostrar al cliente)
+        let extrasTotalUSD   = 0;
         let extrasTotalLocal = 0;
         tipos.forEach(t => {
             const e = document.getElementById(`extra-${t}-${id}`);
@@ -2739,8 +2767,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 var localUnit;
                 if (monedaActual === 'CAD') {
                     localUnit = _extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5);
+                } else if (monedaActual === 'MXN') {
+                    localUnit = _extrasPreciosMXN[usdUnit] || Math.round(usdUnit * 18.5);
                 } else {
-                    localUnit = convertirPrecio(usdUnit, monedaActual);
+                    localUnit = usdUnit;
                 }
                 extrasTotalUSD   += parseInt(e.innerText) * usdUnit;
                 extrasTotalLocal += parseInt(e.innerText) * localUnit;
@@ -2780,7 +2810,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     }
 
     function getExtrasText(id) {
-        const tipos = ['water','beer','waterR','beerR'];
+        const tipos = ['water','beer','waterR','beerR','stop','stopR'];
         const lang = currentLang;
         const monedaActual = getExtrasMoneda();
         const symbol = monedaActual === 'CAD' ? 'C$' : '$';
@@ -2792,8 +2822,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 var localUnit;
                 if (monedaActual === 'CAD') {
                     localUnit = _extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5);
+                } else if (monedaActual === 'MXN') {
+                    localUnit = _extrasPreciosMXN[usdUnit] || Math.round(usdUnit * 18.5);
                 } else {
-                    localUnit = convertirPrecio(usdUnit, monedaActual);
+                    localUnit = usdUnit;
                 }
                 const lineTotal = parseInt(el.innerText) * localUnit;
                 parts.push(`${_extrasNombres[t][lang]} x${el.innerText} (${symbol}${lineTotal} ${monedaActual})`);
@@ -2803,7 +2835,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     }
 
     function getExtrasTotal(id) {
-        const tipos = ['water','beer','waterR','beerR'];
+        const tipos = ['water','beer','waterR','beerR','stop','stopR'];
         const monedaActual = getExtrasMoneda();
         let total = 0;
         tipos.forEach(t => {
@@ -2813,8 +2845,10 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 var unit;
                 if (monedaActual === 'CAD') {
                     unit = _extrasPreciosCAD[usdUnit] || Math.round(usdUnit * 18.5 / 11.5);
+                } else if (monedaActual === 'MXN') {
+                    unit = _extrasPreciosMXN[usdUnit] || Math.round(usdUnit * 18.5);
                 } else {
-                    unit = convertirPrecio(usdUnit, monedaActual);
+                    unit = usdUnit;
                 }
                 total += parseInt(el.innerText) * unit;
             }
@@ -2906,6 +2940,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         const extraCerveza  = parseInt(document.getElementById('extra-beer-' + id)   ? document.getElementById('extra-beer-' + id).innerText   : 0) || 0;
         const extraAguaR    = parseInt(document.getElementById('extra-waterR-' + id) ? document.getElementById('extra-waterR-' + id).innerText : 0) || 0;
         const extraCervezaR = parseInt(document.getElementById('extra-beerR-' + id)  ? document.getElementById('extra-beerR-' + id).innerText  : 0) || 0;
+        const extraStop     = parseInt(document.getElementById('extra-stop-' + id)   ? document.getElementById('extra-stop-' + id).innerText   : 0) || 0;
+        const extraStopR    = parseInt(document.getElementById('extra-stopR-' + id)  ? document.getElementById('extra-stopR-' + id).innerText  : 0) || 0;
         const moneda = document.getElementById('moneda') ? document.getElementById('moneda').value : 'USD';
         const totalExtrasStr = extrasTotal > 0 ? ('$' + extrasTotal + ' ' + moneda) : '$0';
 
@@ -2917,15 +2953,15 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             nombre, telefono: lada + " " + tel, email,
             pasajeros: document.getElementById('pasajeros').value,
             tipoViaje: tipoViajeFinal,
-            origen: document.getElementById('origen').value,
-            destino: document.getElementById('destino').value,
+            origen: datosCard.origen || document.getElementById('origen').value,
+            destino: datosCard.destino || document.getElementById('destino').value,
             fecha: document.getElementById('fechaIda').value, hora: horaIda,
             fechaRegreso: fechaVueltaVal, horaRegreso: horaVueltaVal,
             notas: notasFinales, vuelo,
             vueloRegreso: document.getElementById('vuelo-regreso-' + id) ? document.getElementById('vuelo-regreso-' + id).value : "",
             vehiculo: datosCard.vehiculo, precio: datosCard.precio,
             zona: datosCard.zona, idioma: currentLang, pago,
-            extraAgua, extraCerveza, extraAguaR, extraCervezaR,
+            extraAgua, extraCerveza, extraAguaR, extraCervezaR, extraStop, extraStopR,
             totalExtras: totalExtrasStr,
             cupon: (() => {
                 const tipoActivo = document.getElementById('tipoServicio') ? document.getElementById('tipoServicio').value : 'SENCILLO';
