@@ -46,8 +46,8 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     <link rel="preload" as="image" href="https://i.imgur.com/3JAl89S.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Ocultar página hasta que cargue el idioma correcto -->
-    <style>body { visibility: hidden; }</style>
+    <!-- Ocultar brevemente para evitar flash de idioma -->
+    <style>body { opacity: 0; transition: opacity 0.15s ease; }</style>
     <script>
       // Aplicar idioma ANTES de que el body sea visible — elimina el flash
       (function() {
@@ -1699,7 +1699,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         origenInput.style.cssText = 'color:var(--text-dark); background:transparent;';
 
         setLang('en');
-        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
 
         // Restaurar modo correcto sin re-llenar el campo
         direccionMode = 'desdeAero';
