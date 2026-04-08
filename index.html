@@ -843,7 +843,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             <div class="slider-track">
                 <div class="slider-slide">
                     <div class="vehicle-card-clean">
-                        <div class="image-container-clean"><img loading="lazy" src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/CLASSIC%20SEDAN%201.webp" alt="Sedán Ejecutivo" class="vehicle-img-clean"></div>
+                        <div class="image-container-clean"><img loading="lazy" src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/Carrusel%20CLASSIC%20SEDAN.webp" alt="Sedán Ejecutivo" class="vehicle-img-clean"></div>
                         <div class="card-content-clean">
                             <h3 class="vehicle-name-clean" id="veh-title-1">Classic Sedan</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-1">Viaja ligero y con total comodidad. Ideal para parejas o viajeros de negocios que buscan un traslado privado y eficiente.</p>
@@ -854,7 +854,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 </div>
                 <div class="slider-slide">
                     <div class="vehicle-card-clean">
-                        <div class="image-container-clean"><img loading="lazy" src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/Carrusel%20COMFORT%20VAN.webp" alt="Luxury SUV" class="vehicle-img-clean"></div>
+                        <div class="image-container-clean"><img loading="lazy" src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/Carrusel%20LUXURY%20VIP.webp" alt="Luxury SUV" class="vehicle-img-clean"></div>
                         <div class="card-content-clean">
                             <h3 class="vehicle-name-clean" id="veh-title-2">Luxury VIP</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-2">Exclusividad y potencia desde tu llegada. El recibimiento perfecto en el aeropuerto para ejecutivos y familias VIP.</p>
@@ -865,7 +865,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
                 </div>
                 <div class="slider-slide">
                     <div class="vehicle-card-clean">
-                        <div class="image-container-clean"><img loading="lazy" src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/Carrusel%20FAMILY%20VAN.webp" alt="Van Ejecutiva" class="vehicle-img-clean"></div>
+                        <div class="image-container-clean"><img loading="lazy" src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/Carrusel%20COMFORT%20VAN.webp" alt="Van Ejecutiva" class="vehicle-img-clean"></div>
                         <div class="card-content-clean">
                             <h3 class="vehicle-name-clean" id="veh-title-3">Comfort Van</h3>
                             <p class="vehicle-desc-clean" id="fleet-desc-3">Espacio inteligente y confort total. La opción ideal para familias o grupos de amigos que buscan viajar juntos con seguridad.</p>
@@ -1117,16 +1117,15 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     let direccionMode = 'desdeAero'; 
     const baseGH = "https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Prueba/main/";
     const imgUrlsErtiga = [
-        baseGH + "CLASSIC%20SEDAN%201.webp",
-        baseGH + "CLASSIC%20SEDAN%202.webp",
-        baseGH + "CLASSIC%20SEDAN%203.webp",
-        baseGH + "Carrusel%20CLASSIC%20SEDAN.webp"
+        baseGH + "CLASSIC%20SEDAN%201%20Desglose%20de%20Precios.webp",
+        baseGH + "CLASSIC%20SEDAN%202%20Desglose%20de%20Precios.webp",
+        baseGH + "CLASSIC%20SEDAN%203%20Desglose%20de%20Precios.webp"
     ];
     const imgUrlErtiga      = imgUrlsErtiga[0];
-    const imgUrlTransporter = baseGH + "COMFORT%20VAN.webp";
-    const imgUrlSprinter    = baseGH + "GRAND%20SPRINTER.webp";
-    const imgUrlSuburban    = baseGH + "LUXURY%20VIP.webp";
-    const imgUrlToyotaGL    = baseGH + "FAMILY%20VAN.webp";
+    const imgUrlTransporter = baseGH + "COMFORT%20VAN%20Desglose%20de%20Precios.webp";
+    const imgUrlSprinter    = baseGH + "GRAND%20SPRINTER%20Desglose%20de%20Precios.webp";
+    const imgUrlSuburban    = baseGH + "LUXURY%20VIP%20Desglose%20de%20Precios.webp";
+    const imgUrlToyotaGL    = baseGH + "FAMILY%20VAN%20Desglose%20de%20Precios.webp";
 
     function adjustScrollMargin() {
         const header = document.querySelector('header');
@@ -2445,13 +2444,6 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
         return `
         <div class="tarjeta" id="${id}">
-            <div class="tarjeta-img">${
-                Array.isArray(img)
-                ? `<div id="slider-${id}" class="ertiga-auto-slider" style="width:100%;height:140px;position:relative;overflow:hidden;border-radius:8px;">
-                    ${img.map((src,i) => `<img src="${src}" alt="${veh}" style="position:absolute;top:0;left:0;width:100%;height:140px;object-fit:contain;transition:opacity 0.6s ease;opacity:${i===0?1:0};">`).join('')}
-                  </div>`
-                : `<img src="${img}" alt="${veh}">`
-            }</div>
             <div class="tarjeta-info">
                 <h3>${veh}</h3>
                 <div class="tarjeta-route-display">${rutaLabel}</div>
