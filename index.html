@@ -79,7 +79,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         body {
             font-family: var(--font-body);
             margin: 0; padding: 0; color: var(--dark-gray); background-color: var(--white);
-            overflow-x: hidden;
+            overflow-x: clip;
         }
 
         img { max-width: 100%; height: auto; }
@@ -302,8 +302,16 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
         /* Ajuste específico para que el input type="time" se vea bien en móviles y desktop */
         input[type="time"] {
-            font-family: 'Open Sans', sans-serif; /* Misma fuente que el resto */
+            font-family: 'Open Sans', sans-serif;
             cursor: pointer;
+        }
+
+        /* WHEEL PICKER ESTILO iOS — Android only */
+        .wheel-item {
+            height: 44px; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: 400; color: #aaa;
+            scroll-snap-align: center; cursor: pointer;
+            transition: color 0.1s, font-size 0.1s; user-select: none;
         }
 
         .contact-section { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-top: 20px; border-top: 1px dashed #ddd; padding-top: 25px; }
@@ -576,6 +584,31 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             .custom-form-grid { grid-template-columns: 1fr !important; }
             .ltr-social-link { width: 34px; height: 34px; font-size: 15px; }
         }
+        body.lang-loading { visibility: hidden; }
+
+        /* SPLASH LOADER */
+        #splash-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0a0a0a; z-index: 999999;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 20px;
+            transition: opacity 0.4s ease;
+        }
+        #splash-loader img { width: 60px; height: 60px; object-fit: contain; }
+        #splash-loader .splash-brand {
+            font-family: var(--font-title); font-size: 1.3rem; font-weight: 800;
+            color: var(--gold); text-transform: uppercase; letter-spacing: 3px;
+        }
+        #splash-loader .splash-bar-wrap {
+            width: 140px; height: 3px; background: rgba(212,175,55,0.2);
+            border-radius: 10px; overflow: hidden;
+        }
+        #splash-loader .splash-bar {
+            height: 100%; width: 0%; background: var(--gold);
+            border-radius: 10px;
+            animation: splashFill 1.5s ease forwards;
+        }
+        @keyframes splashFill { from { width: 0%; } to { width: 100%; } }
         /* CUPÓN EMERGENTE */
         #cupon-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -631,7 +664,14 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         #cupon-box .cupon-btn:hover { background: var(--gold-hover); }
     </style>
 </head>
-<body>
+<body class="lang-loading">
+
+    <!-- SPLASH LOADER -->
+    <div id="splash-loader">
+        <img src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Luxury-Transfers-Riviera/main/Favicon%20200%20x%20200%20px.webp" alt="Luxury Transfers">
+        <div class="splash-brand">Luxury Transfers</div>
+        <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+    </div>
 
     <!-- CUPÓN EMERGENTE -->
     <div id="cupon-overlay">
@@ -1195,6 +1235,142 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     const imgUrlSprinter    = baseGH + "GRAND%20SPRINTER%20Desglose%20de%20Precios.webp";
     const imgUrlSuburban    = baseGH + "LUXURY%20VIP%20Desglose%20de%20Precios.webp";
     const imgUrlToyotaGL    = baseGH + "FAMILY%20VAN%20Desglose%20de%20Precios.webp";
+
+    // WHEEL PICKER ESTILO iOS — solo para Android
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const WHEEL_ITEM_H = 44;
+    const WHEEL_PAD = 2;
+
+    function wheelBuildCol(el, values) {
+        el.innerHTML = '';
+        for(let i=0;i<WHEEL_PAD;i++){const p=document.createElement('div');p.style.height=WHEEL_ITEM_H+'px';el.appendChild(p);}
+        values.forEach(v=>{
+            const d=document.createElement('div');
+            d.className='wheel-item';
+            d.textContent=v;
+            d.dataset.val=v;
+            el.appendChild(d);
+        });
+        for(let i=0;i<WHEEL_PAD;i++){const p=document.createElement('div');p.style.height=WHEEL_ITEM_H+'px';el.appendChild(p);}
+    }
+
+    function wheelGetSelected(col) {
+        const idx = Math.round(col.scrollTop / WHEEL_ITEM_H);
+        const items = col.querySelectorAll('.wheel-item');
+        return items[Math.min(idx, items.length-1)]?.dataset.val || '';
+    }
+
+    function wheelHighlight(col) {
+        const items = col.querySelectorAll('.wheel-item');
+        const idx = Math.round(col.scrollTop / WHEEL_ITEM_H);
+        items.forEach((item,i)=>{
+            const active = i === idx;
+            item.style.color = active ? '#1a1a1a' : '#aaa';
+            item.style.fontSize = active ? '22px' : '18px';
+        });
+    }
+
+    function wheelScrollToIdx(col, idx) {
+        col.scrollTop = idx * WHEEL_ITEM_H;
+    }
+
+    function to24h(h, ap) {
+        let hNum = parseInt(h);
+        if(ap === 'AM' && hNum === 12) hNum = 0;
+        if(ap === 'PM' && hNum !== 12) hNum += 12;
+        return String(hNum).padStart(2,'0');
+    }
+
+    function from24h(val) {
+        const parts = val.split(':');
+        let h = parseInt(parts[0] || 0);
+        const m = String(Math.round((parseInt(parts[1]||0))/5)*5).padStart(2,'0');
+        const ap = h >= 12 ? 'PM' : 'AM';
+        if(h === 0) h = 12;
+        else if(h > 12) h -= 12;
+        return { h: String(h).padStart(2,'0'), m, ap };
+    }
+
+    function replaceTimeInput(inputId) {
+        const input = document.getElementById(inputId);
+        if (!input || !isAndroid) return;
+
+        const uid = inputId;
+        const hours12 = Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
+        const mins5   = Array.from({length:12},(_,i)=>String(i*5).padStart(2,'0'));
+        const ampmVals = ['AM','PM'];
+
+        const init = input.value ? from24h(input.value) : {h:'06',m:'00',ap:'AM'};
+
+        const display = document.createElement('div');
+        display.id = 'wd-display-'+uid;
+        display.style.cssText = 'font-size:14px;font-weight:600;color:#333;cursor:pointer;font-family:var(--font-body);padding:4px 0;display:flex;align-items:center;gap:6px;';
+        display.innerHTML = `<span id="wd-txt-${uid}">${init.h}:${init.m} ${init.ap}</span> <i class="fas fa-clock" style="color:#aaa;font-size:12px;"></i>`;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'wd-overlay-'+uid;
+        overlay.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:99999;align-items:flex-end;justify-content:center;';
+
+        overlay.innerHTML = `
+        <div style="background:#f9f9f9;width:100%;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom);">
+            <div style="display:flex;justify-content:space-between;padding:14px 20px;border-bottom:0.5px solid #ddd;">
+                <button id="wd-cancel-${uid}" style="border:none;background:none;font-size:16px;color:#888;cursor:pointer;font-family:var(--font-body);">Cancelar</button>
+                <span style="font-size:16px;font-weight:700;color:#333;font-family:var(--font-title);">Hora</span>
+                <button id="wd-ok-${uid}" style="border:none;background:none;font-size:16px;font-weight:700;color:#007AFF;cursor:pointer;font-family:var(--font-body);">Listo</button>
+            </div>
+            <div style="position:relative;height:180px;overflow:hidden;background:#f9f9f9;">
+                <div style="position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,#f9f9f9,transparent);z-index:2;pointer-events:none;"></div>
+                <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,#f9f9f9,transparent);z-index:2;pointer-events:none;"></div>
+                <div style="position:absolute;top:50%;left:0;right:0;height:44px;transform:translateY(-50%);border-top:0.5px solid #ccc;border-bottom:0.5px solid #ccc;z-index:1;pointer-events:none;"></div>
+                <div style="display:flex;height:100%;padding:0 20px;gap:4px;">
+                    <div id="wd-h-${uid}"  style="flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;-ms-overflow-style:none;"></div>
+                    <div style="display:flex;align-items:center;font-size:22px;font-weight:500;color:#333;z-index:3;">:</div>
+                    <div id="wd-m-${uid}"  style="flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;-ms-overflow-style:none;"></div>
+                    <div style="width:8px;"></div>
+                    <div id="wd-ap-${uid}" style="flex:1;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;-ms-overflow-style:none;"></div>
+                </div>
+            </div>
+        </div>`;
+
+        document.body.appendChild(overlay);
+
+        const colH  = overlay.querySelector('#wd-h-'+uid);
+        const colM  = overlay.querySelector('#wd-m-'+uid);
+        const colAP = overlay.querySelector('#wd-ap-'+uid);
+
+        wheelBuildCol(colH,  hours12);
+        wheelBuildCol(colM,  mins5);
+        wheelBuildCol(colAP, ampmVals);
+
+        [colH,colM,colAP].forEach(c=>c.addEventListener('scroll',()=>wheelHighlight(c)));
+
+        display.addEventListener('click', ()=>{
+            overlay.style.display = 'flex';
+            const cur = from24h(input.value || '06:00');
+            wheelScrollToIdx(colH,  hours12.indexOf(cur.h));
+            wheelScrollToIdx(colM,  mins5.indexOf(cur.m) > -1 ? mins5.indexOf(cur.m) : 0);
+            wheelScrollToIdx(colAP, ampmVals.indexOf(cur.ap));
+            setTimeout(()=>{[colH,colM,colAP].forEach(c=>wheelHighlight(c));},50);
+        });
+
+        overlay.querySelector('#wd-cancel-'+uid).addEventListener('click',()=>{
+            overlay.style.display='none';
+        });
+        overlay.querySelector('#wd-ok-'+uid).addEventListener('click',()=>{
+            const h  = wheelGetSelected(colH);
+            const m  = wheelGetSelected(colM);
+            const ap = wheelGetSelected(colAP);
+            const h24 = to24h(h, ap);
+            input.value = h24+':'+m;
+            input.dispatchEvent(new Event('input',{bubbles:true}));
+            input.dispatchEvent(new Event('change',{bubbles:true}));
+            document.querySelector('#wd-txt-'+uid).textContent = h+':'+m+' '+ap;
+            overlay.style.display='none';
+        });
+
+        input.style.display = 'none';
+        input.parentNode.insertBefore(display, input.nextSibling);
+    }
 
     function adjustScrollMargin() {
         const header = document.querySelector('header');
@@ -1763,13 +1939,22 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
         origenInput.style.cssText = 'color:var(--text-dark); background:transparent;';
 
         setLang('en');
+        document.body.classList.remove('lang-loading');
         document.body.style.opacity = '1';
+        const splash = document.getElementById('splash-loader');
+        if (splash) {
+            splash.style.opacity = '0';
+            setTimeout(() => splash.style.display = 'none', 400);
+        }
 
         // Restaurar modo correcto sin re-llenar el campo
         direccionMode = 'desdeAero';
 
         initSlider();
         adjustScrollMargin();
+
+        // Reemplazar todos los inputs de hora con selector personalizado
+        ['horaIda', 'horaIdaRT', 'horaVuelta', 'custom-hora', 'custom-hora-regreso'].forEach(replaceTimeInput);
     };
 
     function initSlider() {
@@ -3248,7 +3433,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     function copiarCupon(el) {
         navigator.clipboard.writeText('LTR-10').then(() => {
             const hint = document.getElementById('cupon-hint');
-            hint.textContent = '✅ ¡Código copiado!';
+            hint.textContent = currentLang === 'en' ? '✅ Code copied!' : '✅ ¡Código copiado!';
             hint.style.color = 'var(--gold)';
         });
     }
