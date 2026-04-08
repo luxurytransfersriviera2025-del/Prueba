@@ -576,9 +576,75 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
             .custom-form-grid { grid-template-columns: 1fr !important; }
             .ltr-social-link { width: 34px; height: 34px; font-size: 15px; }
         }
+        /* CUPÓN EMERGENTE */
+        #cupon-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); z-index: 99999;
+            display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+        #cupon-box {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 2px solid var(--gold);
+            border-radius: 20px; padding: 40px 35px;
+            max-width: 420px; width: 90%; text-align: center;
+            position: relative;
+            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 60px rgba(212,175,55,0.25);
+        }
+        #cupon-box .cupon-close {
+            position: absolute; top: 14px; right: 18px;
+            color: #aaa; font-size: 22px; cursor: pointer;
+            background: none; border: none; line-height: 1;
+            transition: color 0.2s;
+        }
+        #cupon-box .cupon-close:hover { color: var(--gold); }
+        #cupon-box .cupon-icon { font-size: 2.8rem; margin-bottom: 10px; }
+        #cupon-box .cupon-titulo {
+            font-family: var(--font-title); font-size: 1.3rem; font-weight: 900;
+            color: var(--gold); text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        #cupon-box .cupon-desc {
+            font-family: var(--font-body); font-size: 0.95rem;
+            color: #ccc; margin-bottom: 22px; line-height: 1.5;
+        }
+        #cupon-box .cupon-codigo {
+            background: var(--gold); color: var(--black);
+            font-family: var(--font-title); font-size: 1.6rem; font-weight: 900;
+            letter-spacing: 4px; padding: 14px 30px; border-radius: 10px;
+            display: inline-block; margin-bottom: 18px;
+            cursor: pointer; transition: transform 0.2s;
+            user-select: all;
+        }
+        #cupon-box .cupon-codigo:hover { transform: scale(1.05); }
+        #cupon-box .cupon-hint {
+            font-size: 0.78rem; color: #888; margin-bottom: 22px;
+        }
+        #cupon-box .cupon-btn {
+            background: var(--gold); color: var(--black);
+            font-family: var(--font-title); font-weight: 800;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+            padding: 14px 30px; border-radius: 50px; border: none;
+            cursor: pointer; width: 100%; transition: background 0.3s;
+        }
+        #cupon-box .cupon-btn:hover { background: var(--gold-hover); }
     </style>
 </head>
 <body>
+
+    <!-- CUPÓN EMERGENTE -->
+    <div id="cupon-overlay">
+        <div id="cupon-box">
+            <button class="cupon-close" onclick="cerrarCupon()">✕</button>
+            <div class="cupon-icon"><img src="https://raw.githubusercontent.com/luxurytransfersriviera2025-del/Luxury-Transfers-Riviera/main/Favicon%20200%20x%20200%20px.webp" alt="Luxury Transfers" style="width:70px;height:70px;object-fit:contain;"></div>
+            <div class="cupon-titulo" id="cupon-titulo">¡Oferta Exclusiva!</div>
+            <div class="cupon-desc" id="cupon-desc">Usa este cupón al cotizar tu transfer y obtén un <strong style="color:var(--gold);">10% de descuento</strong> en tu reserva.</div>
+            <div class="cupon-codigo" onclick="copiarCupon(this)" title="Clic para copiar">LTR-10</div>
+            <div class="cupon-hint" id="cupon-hint">🖱️ Haz clic en el código para copiarlo</div>
+            <button class="cupon-btn" onclick="irACotizar()" id="cupon-btn">Cotizar Ahora</button>
+        </div>
+    </div>
 
 
 
@@ -1498,6 +1564,7 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
 
     function setLang(lang) {
         currentLang = lang;
+        actualizarCuponIdioma();
         const t = translations[lang];
         const btnText = lang === 'es' ? '<i class="fas fa-globe"></i> English' : '<i class="fas fa-globe"></i> Español';
         document.getElementById('lang-btn').innerHTML = btnText;
@@ -3166,6 +3233,41 @@ src="https://www.facebook.com/tr?id=1206982288231935&ev=PageView&noscript=1"
     }
 
     function cerrarModal() { document.getElementById('modalConfirmacion').style.display = 'none'; }
+
+    // CUPÓN EMERGENTE
+    function mostrarCupon() {
+        const overlay = document.getElementById('cupon-overlay');
+        if (!sessionStorage.getItem('cuponVisto')) {
+            overlay.style.display = 'flex';
+        }
+    }
+    function cerrarCupon() {
+        document.getElementById('cupon-overlay').style.display = 'none';
+        sessionStorage.setItem('cuponVisto', '1');
+    }
+    function copiarCupon(el) {
+        navigator.clipboard.writeText('LTR-10').then(() => {
+            const hint = document.getElementById('cupon-hint');
+            hint.textContent = '✅ ¡Código copiado!';
+            hint.style.color = 'var(--gold)';
+        });
+    }
+    function irACotizar() {
+        cerrarCupon();
+        document.getElementById('seccion-quote').scrollIntoView({ behavior: 'smooth' });
+    }
+    // Actualizar textos del cupón según idioma
+    function actualizarCuponIdioma() {
+        const isEN = currentLang === 'en';
+        document.getElementById('cupon-titulo').textContent  = isEN ? 'Exclusive Offer!' : '¡Oferta Exclusiva!';
+        document.getElementById('cupon-desc').innerHTML      = isEN
+            ? 'Use this coupon when quoting your transfer and get a <strong style="color:var(--gold);">10% discount</strong> on your booking.'
+            : 'Usa este cupón al cotizar tu transfer y obtén un <strong style="color:var(--gold);">10% de descuento</strong> en tu reserva.';
+        document.getElementById('cupon-hint').textContent   = isEN ? '🖱️ Click the code to copy it' : '🖱️ Haz clic en el código para copiarlo';
+        document.getElementById('cupon-btn').textContent    = isEN ? 'Quote Now' : 'Cotizar Ahora';
+    }
+    // Mostrar cupón a los 4 segundos
+    setTimeout(mostrarCupon, 4000);
     
     function initAutocomplete() {
         const bounds = new google.maps.LatLngBounds(new google.maps.LatLng(17.9, -91.5), new google.maps.LatLng(21.8, -86.5));
